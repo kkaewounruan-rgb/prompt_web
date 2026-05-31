@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaizen Prompt Template Library</title>
+<style>
+:root{
+  --green:#1D9E75;--gl:#E1F5EE;--gm:#9FE1CB;--gd:#0F6E56;
+  --bd:#e2e8f0;--bg:#f8fafc;--bg2:#fff;--tx:#1a202c;--tx2:#64748b;--tx3:#94a3b8;
+  --r:10px;--shadow:0 1px 4px rgba(0,0,0,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+.wrap{max-width:920px;margin:0 auto;padding:26px 18px 52px}
+
+/* Header */
+.hdr{text-align:center;margin-bottom:24px}
+.hdr-badge{display:inline-block;background:var(--gl);color:var(--gd);font-size:12px;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:10px;letter-spacing:.3px}
+.hdr h1{font-size:24px;font-weight:700;margin-bottom:6px}
+.hdr p{font-size:13px;color:var(--tx2);line-height:1.65;max-width:580px;margin:0 auto}
+
+/* Template grid */
+.tpl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px;margin-bottom:28px}
+
+/* Template card */
+.tpl-card{background:var(--bg2);border:1.5px solid var(--bd);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);transition:border-color .2s,box-shadow .2s}
+.tpl-card:hover{border-color:var(--gm);box-shadow:0 3px 14px rgba(29,158,117,.12)}
+.tpl-card.open{border-color:var(--green);box-shadow:0 3px 18px rgba(29,158,117,.18)}
+
+.tpl-hdr{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;cursor:pointer;user-select:none}
+.tpl-hdr:hover{background:var(--bg)}
+.tpl-num{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;font-weight:700}
+.tpl-meta{flex:1}
+.tpl-name{font-size:13.5px;font-weight:700;color:var(--tx);margin-bottom:3px;line-height:1.3}
+.tpl-sub{font-size:11.5px;color:var(--tx2);line-height:1.4}
+.tpl-lvl{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block;margin-top:4px}
+.tpl-arr{font-size:11px;color:var(--tx3);margin-top:3px;transition:transform .22s;flex-shrink:0}
+.tpl-card.open .tpl-arr{transform:rotate(180deg);color:var(--green)}
+
+/* Card body */
+.tpl-body{display:none;border-top:1px solid var(--bd)}
+.tpl-card.open .tpl-body{display:block}
+
+/* Form fields */
+.form-wrap{padding:14px 16px 0}
+.field{margin-bottom:12px}
+.field label{font-size:11.5px;font-weight:600;color:var(--tx2);margin-bottom:5px;display:block}
+.field input,.field select,.field textarea{
+  width:100%;padding:9px 12px;border:1px solid var(--bd);border-radius:8px;
+  font-size:13px;color:var(--tx);background:var(--bg);font-family:inherit;
+  transition:border-color .15s
+}
+.field textarea{height:70px;resize:vertical;line-height:1.5}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(29,158,117,.1)}
+.field-hint{font-size:10.5px;color:var(--tx3);margin-top:3px}
+
+/* Buttons */
+.btn-row{display:flex;gap:7px;padding:0 16px 14px;flex-wrap:wrap}
+.gen-btn{flex:1;min-width:120px;padding:10px 14px;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.gen-btn:hover{opacity:.88}
+.clr-btn{padding:10px 14px;background:none;border:1px solid var(--bd);border-radius:8px;font-size:13px;color:var(--tx2);cursor:pointer;font-family:inherit;transition:all .15s}
+.clr-btn:hover{background:var(--bg);color:var(--tx)}
+
+/* Prompt output */
+.pout-wrap{display:none;margin:0 14px 14px;background:var(--gl);border:1px solid var(--gm);border-radius:9px;padding:14px;position:relative}
+.pout-wrap.show{display:block}
+.pout-label{font-size:10px;font-weight:700;color:var(--gd);text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px}
+.pout-txt{font-size:12.5px;color:var(--tx);line-height:1.8;white-space:pre-wrap;word-break:break-word}
+.pout-actions{display:flex;gap:7px;margin-top:10px}
+.copy-btn2{flex:1;padding:8px;background:var(--bg2);border:1px solid var(--gm);border-radius:7px;font-size:12px;color:var(--gd);cursor:pointer;font-family:inherit;font-weight:500;transition:all .15s}
+.copy-btn2:hover{background:var(--gl)}
+
+/* Color themes per template */
+.t1 .tpl-num{background:#E1F5EE;color:#0F6E56}
+.t1 .tpl-lvl{background:#E1F5EE;color:#0F6E56}
+.t2 .tpl-num{background:#FEE2E2;color:#991B1B}
+.t2 .tpl-lvl{background:#FEE2E2;color:#991B1B}
+.t3 .tpl-num{background:#E6F1FB;color:#185FA5}
+.t3 .tpl-lvl{background:#E6F1FB;color:#185FA5}
+.t4 .tpl-num{background:#FAEEDA;color:#854F0B}
+.t4 .tpl-lvl{background:#FAEEDA;color:#854F0B}
+.t5 .tpl-num{background:#EEEDFE;color:#534AB7}
+.t5 .tpl-lvl{background:#EEEDFE;color:#534AB7}
+.t6 .tpl-num{background:#FEF3C7;color:#92400E}
+.t6 .tpl-lvl{background:#FEF3C7;color:#92400E}
+
+/* Preview strip */
+.preview-strip{display:flex;gap:8px;margin-bottom:20px;overflow-x:auto;padding-bottom:4px}
+.ps-item{flex-shrink:0;padding:7px 14px;border-radius:20px;border:1.5px solid var(--bd);font-size:12px;font-weight:500;cursor:pointer;color:var(--tx2);background:var(--bg2);transition:all .15s;white-space:nowrap}
+.ps-item:hover{border-color:var(--gm);color:var(--tx)}
+.ps-item.active{background:var(--green);color:#fff;border-color:var(--green)}
+
+.footer{text-align:center;margin-top:40px;font-size:12px;color:var(--tx3);line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hdr">
+  <div class="hdr-badge">✨ Kaizen Prompt Library</div>
+  <h1>6 Template Kaizen Prompt Generator</h1>
+  <p>เลือก Template → กรอกข้อมูลของคุณ → กด "สร้าง Prompt" → คัดลอกไปใช้กับ AI ได้เลย</p>
+</div>
+
+<!-- Quick Filter -->
+<div class="preview-strip">
+  <div class="ps-item active" onclick="showAll(this)">🌟 ทั้งหมด</div>
+  <div class="ps-item" onclick="filterLevel('basic',this)">🟢 เริ่มต้น</div>
+  <div class="ps-item" onclick="filterLevel('advanced',this)">🔴 ขั้นสูง</div>
+  <div class="ps-item" onclick="filterLevel('org',this)">🔵 ธุรกิจ/องค์กร</div>
+  <div class="ps-item" onclick="filterLevel('personal',this)">🟡 ส่วนตัว</div>
+  <div class="ps-item" onclick="filterLevel('team',this)">🟣 ทีมงาน</div>
+  <div class="ps-item" onclick="filterLevel('mega',this)">🏆 Mega</div>
+</div>
+
+<div class="tpl-grid" id="tplGrid"></div>
+
+<div class="footer">
+  จัดทำโดย คณะกรรมการส่งเสริมกิจกรรมไคเซ็น · คณะบริหารธุรกิจ มหาวิทยาลัยเชียงใหม่<br>
+  Kaizen Prompt Library — ทุกคน ทุกที่ ทุกเวลา 🌱
+</div>
+</div>
+
+<script>
+// ============================================================
+// TEMPLATE DEFINITIONS
+// ============================================================
+const TEMPLATES = [
+  {
+    id:'t1', level:'basic', emoji:'📋', num:'1',
+    name:'Basic Kaizen Idea Generator',
+    sub:'ทั่วไป — สร้างไอเดีย Kaizen 10 ข้อ พร้อม KPI',
+    lvlLabel:'🟢 เริ่มต้น',
+    fields:[
+      {id:'area', label:'พื้นที่/กระบวนการที่ต้องการปรับปรุง', type:'text', ph:'เช่น งานขาย, การจัดการเวลา, กระบวนการผลิต', hint:'ระบุให้ชัดเจน AI จะสร้างไอเดียได้ตรงจุดขึ้น'},
+      {id:'context', label:'บริบทเพิ่มเติม (ถ้ามี)', type:'textarea', ph:'เช่น ทีม 10 คน, ปัญหาหลักคือ... งบประมาณจำกัด', hint:'ไม่บังคับ แต่ช่วยให้ AI ตอบได้แม่นยำขึ้น'}
+    ],
+    build: f => `คุณคือผู้เชี่ยวชาญ Kaizen และ Lean Thinking ระดับโลก มีประสบการณ์ 20 ปี
+
+โหมด: Kaizen Continuous Improvement
+
+ช่วยสร้างไอเดีย Kaizen สำหรับ "${f.area}"
+
+ข้อกำหนด:
+• สร้างไอเดียอย่างน้อย 10 ไอเดีย
+• แต่ละไอเดียต้องเล็กพอที่จะทำได้ภายใน 1-4 สัปดาห์
+• ระบุ ปัญหาที่แก้ + วิธีทำ + ผลลัพธ์ที่คาดหวัง + ตัวชี้วัดความสำเร็จ (KPI)
+• จัดลำดับตามความง่ายในการนำไปใช้ (Easiest → Harder)
+• ใช้หลัก 5S, PDCA, Muda, Mura, Muri ประกอบ
+
+บริบทเพิ่มเติม: ${f.context || 'ไม่ระบุ'}`
+  },
+  {
+    id:'t2', level:'advanced', emoji:'🔴', num:'2',
+    name:'Advanced Multi-Perspective',
+    sub:'ขั้นสูง — วิเคราะห์ 8 Wastes + PDCA + 5 Whys',
+    lvlLabel:'🔴 ขั้นสูง',
+    fields:[
+      {id:'topic', label:'หัวข้อที่ต้องการวิเคราะห์', type:'text', ph:'เช่น กระบวนการอนุมัติเอกสาร, ระบบ Customer Service', hint:'ยิ่งชัดเจนยิ่งได้ไอเดียที่ใช้ได้จริง'},
+      {id:'dept', label:'แผนก/หน่วยงาน', type:'text', ph:'เช่น ฝ่ายบัญชี, สำนักงานคณบดี, ฝ่ายผลิต', hint:'ช่วยให้ AI ปรับบริบทการตอบ'},
+      {id:'problem', label:'ปัญหาหลักที่พบ', type:'textarea', ph:'อธิบายปัญหาที่เจอในปัจจุบัน เช่น ขั้นตอนช้า ผิดพลาดบ่อย ลูกค้าร้องเรียน', hint:''}
+    ],
+    build: f => `🔴 Priority Level: MAX
+โหมด: Deep Kaizen Thinking
+
+คุณคือ Kaizen Master + Lean Six Sigma Black Belt + Behavioral Economist
+
+งาน: สร้างไอเดีย Kaizen สำหรับ "${f.topic}" ในแผนก "${f.dept}"
+
+ปัญหาหลักที่พบ: ${f.problem}
+
+วิธีคิด (ต้องทำตามลำดับ):
+1. วิเคราะห์ปัจจุบันด้วย 8 Wastes (Muda)
+2. คิดแบบ PDCA + 5 Whys
+3. พิจารณามุมมอง 3 ด้าน: Process, People, Technology
+4. สร้างไอเดีย 12-15 ไอเดีย
+5. แบ่งเป็น 3 ระดับ: Quick Win (1-7 วัน), Medium (2-4 สัปดาห์), Strategic (1-3 เดือน)
+
+รูปแบบการตอบ:
+### Quick Wins (1-7 วัน)
+### Medium Term (2-4 สัปดาห์)
+### Strategic Kaizen (1-3 เดือน)
+
+แต่ละไอเดียต้องมี:
+- ชื่อไอเดีย
+- ปัญหาที่แก้ไข
+- ขั้นตอนการทำ (Step-by-step)
+- ผลกระทบที่คาดการณ์
+- ความเสี่ยงและวิธีลดความเสี่ยง`
+  },
+  {
+    id:'t3', level:'org', emoji:'🏢', num:'3',
+    name:'Business / Organization Kaizen',
+    sub:'ธุรกิจ/องค์กร — Toyota Production System Style',
+    lvlLabel:'🔵 ธุรกิจ/องค์กร',
+    fields:[
+      {id:'biz', label:'ชื่อแผนก/ธุรกิจ', type:'text', ph:'เช่น ฝ่าย HR คณะบริหารธุรกิจ, ร้านอาหาร ABC', hint:''},
+      {id:'focus', label:'ด้านที่ต้องการปรับปรุง', type:'text', ph:'เช่น การบริการลูกค้า, การบริหารต้นทุน, ประสิทธิภาพการผลิต', hint:''},
+      {id:'resource', label:'ทรัพยากรที่มีอยู่', type:'text', ph:'เช่น ทีม 8 คน คอมพิวเตอร์ Line Official', hint:'ช่วยให้ไอเดียสอดคล้องกับความเป็นจริง'},
+      {id:'goal', label:'เป้าหมายหลัก', type:'text', ph:'เช่น ลดต้นทุน 20%, เพิ่มความพึงพอใจลูกค้า, ลดเวลาส่งมอบ', hint:''}
+    ],
+    build: f => `คำสั่งพิเศษ: ใช้ Kaizen Philosophy แบบ Toyota Production System
+
+สร้างไอเดีย Kaizen ให้กับ "${f.biz}" ในด้าน "${f.focus}"
+
+ทรัพยากรที่มีอยู่: ${f.resource}
+เป้าหมายหลัก: ${f.goal}
+
+เงื่อนไขสำคัญ:
+• เน้นลดต้นทุน + เพิ่มประสิทธิภาพ + เพิ่มความพึงพอใจลูกค้า
+• ไอเดียต้องทำได้ด้วยทรัพยากรที่มีอยู่ (Low-cost / No-cost)
+• รวมไอเดียที่ใช้ Visual Management (Kanban, Andon, Visual Control)
+• มีอย่างน้อย 1 ไอเดียที่ใช้ Gemba Walk (ไปดูที่หน้างานจริง)
+
+สร้างมา 15 ไอเดีย และแนะนำ Top 5 ที่ควรทำก่อน พร้อมเหตุผล`
+  },
+  {
+    id:'t4', level:'personal', emoji:'🌱', num:'4',
+    name:'Personal Kaizen',
+    sub:'ชีวิตส่วนตัว — 1% Better Every Day',
+    lvlLabel:'🟡 ส่วนตัว',
+    fields:[
+      {id:'area', label:'ด้านที่ต้องการพัฒนา', type:'text', ph:'เช่น การออกกำลังกาย, การเงิน, การเรียน, สุขภาพจิต', hint:''},
+      {id:'current', label:'สถานการณ์ปัจจุบัน', type:'textarea', ph:'เช่น ออกกำลังกายไม่สม่ำเสมอ ทำได้แค่ 1-2 ครั้ง/สัปดาห์ รู้สึกขาดแรงจูงใจ', hint:''},
+      {id:'obstacle', label:'อุปสรรคหลักที่เจอ', type:'text', ph:'เช่น ไม่มีเวลา, ขาดวินัย, ไม่รู้จะเริ่มอย่างไร', hint:''},
+      {id:'goal2', label:'เป้าหมายที่ต้องการใน 3 เดือน', type:'text', ph:'เช่น ออกกำลังกาย 5 ครั้ง/สัปดาห์, ประหยัดเงิน 20%', hint:''}
+    ],
+    build: f => `Activate Personal Kaizen Mode
+
+ฉันต้องการพัฒนาตัวเองในด้าน "${f.area}"
+
+สถานการณ์ปัจจุบัน: ${f.current}
+อุปสรรคหลัก: ${f.obstacle}
+เป้าหมาย 3 เดือน: ${f.goal2}
+
+สร้าง Personal Kaizen Ideas โดยใช้หลัก:
+• 1% Better Every Day
+• Habit Stacking
+• Tiny Habits
+• 5S ในชีวิตประจำวัน
+
+สร้าง 10 ไอเดีย แต่ละอันต้อง:
+- ทำได้จริงในชีวิตประจำวัน (ไม่เกิน 15 นาที/วัน)
+- วัดผลได้ด้วยตัวเลขหรือสัญลักษณ์
+- มีระบบติดตามความคืบหน้า
+- มีวิธีป้องกันการกลับไปสู่พฤติกรรมเดิม`
+  },
+  {
+    id:'t5', level:'team', emoji:'👥', num:'5',
+    name:'Team Kaizen Workshop',
+    sub:'ทีมงาน — Facilitator ออกแบบ Workshop',
+    lvlLabel:'🟣 ทีมงาน',
+    fields:[
+      {id:'team', label:'ชื่อทีม/แผนก', type:'text', ph:'เช่น ทีมพัฒนาผลิตภัณฑ์, สำนักงานเลขานุการ', hint:''},
+      {id:'size', label:'จำนวนสมาชิก', type:'text', ph:'เช่น 8 คน', hint:''},
+      {id:'pain', label:'ปัญหาหลักของทีมตอนนี้', type:'textarea', ph:'เช่น ประชุมบ่อยแต่ไม่ได้ผล สื่อสารไม่ชัด งานกระจุกตัวที่คนเดียว', hint:''},
+      {id:'duration', label:'ระยะเวลา Workshop', type:'select', options:['ครึ่งวัน (3-4 ชั่วโมง)','เต็มวัน (6-8 ชั่วโมง)','2 วัน','1 สัปดาห์'], hint:''}
+    ],
+    build: f => `Team Kaizen Workshop Simulation
+
+คุณคือ Facilitator ระดับสูงของ Kaizen Event
+
+ออกแบบ Workshop "${f.duration}" สำหรับทีม "${f.team}" จำนวน ${f.size} คน
+
+ปัญหาหลักของทีม:
+${f.pain}
+
+โฟกัสที่:
+• ปรับปรุงกระบวนการทำงานที่ติดขัด
+• ลดการประชุมที่ไร้ประสิทธิภาพ
+• เพิ่ม Collaboration และความไว้วางใจในทีม
+• ลด Burnout และเพิ่มแรงจูงใจ
+
+สร้างทั้ง:
+- ไอเดียระดับบุคคล (ทำได้คนเดียว)
+- ไอเดียระดับทีม (ทำร่วมกัน)
+- ไอเดียระดับระบบ/นโยบาย (ต้องขออนุมัติ)
+
+พร้อมออกแบบ:
+- Agenda Workshop ที่ละเอียด
+- กิจกรรม Ice Breaker เพื่อละลายพฤติกรรม
+- วิธีติดตามผลหลัง Workshop`
+  },
+  {
+    id:'t6', level:'mega', emoji:'🌟', num:'6',
+    name:'ULTIMATE KAIZEN PROMPT',
+    sub:'Mega Template — Kaizen Sensei + Business Excellence + Innovation',
+    lvlLabel:'🏆 Mega',
+    fields:[
+      {id:'topic2', label:'หัวข้อหลัก', type:'text', ph:'เช่น ระบบการรับสมัครนักศึกษา, กระบวนการจัดซื้อจัดจ้าง', hint:''},
+      {id:'org2', label:'องค์กร/แผนก', type:'text', ph:'เช่น คณะบริหารธุรกิจ มช., บริษัท XYZ ฝ่ายผลิต', hint:''},
+      {id:'scope', label:'ขอบเขตของปัญหา', type:'textarea', ph:'อธิบายขอบเขต เช่น ครอบคลุมตั้งแต่รับใบสมัคร → ประกาศผล ใช้เวลา 45 วัน ปัจจุบันมีข้อร้องเรียน 30%', hint:''},
+      {id:'kpi2', label:'ตัวชี้วัดที่ต้องการปรับปรุง', type:'text', ph:'เช่น ลดเวลาจาก 45 วัน → 20 วัน, ลดข้อร้องเรียน 80%', hint:''},
+      {id:'timeline', label:'ระยะเวลาดำเนินการ', type:'select', options:['30 วัน','60 วัน','90 วัน','6 เดือน','1 ปี'], hint:''}
+    ],
+    build: f => `🌟 ULTIMATE KAIZEN PROMPT 🌟
+
+บทบาท: Kaizen Sensei + Business Excellence Consultant + Innovation Expert
+
+งานหลัก: สร้างระบบ Kaizen สำหรับ "${f.topic2}" ใน "${f.org2}"
+
+ขอบเขต: ${f.scope}
+ตัวชี้วัดเป้าหมาย: ${f.kpi2}
+ระยะเวลา: ${f.timeline}
+
+ขั้นตอนการคิด (บังคับทำตามลำดับ):
+1. วิเคราะห์สถานการณ์ปัจจุบัน (Current State)
+2. หาจุดเสียเวลา/ความสูญเปล่า (Muda) ทั้ง 8 ประเภท
+3. ถาม 5 Whys อย่างละเอียดในแต่ละปัญหาหลัก
+4. สร้างไอเดียด้วยหลัก Kaizen + Lean + Design Thinking
+5. ประเมินด้วย Effort-Impact Matrix (2x2)
+6. ออกแบบ PDCA Cycle สำหรับแต่ละไอเดียหลัก
+
+ผลลัพธ์ที่ต้องการ:
+📌 Executive Summary (1 หน้า)
+🎯 Top 8 Kaizen Ideas (เรียงตามผลกระทบสูงสุด)
+🗓️ Implementation Roadmap ${f.timeline}
+📊 Metrics & Monitoring Plan
+⚠️ Potential Risks & Countermeasures
+✅ Quick Win ที่ทำได้วันแรกทันที`
+  }
+];
+
+// ============================================================
+// RENDER
+// ============================================================
+function renderAll(){
+  const grid = document.getElementById('tplGrid');
+  grid.innerHTML = '';
+  TEMPLATES.forEach(t => {
+    const card = document.createElement('div');
+    card.className = `tpl-card ${t.id}`;
+    card.dataset.level = t.level;
+
+    // Fields HTML
+    let fieldsHTML = t.fields.map(f => {
+      let input = '';
+      if(f.type==='textarea'){
+        input = `<textarea id="f_${t.id}_${f.id}" placeholder="${f.ph}"></textarea>`;
+      } else if(f.type==='select'){
+        const opts = f.options.map(o=>`<option>${o}</option>`).join('');
+        input = `<select id="f_${t.id}_${f.id}">${opts}</select>`;
+      } else {
+        input = `<input type="text" id="f_${t.id}_${f.id}" placeholder="${f.ph}">`;
+      }
+      return `<div class="field">
+        <label>${f.label}</label>
+        ${input}
+        ${f.hint?`<div class="field-hint">💡 ${f.hint}</div>`:''}
+      </div>`;
+    }).join('');
+
+    card.innerHTML = `
+      <div class="tpl-hdr" onclick="toggleCard('${t.id}')">
+        <div class="tpl-num">${t.emoji}</div>
+        <div class="tpl-meta">
+          <div class="tpl-name">Template ${t.num}: ${t.name}</div>
+          <div class="tpl-sub">${t.sub}</div>
+          <span class="tpl-lvl">${t.lvlLabel}</span>
+        </div>
+        <span class="tpl-arr">▼</span>
+      </div>
+      <div class="tpl-body">
+        <div class="form-wrap">${fieldsHTML}</div>
+        <div class="btn-row">
+          <button class="gen-btn" onclick="generate('${t.id}')">✨ สร้าง Prompt</button>
+          <button class="clr-btn" onclick="clearForm('${t.id}')">🗑️ ล้าง</button>
+        </div>
+        <div class="pout-wrap" id="pout_${t.id}">
+          <div class="pout-label">📋 Prompt พร้อมใช้ — คัดลอกไปวางใน AI ได้เลย</div>
+          <div class="pout-txt" id="ptxt_${t.id}"></div>
+          <div class="pout-actions">
+            <button class="copy-btn2" onclick="doCopy('${t.id}')">📋 คัดลอก Prompt</button>
+          </div>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function toggleCard(id){
+  const card = document.querySelector(`.tpl-card.${id}`);
+  const isOpen = card.classList.contains('open');
+  document.querySelectorAll('.tpl-card').forEach(c=>c.classList.remove('open'));
+  if(!isOpen){
+    card.classList.add('open');
+    setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),60);
+  }
+}
+
+function getFields(t){
+  const out = {};
+  t.fields.forEach(f=>{
+    const el = document.getElementById(`f_${t.id}_${f.id}`);
+    out[f.id] = el ? el.value.trim() : '';
+  });
+  return out;
+}
+
+function generate(id){
+  const t = TEMPLATES.find(x=>x.id===id);
+  const fields = getFields(t);
+  // Check required text fields
+  const missing = t.fields.filter(f=>f.type!=='select' && f.type!=='textarea' && !fields[f.id]);
+  if(missing.length>0){
+    alert(`กรุณากรอก: ${missing.map(m=>m.label).join(', ')}`);
+    return;
+  }
+  const prompt = t.build(fields);
+  const pout = document.getElementById(`pout_${id}`);
+  const ptxt = document.getElementById(`ptxt_${id}`);
+  ptxt.textContent = prompt;
+  pout.classList.add('show');
+  setTimeout(()=>pout.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+
+function clearForm(id){
+  const t = TEMPLATES.find(x=>x.id===id);
+  t.fields.forEach(f=>{
+    const el = document.getElementById(`f_${t.id}_${f.id}`);
+    if(el && f.type!=='select') el.value='';
+  });
+  document.getElementById(`pout_${id}`).classList.remove('show');
+}
+
+function doCopy(id){
+  const txt = document.getElementById(`ptxt_${id}`).textContent;
+  navigator.clipboard.writeText(txt).then(()=>{
+    const btn = document.querySelector(`#pout_${id} .copy-btn2`);
+    btn.textContent='✅ คัดลอกแล้ว!';
+    setTimeout(()=>btn.textContent='📋 คัดลอก Prompt',2000);
+  });
+}
+
+function showAll(btn){
+  document.querySelectorAll('.ps-item').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.tpl-card').forEach(c=>c.style.display='');
+}
+
+function filterLevel(level, btn){
+  document.querySelectorAll('.ps-item').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.tpl-card').forEach(c=>{
+    c.style.display = c.dataset.level===level ? '' : 'none';
+  });
+}
+
+renderAll();
+</script>
+</body>
+</html>
