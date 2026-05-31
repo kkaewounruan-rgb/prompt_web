@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaizen × Prompt Engineering</title>
+<style>
+  :root {
+    --green:#1D9E75;--green-light:#E1F5EE;--green-mid:#9FE1CB;
+    --green-dark:#0F6E56;--border:#e2e8f0;--bg:#f8fafc;
+    --bg2:#ffffff;--text:#1a202c;--text2:#64748b;--text3:#94a3b8;--radius:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  .container{max-width:860px;margin:0 auto;padding:28px 20px 48px}
+  .header{text-align:center;margin-bottom:32px}
+  .header-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-light);color:var(--green-dark);font-size:12px;font-weight:600;padding:4px 14px;border-radius:20px;margin-bottom:14px}
+  .header h1{font-size:28px;font-weight:700;color:var(--text);margin-bottom:8px}
+  .header p{font-size:14px;color:var(--text2);line-height:1.6;max-width:520px;margin:0 auto}
+  .sec-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin:28px 0 12px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-bottom:10px}
+  .kcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:all .2s;position:relative}
+  .kcard:hover{border-color:var(--green-mid);box-shadow:0 2px 12px rgba(29,158,117,.1);transform:translateY(-1px)}
+  .kcard.open{border-color:var(--green);box-shadow:0 2px 16px rgba(29,158,117,.15)}
+  .kcard-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .kcard-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+  .kcard-title{font-size:14px;font-weight:600;color:var(--text);line-height:1.3}
+  .kcard-tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;display:inline-block;margin-top:3px}
+  .kcard-desc{font-size:12.5px;color:var(--text2);line-height:1.55;margin-top:5px}
+  .chevron{position:absolute;top:14px;right:14px;font-size:12px;color:var(--text3);transition:transform .22s}
+  .kcard.open .chevron{transform:rotate(180deg);color:var(--green)}
+  .expand{display:none;margin-top:14px;border-top:1px solid var(--border);padding-top:14px}
+  .kcard.open .expand{display:block}
+  .ex-label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+  .prompt-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 80px 12px 14px;font-size:13px;color:var(--text);line-height:1.75;position:relative;margin-bottom:10px}
+  .prompt-box strong{color:var(--green-dark)}
+  .copy-btn{position:absolute;top:9px;right:10px;background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:4px 10px;font-size:11px;cursor:pointer;color:var(--text2);font-family:inherit;transition:all .15s;white-space:nowrap}
+  .copy-btn:hover{background:var(--green-light);color:var(--green-dark);border-color:var(--green-mid)}
+  .tip{font-size:12px;color:var(--text2);background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:9px 12px;line-height:1.6}
+  .tip strong{color:#92400e}
+  .table-wrap{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:4px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{background:var(--bg);padding:10px 14px;text-align:left;font-weight:600;color:var(--text2);font-size:11px;border-bottom:1px solid var(--border)}
+  td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;line-height:1.55}
+  tr:last-child td{border-bottom:none}
+  td strong{color:var(--green-dark)}
+  .builder{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-top:4px;box-shadow:0 1px 6px rgba(0,0,0,.05)}
+  .builder h3{font-size:15px;font-weight:600;color:var(--text);margin-bottom:16px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  @media(max-width:560px){.row2{grid-template-columns:1fr}}
+  .inp-group label{font-size:12px;color:var(--text2);font-weight:500;margin-bottom:5px;display:block}
+  .inp-group select,.inp-group input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text);background:var(--bg);font-family:inherit;transition:border-color .15s}
+  .inp-group select:focus,.inp-group input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(29,158,117,.1)}
+  .gen-btn{width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;margin-top:12px;transition:opacity .15s;font-family:inherit}
+  .gen-btn:hover{opacity:.9}
+  .result-area{display:none;margin-top:14px}
+  .result-label{font-size:11px;font-weight:700;color:var(--green-dark);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+  .result-prompt{background:var(--green-light);border:1px solid var(--green-mid);border-radius:10px;padding:16px 18px;font-size:13.5px;color:var(--text);line-height:1.85}
+  .result-prompt strong{color:var(--green-dark)}
+  .copy-all{width:100%;padding:10px;background:none;border:1px solid var(--green-mid);border-radius:8px;font-size:13px;color:var(--green-dark);cursor:pointer;margin-top:8px;font-family:inherit;font-weight:500;transition:all .15s}
+  .copy-all:hover{background:var(--green-light)}
+  .tag-g{background:#E1F5EE;color:#0F6E56}
+  .tag-b{background:#E6F1FB;color:#185FA5}
+  .tag-a{background:#FAEEDA;color:#854F0B}
+  .tag-p{background:#EEEDFE;color:#534AB7}
+  .tag-r{background:#FCEBEB;color:#A32D2D}
+  .tag-gr{background:#EAF3DE;color:#3B6D11}
+  .footer{text-align:center;margin-top:40px;font-size:12px;color:var(--text3);line-height:1.7}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-badge">🔗 Kaizen × AI</div>
+    <h1>Kaizen × Prompt Engineering</h1>
+    <p>นำเทคนิคปรับปรุงงานแบบ Kaizen มาใช้เขียน Prompt<br>เพื่อให้ได้ผลลัพธ์จาก AI แม่นยำ และนำไปใช้งานได้จริง</p>
+  </div>
+
+  <div class="sec-label">🎴 เทคนิคหลัก Kaizen → Prompt</div>
+  <div class="cards">
+
+    <div class="kcard" onclick="toggle(this)">
+      <span class="chevron">▼</span>
+      <div class="kcard-top"><div class="kcard-icon" style="background:#E1F5EE">🔄</div><div><div class="kcard-title">เลิก-ลด-เปลี่ยน</div><span class="kcard-tag tag-g">Stop · Reduce · Change</span></div></div>
+      <div class="kcard-desc">กำหนดชัดว่า AI ต้องเลิกทำอะไร ลดอะไร และเปลี่ยนเป็นอะไร</div>
+      <div class="expand">
+        <div class="ex-label">Template Prompt</div>
+        <div class="prompt-box"><button class="copy-btn" onclick="cp(this,event)">📋 คัดลอก</button><strong>เลิก:</strong> อย่าใช้ศัพท์เทคนิค อย่าตอบเกิน 3 ข้อ<br><strong>ลด:</strong> ลดคำอธิบายที่ไม่จำเป็น ลดการทำซ้ำ<br><strong>เปลี่ยน:</strong> เปลี่ยนจากข้อความล้วน → ตาราง/รายการ<br>---<br>[คำถามจริงของคุณ]</div>
+        <div class="tip"><strong>💡 ทำไมได้ผล:</strong> AI จะโฟกัสสิ่งที่ต้องการ ไม่วกเวียน ผลลัพธ์กระชับ ตรงประเด็น</div>
+      </div>
+    </div>
+
+    <div class="kcard" onclick="toggle(this)">
+      <span class="chevron">▼</span>
+      <div class="kcard-top"><div class="kcard-icon" style="background:#E6F1FB">📊</div><div><div class="kcard-title">Big Q: QCDSMPEE</div><span class="kcard-tag tag-b">กำหนดมิติคำตอบ</span></div></div>
+      <div class="kcard-desc">เลือกมิติที่ต้องการให้ AI ตอบ เช่น คุณภาพ ต้นทุน เวลา ความปลอดภัย</div>
+      <div class="expand">
+        <div class="ex-label">Template Prompt</div>
+        <div class="prompt-box"><button class="copy-btn" onclick="cp(this,event)">📋 คัดลอก</button>วิเคราะห์ [หัวข้อ] โดยพิจารณาตามกรอบ Big Q:<br><strong>Q</strong> - คุณภาพ: ผลกระทบต่อมาตรฐาน<br><strong>C</strong> - ต้นทุน: ประหยัดหรือเพิ่มค่าใช้จ่าย<br><strong>D</strong> - เวลา: ช่วยลดหรือเพิ่มเวลาไหม<br><strong>S</strong> - ความปลอดภัย: มีความเสี่ยงอะไร<br>ตอบเป็นตารางเปรียบเทียบ ก่อน/หลัง</div>
+        <div class="tip"><strong>💡 ทำไมได้ผล:</strong> กรอบ QCDSMPEE บังคับให้ AI คิดรอบด้าน ไม่มองแค่มุมเดียว</div>
+      </div>
+    </div>
+
+    <div class="kcard" onclick="toggle(this)">
+      <span class="chevron">▼</span>
+      <div class="kcard-top"><div class="kcard-icon" style="background:#FAEEDA">📋</div><div><div class="kcard-title">6 ขั้นตอน Kaizen</div><span class="kcard-tag tag-a">Step-by-Step</span></div></div>
+      <div class="kcard-desc">ให้ AI ทำงานตามขั้นตอน ค้นหา→สำรวจ→คิด→เลือก→ลงมือ→แสดงผล</div>
+      <div class="expand">
+        <div class="ex-label">Template Prompt</div>
+        <div class="prompt-box"><button class="copy-btn" onclick="cp(this,event)">📋 คัดลอก</button>ช่วยปรับปรุง [งาน/กระบวนการ] โดยทำตาม 6 ขั้น:<br><strong>1. ค้นหา:</strong> ระบุปัญหาที่พบ<br><strong>2. สำรวจ:</strong> สภาพปัจจุบันเป็นอย่างไร<br><strong>3. คิด:</strong> แนวทางแก้ไข 3 วิธี<br><strong>4. เลือก:</strong> วิธีที่ดีที่สุด พร้อมเหตุผล<br><strong>5. ลงมือ:</strong> แผนปฏิบัติจริง<br><strong>6. ผลลัพธ์:</strong> ผลที่คาดว่าจะได้รับ</div>
+        <div class="tip"><strong>💡 ทำไมได้ผล:</strong> AI ไม่ข้ามขั้นตอน คำตอบมีโครงสร้างชัดเจน นำไปใช้ได้ทันที</div>
+      </div>
+    </div>
+
+    <div class="kcard" onclick="toggle(this)">
+      <span class="chevron">▼</span>
+      <div class="kcard-top"><div class="kcard-icon" style="background:#EEEDFE">✍️</div><div><div class="kcard-title">ปัญหา→แก้→ผลลัพธ์</div><span class="kcard-tag tag-p">โครงสร้างข้อเสนอแนะ</span></div></div>
+      <div class="kcard-desc">บังคับให้ AI ตอบครบ 3 ส่วนเหมือนแบบฟอร์ม Kaizen จริง</div>
+      <div class="expand">
+        <div class="ex-label">Template Prompt</div>
+        <div class="prompt-box"><button class="copy-btn" onclick="cp(this,event)">📋 คัดลอก</button>ตอบในรูปแบบข้อเสนอแนะ Kaizen ดังนี้:<br><br><strong>🔴 ปัญหา (ก่อน):</strong><br>อธิบายสภาพปัญหา ระบุตัวเลข/เวลาที่สูญเสีย<br><br><strong>🟢 วิธีแก้ (รายละเอียด):</strong><br>อธิบายแนวทางแก้ไขอย่างเป็นรูปธรรม ทำได้จริง<br><br><strong>✅ ผลลัพธ์ (หลัง):</strong><br>ระบุประโยชน์ทั้งตัวเลข และคุณภาพชีวิต<br><br>หัวข้อ: [ระบุงานที่ต้องการปรับปรุง]</div>
+        <div class="tip"><strong>💡 ทำไมได้ผล:</strong> โครงสร้างนี้บังคับ AI คิดครบทุกมุม ไม่ตอบกว้างเกินไป</div>
+      </div>
+    </div>
+
+    <div class="kcard" onclick="toggle(this)">
+      <span class="chevron">▼</span>
+      <div class="kcard-top"><div class="kcard-icon" style="background:#FCEBEB">🧠</div><div><div class="kcard-title">Limiting Beliefs → Positive</div><span class="kcard-tag tag-r">เปลี่ยนมุมมอง</span></div></div>
+      <div class="kcard-desc">ใช้หลักเปลี่ยนความเชื่อด้านลบ เพื่อให้ AI คิดเชิงสร้างสรรค์</div>
+      <div class="expand">
+        <div class="ex-label">Template Prompt</div>
+        <div class="prompt-box"><button class="copy-btn" onclick="cp(this,event)">📋 คัดลอก</button>ฉันมีความเชื่อด้านลบว่า "[ความเชื่อที่ขัดขวาง]"<br><br>ช่วยทำ 3 อย่างนี้:<br><strong>1.</strong> อธิบายว่าทำไมความเชื่อนี้ไม่เป็นความจริง<br><strong>2.</strong> เปลี่ยนเป็นความเชื่อด้านบวกที่สร้างสรรค์<br><strong>3.</strong> ยกตัวอย่างคนที่ทำสำเร็จแม้มีข้อจำกัดแบบนี้<br><br>บริบท: [สถานการณ์ของคุณ]</div>
+        <div class="tip"><strong>💡 ทำไมได้ผล:</strong> AI จะไม่ตอบแค่ "ทำได้" แต่จะให้เหตุผลและวิธีเอาชนะจริงๆ</div>
+      </div>
+    </div>
+
+    <div class="kcard" onclick="toggle(this)">
+      <span class="chevron">▼</span>
+      <div class="kcard-top"><div class="kcard-icon" style="background:#EAF3DE">👨‍💼</div><div><div class="kcard-title">สวมบทบาท Expert</div><span class="kcard-tag tag-gr">Role + Experience</span></div></div>
+      <div class="kcard-desc">กำหนดให้ AI รับบทผู้เชี่ยวชาญ Kaizen พร้อมประสบการณ์จริง</div>
+      <div class="expand">
+        <div class="ex-label">Template Prompt</div>
+        <div class="prompt-box"><button class="copy-btn" onclick="cp(this,event)">📋 คัดลอก</button><strong>สมมุติคุณคือ:</strong> ผู้เชี่ยวชาญ Kaizen 20 ปี<br><strong>บริบทองค์กร:</strong> [ระบุแผนก/หน่วยงาน]<br><strong>ผู้ฟัง:</strong> [เช่น พนักงานใหม่ / หัวหน้างาน]<br><strong>สไตล์:</strong> [เช่น อบอุ่น เข้าใจง่าย / เป็นทางการ]<br><br>คำถาม: [สิ่งที่ต้องการทราบ]</div>
+        <div class="tip"><strong>💡 ทำไมได้ผล:</strong> การกำหนด Role ชัดเจนทำให้ AI ใช้ประสบการณ์และบริบทที่ถูกต้อง</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sec-label">📐 โครงสร้าง Prompt ที่ดีแบบ Kaizen</div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>ส่วนของ Prompt</th><th>หลักการ Kaizen</th><th>ตัวอย่าง</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Role</strong> — กำหนดตัวตน AI</td><td>สวมบทผู้เชี่ยวชาญ</td><td>"คุณคือ Kaizen expert 20 ปี"</td></tr>
+        <tr><td><strong>Context</strong> — บริบทปัญหา</td><td>สำรวจสถานการณ์จริง</td><td>"ในองค์กร 50 คน มีปัญหา..."</td></tr>
+        <tr><td><strong>Task</strong> — สิ่งที่ต้องทำ</td><td>ระบุเป้าหมายชัดเจน</td><td>"วิเคราะห์และเสนอแนะ 3 วิธี"</td></tr>
+        <tr><td><strong>Format</strong> — รูปแบบคำตอบ</td><td>เลิก-ลด-เปลี่ยน output</td><td>"ตอบเป็นตาราง ไม่เกิน 200 คำ"</td></tr>
+        <tr><td><strong>Constraint</strong> — ข้อจำกัด</td><td>ขอบข่ายข้อเสนอแนะ</td><td>"ห้ามเสนอซื้อของใหม่ งบ 0 บาท"</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec-label">🛠️ สร้าง Prompt อัตโนมัติ</div>
+  <div class="builder">
+    <h3>✨ เลือกเทคนิค + ใส่ข้อมูล → ได้ Prompt พร้อมใช้</h3>
+    <div class="row2">
+      <div class="inp-group">
+        <label>เทคนิค Kaizen</label>
+        <select id="sel-tech">
+          <option value="step">6 ขั้นตอน Kaizen</option>
+          <option value="form">ปัญหา→แก้→ผลลัพธ์</option>
+          <option value="bigq">Big Q: QCDSMPEE</option>
+          <option value="stop">เลิก-ลด-เปลี่ยน</option>
+          <option value="role">สวมบทบาท Expert</option>
+        </select>
+      </div>
+      <div class="inp-group">
+        <label>แผนก/หน่วยงาน</label>
+        <input id="sel-org" type="text" placeholder="เช่น งานธุรการ, ฝ่าย HR, สำนักงานคณบดี">
+      </div>
+    </div>
+    <div class="inp-group">
+      <label>งาน/กระบวนการที่ต้องการปรับปรุง</label>
+      <input id="inp-work" type="text" placeholder="เช่น การจัดเก็บเอกสาร, การประชุม, การบันทึกข้อมูล">
+    </div>
+    <button class="gen-btn" onclick="buildPrompt()">✨ สร้าง Prompt</button>
+    <div class="result-area" id="result-area">
+      <div class="result-label">Prompt ที่สร้างขึ้น — คัดลอกไปวางใน AI ได้เลย</div>
+      <div class="result-prompt" id="result"></div>
+      <button class="copy-all" onclick="copyAll()">📋 คัดลอก Prompt ทั้งหมด</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    จัดทำโดย คเชนท์  แก้วอุ่นเรือน · แผนกฝึกอบรม 2026<br>
+    Kaizen × AI Prompt Engineering — ทุกคน ทุกที่ ทุกเวลา 🌱
+  </div>
+</div>
+
+<script>
+function toggle(el){
+  const isOpen=el.classList.contains('open');
+  document.querySelectorAll('.kcard').forEach(c=>c.classList.remove('open'));
+  if(!isOpen){el.classList.add('open');el.scrollIntoView({behavior:'smooth',block:'nearest'});}
+}
+function cp(btn,e){
+  e.stopPropagation();
+  const txt=btn.parentElement.innerText.replace('📋 คัดลอก','').replace('✅ คัดลอกแล้ว!','').trim();
+  navigator.clipboard.writeText(txt).then(()=>{
+    btn.textContent='✅ คัดลอกแล้ว!';
+    setTimeout(()=>{btn.textContent='📋 คัดลอก';},2000);
+  });
+}
+function buildPrompt(){
+  const tech=document.getElementById('sel-tech').value;
+  const org=document.getElementById('sel-org').value.trim()||'หน่วยงานของคุณ';
+  const work=document.getElementById('inp-work').value.trim()||'กระบวนการทำงานในสำนักงาน';
+  const t={
+    step:`สมมุติคุณคือผู้เชี่ยวชาญ Kaizen 20 ปี ที่ทำงานใน${org}\n\nช่วยปรับปรุง "${work}" โดยทำตาม 6 ขั้นตอน Kaizen:\n\n1. ค้นหาปัญหา: ระบุจุดที่เป็นปัญหาจากการสังเกต\n2. สำรวจสถานการณ์: อธิบายสภาพปัจจุบันพร้อมตัวเลข\n3. ระดมความคิด: เสนอแนวทางแก้ไขอย่างน้อย 3 วิธี\n4. เลือกวิธีที่ดีที่สุด: พร้อมเหตุผล\n5. แผนปฏิบัติ: ขั้นตอนที่ทำได้จริง งบ 0 บาท\n6. ผลลัพธ์ที่คาดหวัง: ระบุตัวเลขที่วัดได้`,
+    form:`สมมุติคุณคือผู้เชี่ยวชาญ Kaizen 20 ปี ที่ทำงานใน${org}\n\nเขียนข้อเสนอแนะ Kaizen สำหรับ "${work}" ในรูปแบบ:\n\n🔴 ปัญหาก่อนปรับปรุง:\nอธิบายสภาพปัญหา ระบุเวลา/ทรัพยากรที่สูญเสีย\n\n🟢 รายละเอียดการแก้ไข:\nวิธีแก้ที่เป็นรูปธรรม ทำได้จริง ไม่ต้องใช้งบมาก\n\n✅ ประโยชน์ที่ได้รับ:\nผลลัพธ์ทั้งรูปธรรม (ตัวเลข) และนามธรรม (คุณภาพชีวิต)`,
+    bigq:`สมมุติคุณคือผู้เชี่ยวชาญ Kaizen 20 ปี ที่ทำงานใน${org}\n\nวิเคราะห์การปรับปรุง "${work}" ตามกรอบ Big Q QCDSMPEE:\n\nQ - คุณภาพ: ผลกระทบต่อมาตรฐานงาน\nC - ต้นทุน: ประหยัดหรือเพิ่มค่าใช้จ่ายอย่างไร\nD - การส่งมอบ: ลดเวลาได้เท่าไร\nS - ความปลอดภัย: มีความเสี่ยงอะไรบ้าง\nM - ขวัญกำลังใจ: ผลต่อความพึงพอใจพนักงาน\nP - ผลิตภาพ: ประสิทธิภาพเพิ่มขึ้นอย่างไร\n\nตอบเป็นตารางเปรียบเทียบ ก่อน / หลัง`,
+    stop:`สมมุติคุณคือผู้เชี่ยวชาญ Kaizen 20 ปี ที่ทำงานใน${org}\n\nปรับปรุง "${work}" โดยใช้เทคนิค เลิก-ลด-เปลี่ยน:\n\n🛑 เลิก (Stop): สิ่งที่ไม่ก่อประโยชน์ ควรหยุดทำทันที\n⬇️ ลด (Reduce): สิ่งที่ทำมากเกินไป ควรลดลง\n🔄 เปลี่ยน (Change): วิธีการใหม่ที่ดีกว่าเดิม\n\nให้ตัวอย่างที่ทำได้จริง ไม่ต้องใช้งบ ผลเห็นได้ภายใน 1 สัปดาห์`,
+    role:`สมมุติคุณคือผู้เชี่ยวชาญ Kaizen 20 ปี ที่ทำงานใน${org}\nบุคลิก: อบอุ่น เป็นกันเอง ใช้ตัวอย่างจากประสบการณ์จริง\nผู้ฟัง: พนักงานที่ยังไม่เคยทำ Kaizen มาก่อน\n\nสอนเรื่อง "${work}" โดย:\n1. อธิบายปัญหาที่พบบ่อย (จากประสบการณ์ตรง)\n2. เสนอแนวทางแก้ไขแบบ Kaizen ง่ายๆ\n3. จบด้วยคำถามกระตุ้นให้ผู้ฟังลองคิดต่อ`
+  };
+  document.getElementById('result').innerHTML=t[tech].replace(/\n/g,'<br>');
+  const area=document.getElementById('result-area');
+  area.style.display='block';
+  area.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function copyAll(){
+  const txt=document.getElementById('result').innerText;
+  navigator.clipboard.writeText(txt).then(()=>{
+    const b=document.querySelector('.copy-all');
+    b.textContent='✅ คัดลอกแล้ว!';
+    setTimeout(()=>{b.textContent='📋 คัดลอก Prompt ทั้งหมด';},2000);
+  });
+}
+</script>
+</body>
+</html>
