@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KAIZEN SMART PLAYBOOK</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#68dbae",
+                        "surface-container-low": "#f6f3f2",
+                        "secondary": "#006c4e",
+                        "outline": "#70787e",
+                        "on-surface": "#1b1c1c",
+                        "inverse-surface": "#303030",
+                        "inverse-on-surface": "#f3f0ef",
+                        "status-error": "#D32F2F",
+                        "on-tertiary-fixed": "#0c006b",
+                        "surface-dim": "#dcd9d9",
+                        "on-background": "#1b1c1c",
+                        "background": "#fcf9f8",
+                        "on-primary-fixed-variant": "#004c6a",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#8ccef8",
+                        "background-clean": "#F8FAFB",
+                        "on-tertiary-fixed-variant": "#332dbc",
+                        "surface-container-high": "#eae7e7",
+                        "surface-tint": "#13658a",
+                        "on-primary-fixed": "#001e2d",
+                        "on-surface-variant": "#40484e",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#86f8c9",
+                        "outline-variant": "#c0c7ce",
+                        "on-tertiary-container": "#e7e4ff",
+                        "on-secondary-fixed": "#002115",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#cfebff",
+                        "surface": "#fcf9f8",
+                        "primary": "#005576",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#8ccef8",
+                        "surface-container": "#f0eded",
+                        "on-secondary-fixed-variant": "#00513a",
+                        "tertiary": "#3d38c5",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#c5e7ff",
+                        "surface-variant": "#e5e2e1",
+                        "tertiary-fixed-dim": "#c2c1ff",
+                        "accent-purple": "#6366F1",
+                        "surface-white": "#FFFFFF",
+                        "surface-bright": "#fcf9f8",
+                        "surface-container-highest": "#e5e2e1",
+                        "primary-container": "#226e93",
+                        "secondary-container": "#83f5c6",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#e2dfff",
+                        "on-secondary-container": "#007151",
+                        "tertiary-container": "#5654de",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "stack-lg": "48px",
+                        "margin-mobile": "16px",
+                        "stack-sm": "12px",
+                        "margin-desktop": "32px",
+                        "stack-md": "24px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["IBM Plex Sans"],
+                        "headline-md": ["IBM Plex Sans"],
+                        "headline-xl": ["IBM Plex Sans"],
+                        "body-lg": ["IBM Plex Sans"],
+                        "headline-lg-mobile": ["IBM Plex Sans"],
+                        "body-md": ["IBM Plex Sans"],
+                        "headline-lg": ["IBM Plex Sans"],
+                        "label-md": ["IBM Plex Sans"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .ambient-card {
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .ambient-card:active {
+            transform: scale(0.98);
+            box-shadow: 0px 2px 10px rgba(0,0,0,0.03);
+        }
+
+        .glass-highlight {
+            background: rgba(99, 102, 241, 0.05);
+            border-left: 4px solid #005576;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface shadow-sm">
+<button class="p-2 text-primary hover:bg-surface-container-high transition-colors rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold tracking-tight text-primary">KAIZEN SMART</h1>
+<button class="p-2 text-primary hover:bg-surface-container-high transition-colors rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 mt-16 mb-20 px-4 md:px-margin-desktop max-w-[1200px] mx-auto w-full overflow-x-hidden">
+<!-- Hero Section -->
+<section class="py-stack-md animate-fade-in">
+<h2 class="text-headline-xl font-headline-xl text-primary text-center mb-base">KAIZEN SMART PLAYBOOK</h2>
+<div class="rounded-xl overflow-hidden ambient-card mb-stack-md bg-surface-white border border-outline-variant/20">
+<img alt="AI Agents Collaboration" class="w-full h-48 object-cover" data-alt="A futuristic and vibrant digital illustration showcasing AI agents working in a modern industrial setting. The scene features glowing neon lines in primary blue and secondary teal, depicting data flows and intelligent systems collaborating with human workers. The lighting is crisp and cinematic, emphasizing a professional high-tech workspace with clean surfaces and advanced robotic interfaces. The mood is optimistic and innovative, representing the evolution of productivity through agentic AI technology." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUtnFi08QXSgJo6K6JO5CPCA1fJWHkxbOtapT3bHXAvOm3iTOzRjqhPOGkOgb05FA7wZo2CTL_9fpXT_lNSkZl-nOx4GVsnCCoz5397UDlt_SykaPTtohtVgiLZDwrSB7tO9nKdccw2LyCZETsD70uuASUnJorKMcsmdbL4HPTWaQ4W6jBRhdGtssRIKjBZnPD9j6M8dUjzxPptbShgQ62qwMlX4Equ3BwetENFkvwRJ-xctOOuiTjeimWhlmNdE6mWvSoszIvS-I"/>
+<div class="p-stack-md glass-highlight">
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">
+                        Gen AI, AI Agent, Agentic AI ต่างกันยังไง? <br/>
+<span class="font-bold text-primary">Generative AI</span> เป็นเหมือน "นักสร้างสรรค์" <br/>
+<span class="font-bold text-primary">AI Agents</span> เป็นเหมือน "นักลงมือทำ" <br/>
+<span class="font-bold text-primary">Agentic AI</span> เป็นเหมือน "นักคิด"
+                    </p>
+</div>
+</div>
+</section>
+<!-- Bento Grid Categories -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-stack-lg">
+<!-- KAIZEN -->
+<a class="ambient-card bg-surface-white p-5 rounded-2xl flex flex-col justify-between h-40 border border-outline-variant/10 group" href="#">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="arrow_forward">arrow_forward</span>
+</div>
+<div>
+<h3 class="text-headline-md font-headline-md text-primary">KAIZEN</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Continuous Improvement</p>
+</div>
+</a>
+<!-- ChatGPT Step -->
+<a class="ambient-card bg-surface-white p-5 rounded-2xl flex flex-col justify-between h-40 border border-outline-variant/10 group" href="#">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 bg-accent-purple/10 rounded-xl flex items-center justify-center text-accent-purple group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="arrow_forward">arrow_forward</span>
+</div>
+<div>
+<h3 class="text-headline-md font-headline-md text-primary">ChatGPT Step</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Conversation Mastery</p>
+</div>
+</a>
+<!-- Gemini Step -->
+<a class="ambient-card bg-surface-white p-5 rounded-2xl flex flex-col justify-between h-40 border border-outline-variant/10 group" href="#">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="arrow_forward">arrow_forward</span>
+</div>
+<div>
+<h3 class="text-headline-md font-headline-md text-primary">Gemini Step</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Google AI Integration</p>
+</div>
+</a>
+<!-- Kaizen Strategies -->
+<a class="ambient-card bg-surface-white p-5 rounded-2xl flex flex-col justify-between h-40 border border-outline-variant/10 group" href="#">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 bg-tertiary-container/10 rounded-xl flex items-center justify-center text-tertiary-container group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="arrow_forward">arrow_forward</span>
+</div>
+<div>
+<h3 class="text-headline-md font-headline-md text-primary">Strategies</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Core Methodologies</p>
+</div>
+</a>
+</section>
+<!-- Prompt Section -->
+<section class="mb-stack-lg">
+<div class="flex items-center justify-between mb-stack-sm">
+<h2 class="text-headline-md font-headline-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="psychology">psychology</span>
+                    Prompt Strategies
+                </h2>
+<button class="text-primary font-label-md hover:underline">View All</button>
+</div>
+<div class="space-y-4">
+<div class="ambient-card bg-surface-white p-4 rounded-xl flex items-center gap-4 border border-outline-variant/10">
+<div class="flex-1">
+<h4 class="font-bold text-on-surface">Structured Engineering</h4>
+<p class="text-body-md text-on-surface-variant line-clamp-1">Mastering context, goals, and constraints for agents.</p>
+</div>
+<div class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-label-sm font-label-sm">
+                        Advanced
+                    </div>
+</div>
+<div class="ambient-card bg-surface-white p-4 rounded-xl flex items-center gap-4 border border-outline-variant/10">
+<div class="flex-1">
+<h4 class="font-bold text-on-surface">Context Mapping</h4>
+<p class="text-body-md text-on-surface-variant line-clamp-1">Providing background data for precise AI output.</p>
+</div>
+<div class="bg-primary-container text-on-primary-container px-3 py-1 rounded-full text-label-sm font-label-sm">
+                        Core
+                    </div>
+</div>
+</div>
+</section>
+<!-- Featured Resource -->
+<section class="mb-stack-lg">
+<div class="bg-inverse-surface rounded-2xl p-6 text-inverse-on-surface flex items-center justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md mb-2">AI Kaizen for Print</h3>
+<p class="text-label-md opacity-80 mb-4">Official training presentation available for download.</p>
+<button class="bg-primary-fixed text-on-primary-fixed px-6 py-2 rounded-lg font-label-md flex items-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+                        Get PPTX
+                    </button>
+</div>
+<div class="hidden md:block opacity-20">
+<span class="material-symbols-outlined !text-8xl" data-icon="description">description</span>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="py-stack-md border-t border-outline-variant/20 text-center">
+<p class="text-label-md font-label-md text-on-surface-variant mb-1">Promt WEB. All rights reserved.</p>
+<p class="text-label-sm text-outline">By Kachain_K 2026</p>
+</footer>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 pb-safe bg-surface-container-lowest shadow-lg border-t border-outline-variant/20 md:hidden">
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-4 py-2 scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-label-sm font-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+<span class="text-label-sm font-label-sm mt-1">Kaizen</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+<span class="text-label-sm font-label-sm mt-1">ChatGPT</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+<span class="text-label-sm font-label-sm mt-1">Gemini</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="text-label-sm font-label-sm mt-1">Prompts</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for cards
+        document.querySelectorAll('.ambient-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Sticky header transition
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+                header.classList.remove('shadow-sm');
+            } else {
+                header.classList.add('shadow-sm');
+                header.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body></html>
