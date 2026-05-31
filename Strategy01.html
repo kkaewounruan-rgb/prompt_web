@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-Mu's × Kaizen Prompt Generator</title>
+<style>
+:root{--green:#1D9E75;--green-l:#E1F5EE;--green-m:#9FE1CB;--green-d:#0F6E56;--border:#e2e8f0;--bg:#f8fafc;--bg2:#fff;--text:#1a202c;--text2:#64748b;--text3:#94a3b8;--r:10px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.wrap{max-width:860px;margin:0 auto;padding:28px 18px 48px}
+
+/* Header */
+.hdr{text-align:center;margin-bottom:24px}
+.hdr-badge{display:inline-block;background:var(–green-l);color:var(–green-d);font-size:12px;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:12px}
+.hdr h1{font-size:24px;font-weight:700;margin-bottom:6px}
+.hdr p{font-size:13px;color:var(–text2);line-height:1.6;max-width:560px;margin:0 auto}
+
+/* 3Mu strip */
+.mu-row{display:flex;gap:8px;margin-bottom:20px}
+.mu-box{flex:1;border-radius:var(–r);padding:12px 14px;text-align:center}
+.mu-box .jp{font-size:20px;font-weight:700;margin-bottom:2px}
+.mu-box .th{font-size:12px;font-weight:600;margin-bottom:1px}
+.mu-box .en{font-size:10px;opacity:.75}
+.muda-box{background:#FCEBEB;color:#A32D2D}
+.muri-box{background:#FAEEDA;color:#854F0B}
+.mura-box{background:#E6F1FB;color:#185FA5}
+
+/* Section label */
+.sec{font-size:11px;font-weight:700;color:var(–text3);text-transform:uppercase;letter-spacing:.8px;margin:20px 0 10px}
+
+/* Element accordion */
+.el-list{display:flex;flex-direction:column;gap:7px}
+.el-card{background:var(–bg2);border:1px solid var(–border);border-radius:var(–r);overflow:hidden;transition:border-color .2s}
+.el-card.open{border-color:var(–green-m)}
+.el-hdr{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;user-select:none}
+.el-hdr:hover{background:var(–bg)}
+.el-ico{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.el-info{flex:1}
+.el-title{font-size:13.5px;font-weight:600;color:var(–text)}
+.el-hint{font-size:11px;color:var(–text2)}
+.el-arr{font-size:11px;color:var(–text3);transition:transform .22s}
+.el-card.open .el-arr{transform:rotate(180deg);color:var(–green)}
+
+/* Body */
+.el-body{display:none;padding:0 14px 14px;border-top:1px solid var(–border)}
+.el-card.open .el-body{display:block}
+
+/* Mu group */
+.mu-group{margin-top:12px}
+.mu-group-label{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;padding:3px 0}
+.chip-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:4px}
+.chip{padding:5px 11px;border-radius:14px;font-size:11.5px;font-weight:500;cursor:pointer;border:1px solid;transition:all .15s;font-family:inherit}
+.chip:hover{opacity:.8;transform:translateY(-1px)}
+.chip.active{color:#fff!important;border-color:transparent!important;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+/* muda */
+.c-muda{background:#FCEBEB;color:#A32D2D;border-color:#F5C6C6}
+.c-muda.active{background:#A32D2D}
+/* muri */
+.c-muri{background:#FAEEDA;color:#854F0B;border-color:#F5D6A8}
+.c-muri.active{background:#854F0B}
+/* mura */
+.c-mura{background:#E6F1FB;color:#185FA5;border-color:#BCDBF7}
+.c-mura.active{background:#185FA5}
+
+/* Prompt output */
+.pout{display:none;margin-top:12px;background:var(–green-l);border:1px solid var(–green-m);border-radius:9px;padding:14px 16px;font-size:13px;line-height:1.8;color:var(–text);position:relative;padding-right:90px}
+.pout.show{display:block}
+.pout strong{color:var(–green-d)}
+.copy-p{position:absolute;top:10px;right:12px;background:var(–bg2);border:1px solid var(–border);border-radius:7px;padding:4px 11px;font-size:11px;cursor:pointer;color:var(–text2);font-family:inherit;white-space:nowrap;transition:all .15s}
+.copy-p:hover{background:var(–green-l);color:var(–green-d);border-color:var(–green-m)}
+
+/* footer */
+.footer{text-align:center;margin-top:36px;font-size:12px;color:var(–text3);line-height:1.7}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hdr">
+    <div class="hdr-badge">🔍 กลยุทธ์หลัก Kaizen ที่ 1</div>
+    <h1>รายการตรวจสอบ 3-Mu's × Prompt Generator</h1>
+    <p>แยกองค์ประกอบการทำงาน 9 ด้าน × Muda / Muri / Mura<br>คลิกหัวข้อย่อย → ได้ Prompt ค้นหาแนวทางปรับปรุงแบบ Kaizen ทันที</p>
+  </div>
+
+  <div class="mu-row">
+    <div class="mu-box muda-box"><div class="jp">Muda</div><div class="th">ความสูญเปล่า</div><div class="en">Waste — ไม่เพิ่มคุณค่า</div></div>
+    <div class="mu-box muri-box"><div class="jp">Muri</div><div class="th">ความตึง</div><div class="en">Overburden — เกินกำลัง</div></div>
+    <div class="mu-box mura-box"><div class="jp">Mura</div><div class="th">ความแตกต่าง</div><div class="en">Unevenness — ไม่สม่ำเสมอ</div></div>
+  </div>
+
+  <div class="sec">📂 9 องค์ประกอบการทำงาน — คลิกเพื่อขยาย แล้วเลือกหัวข้อย่อย</div>
+  <div class="el-list" id="elList"></div>
+
+  <div class="footer">
+     จัดทำโดย คเชนท์ แก้วอุ่นเรือน · แผนกฝึกอบรม2026<br>
+    3-Mu's Kaizen Prompt Generator — ทุกคน ทุกที่ ทุกเวลา 🌱
+  </div>
+</div>
+
+<script>
+const ELS=[
+  {ico:'👥',bg:'#E1F5EE',t:'กำลังคน',h:'Man / Manpower',
+   muda:['งานซ้ำซ้อนที่พนักงานทำโดยไม่จำเป็น','การรอคอยจากการมอบหมายงานไม่ชัดเจน','ทักษะที่มีแต่ไม่ได้ใช้ประโยชน์'],
+   muri:['ภาระงานเกินกำลังของพนักงาน','การทำงานล่วงเวลาบ่อยครั้ง','งานที่ต้องใช้ทักษะเกินระดับที่มี'],
+   mura:['ปริมาณงานไม่เท่ากันในแต่ละช่วงเวลา','มาตรฐานการทำงานต่างกันในแต่ละคน','การมอบหมายงานไม่สม่ำเสมอ']},
+  {ico:'⚙️',bg:'#E6F1FB',t:'เทคนิค/วิธีการ',h:'Technique / Method',
+   muda:['ขั้นตอนที่ไม่จำเป็นและไม่เพิ่มคุณค่า','การตรวจสอบซ้ำโดยไม่มีเหตุผลชัดเจน','รูปแบบเอกสารที่ยุ่งยากเกินจำเป็น'],
+   muri:['วิธีการที่ยากเกินไปสำหรับผู้ปฏิบัติ','ขั้นตอนที่ต้องใช้แรงหรือความพยายามสูงมาก','กระบวนการที่ฝืนทำโดยไม่มีทางเลือก'],
+   mura:['วิธีการทำงานต่างกันในแต่ละคน','ไม่มีมาตรฐานที่ชัดเจนร่วมกัน','ผลลัพธ์ไม่สม่ำเสมอแม้ทำแบบเดียวกัน']},
+  {ico:'⏰',bg:'#FAEEDA',t:'เวลา',h:'Time',
+   muda:['เวลารอคอยระหว่างขั้นตอนงาน','เวลาที่ใช้กับงานที่ไม่มีคุณค่า','การประชุมที่ยาวเกินความจำเป็น'],
+   muri:['กำหนดเวลาที่แน่นเกินไปจนกดดัน','งานด่วนที่ทำให้สูญเสียสมดุลชีวิต','เวลาไม่เพียงพอสำหรับงานที่มอบหมาย'],
+   mura:['เวลาทำงานไม่สม่ำเสมอในแต่ละวัน','บางช่วงว่างมาก บางช่วงงานล้นมือ','การกระจายเวลาในทีมไม่สมดุล']},
+  {ico:'🔧',bg:'#EEEDFE',t:'สิ่งอำนวยความสะดวก/เครื่องมือ',h:'Facilities / Tools',
+   muda:['เครื่องมือที่มีแต่ไม่ได้ใช้ประโยชน์','พื้นที่จัดเก็บที่ไม่จำเป็น','อุปกรณ์ที่ทำงานซ้ำซ้อนกัน'],
+   muri:['อุปกรณ์ที่ใช้งานหนักเกินพิกัด','เครื่องมือที่ไม่เหมาะสมกับลักษณะงาน','การจัดวางที่ทำให้ใช้งานลำบาก'],
+   mura:['ประสิทธิภาพเครื่องมือไม่สม่ำเสมอ','บางชิ้นใช้หนัก บางชิ้นไม่ได้ใช้เลย','การบำรุงรักษาไม่เป็นระบบ']},
+  {ico:'📦',bg:'#FCEBEB',t:'วัสดุที่ใช้',h:'Materials',
+   muda:['วัสดุที่สั่งมากเกินและไม่ได้ใช้','ของเสียที่เกิดจากกระบวนการทำงาน','การจัดเก็บวัสดุที่ไม่มีประสิทธิภาพ'],
+   muri:['วัสดุที่ต้องใช้แรงมากในการจัดการ','คุณภาพวัสดุต่ำทำให้ต้องแก้งานซ้ำ','วัสดุที่ไม่เหมาะสมกับงานที่ทำ'],
+   mura:['คุณภาพวัสดุไม่สม่ำเสมอในแต่ละชุด','ปริมาณวัสดุที่ส่งมาไม่ตรงเวลา','มาตรฐานวัสดุต่างกันในแต่ละครั้ง']},
+  {ico:'📊',bg:'#EAF3DE',t:'ปริมาณการผลิต/งาน',h:'Production Volume',
+   muda:['ผลิต/ทำงานมากเกินความต้องการจริง','งานที่ทำแล้วไม่ได้นำไปใช้','รายงานที่ไม่มีใครอ่านหรือใช้ประโยชน์'],
+   muri:['ปริมาณงานเกินกำลังที่ทีมรับได้','เป้าหมายที่ตั้งสูงเกินความเป็นจริง','กดดันให้รีบทำจนเสียคุณภาพ'],
+   mura:['ปริมาณงานขึ้นๆ ลงๆ ไม่แน่นอน','บางวันน้อยมาก บางวันล้นมือ','การวางแผนงานไม่สม่ำเสมอ']},
+  {ico:'🗄️',bg:'#E1F5EE',t:'สินค้าคงคลัง/เอกสาร',h:'Inventory / Documents',
+   muda:['เอกสารหรือสินค้าที่เก็บไว้นานเกินจำเป็น','การจัดเก็บที่กินพื้นที่มากเกินควร','ข้อมูลซ้ำซ้อนที่บันทึกไว้หลายที่'],
+   muri:['ระบบจัดการคงคลังที่ซับซ้อนเกินไป','ต้องตรวจสอบและอัปเดตบ่อยครั้งมาก','ภาระในการดูแลเอกสารจำนวนมาก'],
+   mura:['ปริมาณคงคลังไม่สม่ำเสมอ บางช่วงขาด บางช่วงล้น','มาตรฐานการจัดเก็บต่างกันในแต่ละหน่วยงาน','การเบิกจ่ายวัสดุไม่เป็นระบบ']},
+  {ico:'🏢',bg:'#FAEEDA',t:'สถานที่ทำงาน',h:'Workplace / Environment',
+   muda:['พื้นที่ที่ไม่ได้ใช้ประโยชน์','การเดินทางภายในออฟฟิศที่ไม่จำเป็น','แสงสว่างหรืออุปกรณ์ที่เปิดทิ้งไว้เปล่า'],
+   muri:['โต๊ะทำงานที่แน่นหรือไม่รองรับการใช้งาน','เสียงรบกวนที่ทำให้สมาธิและประสิทธิภาพลดลง','สภาพแวดล้อมที่ทำให้เหนื่อยและหมดแรงง่าย'],
+   mura:['อุณหภูมิห้องไม่สม่ำเสมอตลอดวัน','แสงสว่างไม่เพียงพอในบางพื้นที่','ความสะอาดและความเป็นระเบียบไม่สม่ำเสมอ']},
+  {ico:'💡',bg:'#EEEDFE',t:'แนวความคิดในการทำงาน',h:'Work Mindset / Concept',
+   muda:['ความคิด "เดี๋ยวค่อยทำ" ทำให้งานค้างสะสม','การประชุมบ่อยโดยไม่มีผลลัพธ์ชัดเจน','ยึดติดกับวิธีเดิมที่ไม่มีประสิทธิภาพแล้ว'],
+   muri:['ความคิดที่ว่าต้องทำทุกอย่างด้วยตัวเองคนเดียว','กดดันตัวเองมากเกินจนเกิดความเหนื่อยหน่าย','ไม่กล้าปฏิเสธหรือขอความช่วยเหลือ'],
+   mura:['ทัศนคติต่องานไม่สม่ำเสมอในแต่ละวัน','แรงจูงใจขึ้นๆ ลงๆ ตามอารมณ์','ทีมมีความเข้าใจเป้าหมายแตกต่างกัน']}
+];
+
+const MU_LABEL={muda:'🔴 Muda — ความสูญเปล่า',muri:'🟡 Muri — ความตึง/เกินกำลัง',mura:'🔵 Mura — ความแตกต่าง/ไม่สม่ำเสมอ'};
+const MU_FULL={muda:'ความสูญเปล่า (Muda)',muri:'ความตึง/เกินกำลัง (Muri)',mura:'ความแตกต่าง/ไม่สม่ำเสมอ (Mura)'};
+
+function buildP(el,mu,sub){
+  return `สมมุติคุณคือผู้เชี่ยวชาญ Kaizen 20 ปี\n\nใช้หลัก 3-Mu's วิเคราะห์ปัญหา "${sub}"\nด้าน "${el.t}" ในมุม ${MU_FULL[mu]}\n\nกรุณาตอบในรูปแบบ Kaizen:\n\n🔍 สภาพปัจจุบัน:\nอธิบายปัญหาที่เกิดจาก ${MU_FULL[mu]} ในด้านนี้\n\n🎯 สาเหตุที่แท้จริง:\nระบุต้นเหตุที่ทำให้เกิดปัญหานี้\n\n✅ แนวทางปรับปรุงแบบ Kaizen:\nเสนอ 2-3 วิธีที่ทำได้จริง งบน้อย เห็นผลเร็ว\n\n📈 ผลลัพธ์ที่คาดหวัง:\nระบุตัวชี้วัดที่วัดได้หลังการปรับปรุง`;
+}
+
+function buildHTML(el,i){
+  let muGroups='';
+  ['muda','muri','mura'].forEach(mu=>{
+    const cls={muda:'c-muda',muri:'c-muri',mura:'c-mura'}[mu];
+    const chips=el[mu].map(s=>`<button class="chip ${cls}" onclick="pick(${i},'${mu}',this,'${s.replace(/'/g,"\\'")}')"> ${s}</button>`).join('');
+    muGroups+=`<div class="mu-group"><div class="mu-group-label" style="color:${mu==='muda'?'#A32D2D':mu==='muri'?'#854F0B':'#185FA5'}">${MU_LABEL[mu]}</div><div class="chip-row">${chips}</div></div>`;
+  });
+  return `<div class="el-card" id="ec${i}">
+    <div class="el-hdr" onclick="tog(${i})">
+      <div class="el-ico" style="background:${el.bg}">${el.ico}</div>
+      <div class="el-info"><div class="el-title">${i+1}. ${el.t}</div><div class="el-hint">${el.h}</div></div>
+      <span class="el-arr">▼</span>
+    </div>
+    <div class="el-body">${muGroups}
+      <div class="pout" id="po${i}">
+        <button class="copy-p" onclick="doCopy(${i},event)">📋 คัดลอก</button>
+        <span id="pt${i}"></span>
+      </div>
+    </div>
+  </div>`;
+}
+
+document.getElementById('elList').innerHTML=ELS.map((el,i)=>buildHTML(el,i)).join('');
+
+function tog(i){
+  const c=document.getElementById(`ec${i}`);
+  const open=c.classList.contains('open');
+  document.querySelectorAll('.el-card').forEach(x=>x.classList.remove('open'));
+  if(!open){c.classList.add('open');setTimeout(()=>c.scrollIntoView({behavior:'smooth',block:'nearest'}),50);}
+}
+
+function pick(i,mu,chip,sub){
+  document.querySelectorAll(`#ec${i} .chip`).forEach(c=>{c.classList.remove('active');c.style.background='';c.style.color='';c.style.borderColor='';});
+  chip.classList.add('active');
+  const po=document.getElementById(`po${i}`);
+  const pt=document.getElementById(`pt${i}`);
+  pt.innerHTML=buildP(ELS[i],mu,sub).replace(/\n/g,'<br>');
+  pt.dataset.txt=buildP(ELS[i],mu,sub);
+  po.classList.add('show');
+}
+
+function doCopy(i,e){
+  e.stopPropagation();
+  const txt=document.getElementById(`pt${i}`).dataset.txt||document.getElementById(`pt${i}`).innerText;
+  navigator.clipboard.writeText(txt).then(()=>{
+    const b=document.querySelector(`#po${i} .copy-p`);
+    b.textContent='✅ คัดลอกแล้ว!';
+    setTimeout(()=>b.textContent='📋 คัดลอก',2000);
+  });
+}
+</script>
+
+</body>
+</html>
