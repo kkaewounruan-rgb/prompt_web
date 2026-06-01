@@ -4,82 +4,240 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kaizen × Prompt Engineering</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <style>
-  :root {
-    --green:#1D9E75;--green-light:#E1F5EE;--green-mid:#9FE1CB;
-    --green-dark:#0F6E56;--border:#e2e8f0;--bg:#f8fafc;
-    --bg2:#ffffff;--text:#1a202c;--text2:#64748b;--text3:#94a3b8;--radius:10px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-  .container{max-width:860px;margin:0 auto;padding:28px 20px 48px}
-  .header{text-align:center;margin-bottom:32px}
-  .header-badge{display:inline-flex;align-items:center;gap:6px;background:var(--green-light);color:var(--green-dark);font-size:12px;font-weight:600;padding:4px 14px;border-radius:20px;margin-bottom:14px}
-  .header h1{font-size:28px;font-weight:700;color:var(--text);margin-bottom:8px}
-  .header p{font-size:14px;color:var(--text2);line-height:1.6;max-width:520px;margin:0 auto}
-  .sec-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin:28px 0 12px}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-bottom:10px}
-  .kcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:all .2s;position:relative}
-  .kcard:hover{border-color:var(--green-mid);box-shadow:0 2px 12px rgba(29,158,117,.1);transform:translateY(-1px)}
-  .kcard.open{border-color:var(--green);box-shadow:0 2px 16px rgba(29,158,117,.15)}
-  .kcard-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-  .kcard-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-  .kcard-title{font-size:14px;font-weight:600;color:var(--text);line-height:1.3}
-  .kcard-tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;display:inline-block;margin-top:3px}
-  .kcard-desc{font-size:12.5px;color:var(--text2);line-height:1.55;margin-top:5px}
-  .chevron{position:absolute;top:14px;right:14px;font-size:12px;color:var(--text3);transition:transform .22s}
-  .kcard.open .chevron{transform:rotate(180deg);color:var(--green)}
-  .expand{display:none;margin-top:14px;border-top:1px solid var(--border);padding-top:14px}
-  .kcard.open .expand{display:block}
-  .ex-label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
-  .prompt-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 80px 12px 14px;font-size:13px;color:var(--text);line-height:1.75;position:relative;margin-bottom:10px}
-  .prompt-box strong{color:var(--green-dark)}
-  .copy-btn{position:absolute;top:9px;right:10px;background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:4px 10px;font-size:11px;cursor:pointer;color:var(--text2);font-family:inherit;transition:all .15s;white-space:nowrap}
-  .copy-btn:hover{background:var(--green-light);color:var(--green-dark);border-color:var(--green-mid)}
-  .tip{font-size:12px;color:var(--text2);background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:9px 12px;line-height:1.6}
-  .tip strong{color:#92400e}
-  .table-wrap{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:4px}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th{background:var(--bg);padding:10px 14px;text-align:left;font-weight:600;color:var(--text2);font-size:11px;border-bottom:1px solid var(--border)}
-  td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;line-height:1.55}
-  tr:last-child td{border-bottom:none}
-  td strong{color:var(--green-dark)}
-  .builder{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-top:4px;box-shadow:0 1px 6px rgba(0,0,0,.05)}
-  .builder h3{font-size:15px;font-weight:600;color:var(--text);margin-bottom:16px}
-  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-  @media(max-width:560px){.row2{grid-template-columns:1fr}}
-  .inp-group label{font-size:12px;color:var(--text2);font-weight:500;margin-bottom:5px;display:block}
-  .inp-group select,.inp-group input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text);background:var(--bg);font-family:inherit;transition:border-color .15s}
-  .inp-group select:focus,.inp-group input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(29,158,117,.1)}
-  .gen-btn{width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;margin-top:12px;transition:opacity .15s;font-family:inherit}
-  .gen-btn:hover{opacity:.9}
-  .result-area{display:none;margin-top:14px}
-  .result-label{font-size:11px;font-weight:700;color:var(--green-dark);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
-  .result-prompt{background:var(--green-light);border:1px solid var(--green-mid);border-radius:10px;padding:16px 18px;font-size:13.5px;color:var(--text);line-height:1.85}
-  .result-prompt strong{color:var(--green-dark)}
-  .copy-all{width:100%;padding:10px;background:none;border:1px solid var(--green-mid);border-radius:8px;font-size:13px;color:var(--green-dark);cursor:pointer;margin-top:8px;font-family:inherit;font-weight:500;transition:all .15s}
-  .copy-all:hover{background:var(--green-light)}
-  .tag-g{background:#E1F5EE;color:#0F6E56}
-  .tag-b{background:#E6F1FB;color:#185FA5}
-  .tag-a{background:#FAEEDA;color:#854F0B}
-  .tag-p{background:#EEEDFE;color:#534AB7}
-  .tag-r{background:#FCEBEB;color:#A32D2D}
-  .tag-gr{background:#EAF3DE;color:#3B6D11}
-  .footer{text-align:center;margin-top:40px;font-size:12px;color:var(--text3);line-height:1.7}
+:root{
+  --primary:#005576;--secondary:#006c4e;--accent:#6366F1;
+  --green:#1D9E75;--green-light:#E1F5EE;--green-mid:#9FE1CB;--green-dark:#0F6E56;
+  --border:#e2e8f0;--bg:#f8fafc;--bg2:#ffffff;--text:#1a202c;--text2:#64748b;--text3:#94a3b8;--radius:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+ 
+/* ── MATERIAL SYMBOLS ── */
+.material-symbols-outlined{
+  font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
+  display:inline-block;line-height:1;font-size:22px;
+}
+ 
+/* ── TOP APP BAR ── */
+.topbar{
+  position:fixed;top:0;left:0;width:100%;height:64px;z-index:100;
+  background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08);
+  display:flex;align-items:center;justify-content:space-between;padding:0 16px;
+}
+.topbar-btn{
+  width:40px;height:40px;border-radius:50%;border:none;background:transparent;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:var(--primary);transition:background .15s;
+}
+.topbar-btn:hover{background:#f0eded}
+.topbar-title{font-size:20px;font-weight:700;color:var(--primary);letter-spacing:-.3px;text-decoration:none}
+ 
+/* ── OVERLAY ── */
+.overlay{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.35);backdrop-filter:blur(2px);
+}
+.overlay.show{display:block}
+ 
+/* ── SIDE DRAWER ── */
+.drawer{
+  position:fixed;top:0;left:-280px;width:260px;height:100%;z-index:300;
+  background:#fff;box-shadow:4px 0 20px rgba(0,0,0,.12);
+  transition:left .25s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+}
+.drawer.open{left:0}
+.drawer-header{
+  height:64px;display:flex;align-items:center;padding:0 16px;gap:12px;
+  border-bottom:1px solid #f0eded;
+}
+.drawer-logo{font-size:18px;font-weight:700;color:var(--primary)}
+.drawer-nav{flex:1;padding:12px 8px;overflow-y:auto}
+.drawer-item{
+  display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:14px;
+  text-decoration:none;color:#1b1c1c;font-size:15px;font-weight:500;
+  transition:background .15s;margin-bottom:2px;
+}
+.drawer-item:hover{background:#f0eded}
+.drawer-item.active{background:#E1F5EE;color:var(--primary)}
+.drawer-item.active .material-symbols-outlined{color:var(--primary)}
+.di-home,.di-kaizen,.di-prompt{color:var(--primary)}
+.di-chatgpt{color:var(--accent)}
+.di-gemini{color:var(--secondary)}
+.di-strategy{color:#3d38c5}
+.drawer-footer{padding:16px;border-top:1px solid #f0eded;font-size:11px;color:#94a3b8;text-align:center;line-height:1.6}
+ 
+/* ── MAIN ── */
+.container{max-width:860px;margin:0 auto;padding:80px 20px 96px}
+ 
+/* Header */
+.back-link{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--primary);font-size:13px;font-weight:500;text-decoration:none;
+  margin-bottom:14px;padding:6px 12px;background:#f0f9ff;border-radius:20px;
+  border:1px solid #c5e7ff;transition:background .15s;
+}
+.back-link:hover{background:#c5e7ff}
+.header{text-align:center;margin-bottom:32px}
+.header-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--green-light);color:var(--green-dark);
+  font-size:12px;font-weight:600;padding:5px 16px;border-radius:20px;margin-bottom:14px;
+}
+.header h1{font-size:28px;font-weight:700;color:var(--text);margin-bottom:8px}
+.header p{font-size:14px;color:var(--text2);line-height:1.6;max-width:520px;margin:0 auto}
+ 
+/* Content styles */
+.sec-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin:28px 0 12px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-bottom:10px}
+.kcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;cursor:pointer;transition:all .2s;position:relative}
+.kcard:hover{border-color:var(--green-mid);box-shadow:0 2px 12px rgba(29,158,117,.1);transform:translateY(-1px)}
+.kcard.open{border-color:var(--green);box-shadow:0 2px 16px rgba(29,158,117,.15)}
+.kcard-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.kcard-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.kcard-title{font-size:14px;font-weight:600;color:var(--text);line-height:1.3}
+.kcard-tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;display:inline-block;margin-top:3px}
+.kcard-desc{font-size:12.5px;color:var(--text2);line-height:1.55;margin-top:5px}
+.chevron{position:absolute;top:14px;right:14px;font-size:12px;color:var(--text3);transition:transform .22s}
+.kcard.open .chevron{transform:rotate(180deg);color:var(--green)}
+.expand{display:none;margin-top:14px;border-top:1px solid var(--border);padding-top:14px}
+.kcard.open .expand{display:block}
+.ex-label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.prompt-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 80px 12px 14px;font-size:13px;color:var(--text);line-height:1.75;position:relative;margin-bottom:10px}
+.prompt-box strong{color:var(--green-dark)}
+.copy-btn{position:absolute;top:9px;right:10px;background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:4px 10px;font-size:11px;cursor:pointer;color:var(--text2);font-family:inherit;transition:all .15s;white-space:nowrap}
+.copy-btn:hover{background:var(--green-light);color:var(--green-dark);border-color:var(--green-mid)}
+.tip{font-size:12px;color:var(--text2);background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:9px 12px;line-height:1.6}
+.tip strong{color:#92400e}
+.table-wrap{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--bg);padding:10px 14px;text-align:left;font-weight:600;color:var(--text2);font-size:11px;border-bottom:1px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;line-height:1.55}
+tr:last-child td{border-bottom:none}
+td strong{color:var(--green-dark)}
+.builder{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-top:4px;box-shadow:0 1px 6px rgba(0,0,0,.05)}
+.builder h3{font-size:15px;font-weight:600;color:var(--text);margin-bottom:16px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+@media(max-width:560px){.row2{grid-template-columns:1fr}}
+.inp-group label{font-size:12px;color:var(--text2);font-weight:500;margin-bottom:5px;display:block}
+.inp-group select,.inp-group input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--text);background:var(--bg);font-family:inherit;transition:border-color .15s}
+.inp-group select:focus,.inp-group input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(29,158,117,.1)}
+.gen-btn{width:100%;padding:12px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;margin-top:12px;transition:opacity .15s;font-family:inherit}
+.gen-btn:hover{opacity:.9}
+.result-area{display:none;margin-top:14px}
+.result-label{font-size:11px;font-weight:700;color:var(--green-dark);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.result-prompt{background:var(--green-light);border:1px solid var(--green-mid);border-radius:10px;padding:16px 18px;font-size:13.5px;color:var(--text);line-height:1.85}
+.result-prompt strong{color:var(--green-dark)}
+.copy-all{width:100%;padding:10px;background:none;border:1px solid var(--green-mid);border-radius:8px;font-size:13px;color:var(--green-dark);cursor:pointer;margin-top:8px;font-family:inherit;font-weight:500;transition:all .15s}
+.copy-all:hover{background:var(--green-light)}
+.tag-g{background:#E1F5EE;color:#0F6E56}
+.tag-b{background:#E6F1FB;color:#185FA5}
+.tag-a{background:#FAEEDA;color:#854F0B}
+.tag-p{background:#EEEDFE;color:#534AB7}
+.tag-r{background:#FCEBEB;color:#A32D2D}
+.tag-gr{background:#EAF3DE;color:#3B6D11}
+ 
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;width:100%;height:72px;z-index:100;
+  background:#fff;box-shadow:0 -1px 8px rgba(0,0,0,.08);
+  border-top:1px solid #e5e2e1;
+  display:flex;align-items:center;justify-content:space-around;
+  padding:0 4px 8px;
+}
+.nav-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;padding:8px 10px;border-radius:14px;text-decoration:none;
+  color:#40484e;font-size:11px;font-weight:600;transition:all .15s;min-width:52px;
+}
+.nav-item:hover{background:#f0eded}
+.nav-item.active{background:#83f5c6;color:var(--secondary)}
+.nav-item .material-symbols-outlined{font-size:22px}
+.nav-item.home-btn{background:#E1F5EE;padding:6px 8px;border-radius:18px}
+.nav-item.home-btn .material-symbols-outlined{
+  font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;
+  color:var(--primary);font-size:26px;
+}
+ 
+/* Footer */
+.footer{text-align:center;margin-top:40px;font-size:12px;color:var(--text3);line-height:1.7}
+ 
+@media(min-width:768px){
+  .bottom-nav{display:none}
+  .container{padding-bottom:52px}
+}
 </style>
 </head>
 <body>
+ 
+<!-- ── OVERLAY ── -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+ 
+<!-- ── SIDE DRAWER ── -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <span class="material-symbols-outlined" style="color:var(--primary)">menu_book</span>
+    <span class="drawer-logo">KAIZEN SMART</span>
+  </div>
+  <nav class="drawer-nav">
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+      <span class="material-symbols-outlined di-home">home</span>Home
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank">
+      <span class="material-symbols-outlined di-kaizen">trending_up</span>KAIZEN
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank">
+      <span class="material-symbols-outlined di-chatgpt">bolt</span>ChatGPT Step
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank">
+      <span class="material-symbols-outlined di-gemini">auto_awesome</span>Gemini Step
+    </a>
+    <a class="drawer-item" href="https://kkaewounruan-rgb.github.io/prompt_web/Strategy01.html" target="_blank">
+      <span class="material-symbols-outlined di-strategy">architecture</span>Strategies
+    </a>
+    <a class="drawer-item active" href="#">
+      <span class="material-symbols-outlined di-prompt">psychology</span>Prompts
+    </a>
+  </nav>
+  <div class="drawer-footer">KAIZEN SMART PLAYBOOK<br>By Kachain_K 2026</div>
+</div>
+ 
+<!-- ── TOP APP BAR ── -->
+<header class="topbar">
+  <button class="topbar-btn" onclick="openDrawer()">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  <a class="topbar-title" href="https://sites.google.com/view/teprompt-web/home" target="_blank">KAIZEN SMART</a>
+  <button class="topbar-btn">
+    <span class="material-symbols-outlined">search</span>
+  </button>
+</header>
+ 
+<!-- ── MAIN ── -->
 <div class="container">
-
+ 
+  <div style="text-align:center">
+    <a class="back-link" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+      <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span>
+      KAIZEN SMART PLAYBOOK
+    </a>
+  </div>
+ 
   <div class="header">
-    <div class="header-badge">🔗 Kaizen × AI</div>
+    <div class="header-badge">
+      <span class="material-symbols-outlined" style="font-size:15px">link</span>
+      Kaizen × AI
+    </div>
     <h1>Kaizen × Prompt Engineering</h1>
     <p>นำเทคนิคปรับปรุงงานแบบ Kaizen มาใช้เขียน Prompt<br>เพื่อให้ได้ผลลัพธ์จาก AI แม่นยำ และนำไปใช้งานได้จริง</p>
   </div>
-
+ 
   <div class="sec-label">🎴 เทคนิคหลัก Kaizen → Prompt</div>
   <div class="cards">
-
+ 
     <div class="kcard" onclick="toggle(this)">
       <span class="chevron">▼</span>
       <div class="kcard-top"><div class="kcard-icon" style="background:#E1F5EE">🔄</div><div><div class="kcard-title">เลิก-ลด-เปลี่ยน</div><span class="kcard-tag tag-g">Stop · Reduce · Change</span></div></div>
@@ -90,7 +248,7 @@
         <div class="tip"><strong>💡 ทำไมได้ผล:</strong> AI จะโฟกัสสิ่งที่ต้องการ ไม่วกเวียน ผลลัพธ์กระชับ ตรงประเด็น</div>
       </div>
     </div>
-
+ 
     <div class="kcard" onclick="toggle(this)">
       <span class="chevron">▼</span>
       <div class="kcard-top"><div class="kcard-icon" style="background:#E6F1FB">📊</div><div><div class="kcard-title">Big Q: QCDSMPEE</div><span class="kcard-tag tag-b">กำหนดมิติคำตอบ</span></div></div>
@@ -101,7 +259,7 @@
         <div class="tip"><strong>💡 ทำไมได้ผล:</strong> กรอบ QCDSMPEE บังคับให้ AI คิดรอบด้าน ไม่มองแค่มุมเดียว</div>
       </div>
     </div>
-
+ 
     <div class="kcard" onclick="toggle(this)">
       <span class="chevron">▼</span>
       <div class="kcard-top"><div class="kcard-icon" style="background:#FAEEDA">📋</div><div><div class="kcard-title">6 ขั้นตอน Kaizen</div><span class="kcard-tag tag-a">Step-by-Step</span></div></div>
@@ -112,7 +270,7 @@
         <div class="tip"><strong>💡 ทำไมได้ผล:</strong> AI ไม่ข้ามขั้นตอน คำตอบมีโครงสร้างชัดเจน นำไปใช้ได้ทันที</div>
       </div>
     </div>
-
+ 
     <div class="kcard" onclick="toggle(this)">
       <span class="chevron">▼</span>
       <div class="kcard-top"><div class="kcard-icon" style="background:#EEEDFE">✍️</div><div><div class="kcard-title">ปัญหา→แก้→ผลลัพธ์</div><span class="kcard-tag tag-p">โครงสร้างข้อเสนอแนะ</span></div></div>
@@ -123,7 +281,7 @@
         <div class="tip"><strong>💡 ทำไมได้ผล:</strong> โครงสร้างนี้บังคับ AI คิดครบทุกมุม ไม่ตอบกว้างเกินไป</div>
       </div>
     </div>
-
+ 
     <div class="kcard" onclick="toggle(this)">
       <span class="chevron">▼</span>
       <div class="kcard-top"><div class="kcard-icon" style="background:#FCEBEB">🧠</div><div><div class="kcard-title">Limiting Beliefs → Positive</div><span class="kcard-tag tag-r">เปลี่ยนมุมมอง</span></div></div>
@@ -134,7 +292,7 @@
         <div class="tip"><strong>💡 ทำไมได้ผล:</strong> AI จะไม่ตอบแค่ "ทำได้" แต่จะให้เหตุผลและวิธีเอาชนะจริงๆ</div>
       </div>
     </div>
-
+ 
     <div class="kcard" onclick="toggle(this)">
       <span class="chevron">▼</span>
       <div class="kcard-top"><div class="kcard-icon" style="background:#EAF3DE">👨‍💼</div><div><div class="kcard-title">สวมบทบาท Expert</div><span class="kcard-tag tag-gr">Role + Experience</span></div></div>
@@ -145,9 +303,9 @@
         <div class="tip"><strong>💡 ทำไมได้ผล:</strong> การกำหนด Role ชัดเจนทำให้ AI ใช้ประสบการณ์และบริบทที่ถูกต้อง</div>
       </div>
     </div>
-
+ 
   </div>
-
+ 
   <div class="sec-label">📐 โครงสร้าง Prompt ที่ดีแบบ Kaizen</div>
   <div class="table-wrap">
     <table>
@@ -161,7 +319,7 @@
       </tbody>
     </table>
   </div>
-
+ 
   <div class="sec-label">🛠️ สร้าง Prompt อัตโนมัติ</div>
   <div class="builder">
     <h3>✨ เลือกเทคนิค + ใส่ข้อมูล → ได้ Prompt พร้อมใช้</h3>
@@ -192,19 +350,62 @@
       <button class="copy-all" onclick="copyAll()">📋 คัดลอก Prompt ทั้งหมด</button>
     </div>
   </div>
-
+ 
   <div class="footer">
-    จัดทำโดย คเชนท์  แก้วอุ่นเรือน · แผนกฝึกอบรม 2026<br>
-    Kaizen × AI Prompt Engineering — ทุกคน ทุกที่ ทุกเวลา 🌱
+    จัดทำโดย คเชนท์ แก้วอุ่นเรือน · แผนกฝึกอบรม 2026<br>
+    Kaizen × AI Prompt Engineering — ทุกคน ทุกที่ ทุกเวลา 🌱<br>
+    <a href="https://sites.google.com/view/teprompt-web/home" target="_blank"
+       style="color:var(--primary);font-weight:600;text-decoration:none;margin-top:4px;display:inline-block">
+      ← กลับหน้า KAIZEN SMART PLAYBOOK
+    </a>
   </div>
 </div>
-
+ 
+<!-- ── BOTTOM NAV ── -->
+<nav class="bottom-nav">
+  <a class="nav-item home-btn" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+    <span class="material-symbols-outlined">home</span>
+    <span>Home</span>
+  </a>
+  <a class="nav-item" href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank">
+    <span class="material-symbols-outlined">trending_up</span>
+    <span>Kaizen</span>
+  </a>
+  <a class="nav-item" href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank">
+    <span class="material-symbols-outlined">bolt</span>
+    <span>ChatGPT</span>
+  </a>
+  <a class="nav-item" href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank">
+    <span class="material-symbols-outlined">auto_awesome</span>
+    <span>Gemini</span>
+  </a>
+  <a class="nav-item active" href="#">
+    <span class="material-symbols-outlined">psychology</span>
+    <span>Prompts</span>
+  </a>
+</nav>
+ 
 <script>
+/* ── Drawer ── */
+function openDrawer(){
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+  document.body.style.overflow='';
+}
+ 
+/* ── Card toggle ── */
 function toggle(el){
   const isOpen=el.classList.contains('open');
   document.querySelectorAll('.kcard').forEach(c=>c.classList.remove('open'));
-  if(!isOpen){el.classList.add('open');el.scrollIntoView({behavior:'smooth',block:'nearest'});}
+  if(!isOpen){el.classList.add('open');setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'nearest'}),50);}
 }
+ 
+/* ── Copy card prompt ── */
 function cp(btn,e){
   e.stopPropagation();
   const txt=btn.parentElement.innerText.replace('📋 คัดลอก','').replace('✅ คัดลอกแล้ว!','').trim();
@@ -213,6 +414,8 @@ function cp(btn,e){
     setTimeout(()=>{btn.textContent='📋 คัดลอก';},2000);
   });
 }
+ 
+/* ── Build prompt ── */
 function buildPrompt(){
   const tech=document.getElementById('sel-tech').value;
   const org=document.getElementById('sel-org').value.trim()||'หน่วยงานของคุณ';
@@ -227,8 +430,9 @@ function buildPrompt(){
   document.getElementById('result').innerHTML=t[tech].replace(/\n/g,'<br>');
   const area=document.getElementById('result-area');
   area.style.display='block';
-  area.scrollIntoView({behavior:'smooth',block:'nearest'});
+  setTimeout(()=>area.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
 }
+ 
 function copyAll(){
   const txt=document.getElementById('result').innerText;
   navigator.clipboard.writeText(txt).then(()=>{
