@@ -4,594 +4,290 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HR AI Prompt Reference Card</title>
-<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;1,300&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <style>
-  /* ── DARK MODE (default) ── */
   :root {
-    --bg: #0a0c10;
-    --surface: #111318;
-    --surface2: #181c24;
-    --border: rgba(255,255,255,0.07);
-    --text: #e8eaf0;
-    --muted: #6b7280;
-    --c1: #00d4aa;
-    --c2: #4f8ef7;
-    --c3: #a78bfa;
-    --c4: #34d399;
-    --c1-dim: rgba(0,212,170,0.12);
-    --c2-dim: rgba(79,142,247,0.12);
-    --c3-dim: rgba(167,139,250,0.12);
-    --c4-dim: rgba(52,211,153,0.12);
-    --grid-line: rgba(0,212,170,0.04);
-    --shadow: rgba(0,0,0,0.4);
-    --code-bg: #0d1117;
-    --code-text: #a8d8c8;
-    --tab-active-text: #0a0c10;
-    --modal-bg: #111318;
+    --bg:#0a0c10;--surface:#111318;--surface2:#181c24;--border:rgba(255,255,255,0.07);
+    --text:#e8eaf0;--muted:#6b7280;--c1:#00d4aa;--c2:#4f8ef7;--c3:#a78bfa;--c4:#34d399;
+    --c1-dim:rgba(0,212,170,0.12);--c2-dim:rgba(79,142,247,0.12);
+    --c3-dim:rgba(167,139,250,0.12);--c4-dim:rgba(52,211,153,0.12);
+    --grid-line:rgba(0,212,170,0.04);--shadow:rgba(0,0,0,0.4);
+    --code-bg:#0d1117;--code-text:#a8d8c8;--tab-active-text:#0a0c10;--modal-bg:#111318;
+    --primary:#005576;--secondary:#006c4e;--accent:#6366F1;
   }
-
-  /* ── LIGHT MODE ── */
   html.light {
-    --bg: #f4f6fb;
-    --surface: #ffffff;
-    --surface2: #eef1f8;
-    --border: rgba(0,0,0,0.08);
-    --text: #1a1d2e;
-    --muted: #7c8493;
-    --c1: #00a886;
-    --c2: #2d6edc;
-    --c3: #7c3aed;
-    --c4: #059669;
-    --c1-dim: rgba(0,168,134,0.10);
-    --c2-dim: rgba(45,110,220,0.10);
-    --c3-dim: rgba(124,58,237,0.10);
-    --c4-dim: rgba(5,150,105,0.10);
-    --grid-line: rgba(0,168,134,0.06);
-    --shadow: rgba(0,0,0,0.10);
-    --code-bg: #f0f4f8;
-    --code-text: #1a4a3a;
-    --tab-active-text: #ffffff;
-    --modal-bg: #ffffff;
+    --bg:#f4f6fb;--surface:#ffffff;--surface2:#eef1f8;--border:rgba(0,0,0,0.08);
+    --text:#1a1d2e;--muted:#7c8493;--c1:#00a886;--c2:#2d6edc;--c3:#7c3aed;--c4:#059669;
+    --c1-dim:rgba(0,168,134,0.10);--c2-dim:rgba(45,110,220,0.10);
+    --c3-dim:rgba(124,58,237,0.10);--c4-dim:rgba(5,150,105,0.10);
+    --grid-line:rgba(0,168,134,0.06);--shadow:rgba(0,0,0,0.10);
+    --code-bg:#f0f4f8;--code-text:#1a4a3a;--tab-active-text:#ffffff;--modal-bg:#ffffff;
   }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body{font-family:'Anuphan',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background 0.35s,color 0.35s}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
 
-  body {
-    font-family: 'Anuphan', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-    transition: background 0.35s, color 0.35s;
-  }
+  .grid-bg{position:fixed;inset:0;z-index:0;background-image:linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);background-size:48px 48px;transition:background-image 0.3s}
 
-  /* ─── NOISE TEXTURE OVERLAY ─── */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 0;
-  }
+  /* ── MATERIAL SYMBOLS ── */
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;display:inline-block;line-height:1;font-size:22px;font-family:'Material Symbols Outlined'}
 
-  /* ─── GRID BACKGROUND ─── */
-  .grid-bg {
-    position: fixed; inset: 0; z-index: 0;
-    background-image:
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size: 48px 48px;
-    transition: background-image 0.3s;
-  }
+  /* ── TOP APP BAR ── */
+  .topbar{position:fixed;top:0;left:0;width:100%;height:64px;z-index:500;background:rgba(10,12,16,0.95);backdrop-filter:blur(12px);box-shadow:0 1px 8px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid rgba(255,255,255,.06)}
+  html.light .topbar{background:rgba(255,255,255,0.95);box-shadow:0 1px 4px rgba(0,0,0,.08);border-bottom:1px solid rgba(0,0,0,.06)}
+  .topbar-btn{width:40px;height:40px;border-radius:50%;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--c1);transition:background .15s}
+  .topbar-btn:hover{background:rgba(0,212,170,.1)}
+  html.light .topbar-btn{color:var(--primary)}
+  html.light .topbar-btn:hover{background:#f0eded}
+  .topbar-title{font-size:18px;font-weight:700;color:var(--c1);letter-spacing:-.3px;text-decoration:none;font-family:'IBM Plex Sans',sans-serif}
+  html.light .topbar-title{color:var(--primary)}
 
-  .container {
-    position: relative; z-index: 1;
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 40px 24px 80px;
-  }
+  /* ── OVERLAY ── */
+  .overlay{display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.5);backdrop-filter:blur(3px)}
+  .overlay.show{display:block}
+
+  /* ── SIDE DRAWER ── */
+  .drawer{position:fixed;top:0;left:-280px;width:260px;height:100%;z-index:700;background:var(--surface);box-shadow:4px 0 24px rgba(0,0,0,.4);transition:left .25s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;border-right:1px solid var(--border)}
+  .drawer.open{left:0}
+  .drawer-header{height:64px;display:flex;align-items:center;padding:0 16px;gap:12px;border-bottom:1px solid var(--border)}
+  .drawer-logo{font-size:16px;font-weight:700;color:var(--c1);font-family:'IBM Plex Sans',sans-serif}
+  html.light .drawer-logo{color:var(--primary)}
+  .drawer-nav{flex:1;padding:12px 8px;overflow-y:auto}
+  .drawer-item{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:14px;text-decoration:none;color:var(--text);font-size:15px;font-weight:500;transition:background .15s;margin-bottom:2px;font-family:'IBM Plex Sans',sans-serif}
+  .drawer-item:hover{background:rgba(255,255,255,.06)}
+  html.light .drawer-item:hover{background:#f0eded}
+  .drawer-item.active{background:var(--c1-dim);color:var(--c1)}
+  html.light .drawer-item.active{background:#E1F5EE;color:var(--primary)}
+  .di-home,.di-kaizen,.di-prompt{color:var(--c1)}
+  html.light .di-home,html.light .di-kaizen,html.light .di-prompt{color:var(--primary)}
+  .di-chatgpt{color:var(--accent)}
+  .di-gemini{color:var(--c4)}
+  html.light .di-gemini{color:var(--secondary)}
+  .di-strategy{color:var(--c3)}
+  .drawer-footer{padding:16px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);text-align:center;line-height:1.6;font-family:'IBM Plex Sans',sans-serif}
+
+  /* ── MAIN CONTAINER ── */
+  .container{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:80px 24px 96px}
+  @media(max-width:768px){.container{padding-bottom:112px}}
+
+  /* Back link */
+  .back-link{display:inline-flex;align-items:center;gap:6px;color:var(--c1);font-size:13px;font-weight:500;text-decoration:none;margin-bottom:20px;padding:6px 12px;background:var(--c1-dim);border-radius:20px;border:1px solid rgba(0,212,170,.3);transition:background .15s;font-family:'IBM Plex Sans',sans-serif}
+  .back-link:hover{background:rgba(0,212,170,.2)}
+  html.light .back-link{color:var(--primary);background:#f0f9ff;border-color:#c5e7ff}
+  html.light .back-link:hover{background:#c5e7ff}
 
   /* ─── HEADER ─── */
-  header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 24px;
-    margin-bottom: 56px;
-    flex-wrap: wrap;
-  }
-
-  .header-left { flex: 1; min-width: 280px; }
-
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--c1-dim);
-    border: 1px solid rgba(0,212,170,0.3);
-    color: var(--c1);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: 100px;
-    margin-bottom: 16px;
-    animation: fadeDown 0.5s ease both;
-  }
-  .badge::before { content: '●'; font-size: 7px; animation: pulse 2s infinite; }
-
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-  h1 {
-    font-size: clamp(28px, 4vw, 44px);
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    animation: fadeDown 0.5s 0.1s ease both;
-  }
-  h1 span { color: var(--c1); }
-
-  .subtitle {
-    margin-top: 12px;
-    font-family: 'Sarabun', sans-serif;
-    font-size: 15px;
-    color: var(--muted);
-    font-weight: 300;
-    animation: fadeDown 0.5s 0.2s ease both;
-  }
-
-  .stats-row {
-    display: flex;
-    gap: 32px;
-    margin-top: 28px;
-    flex-wrap: wrap;
-    animation: fadeDown 0.5s 0.3s ease both;
-  }
-  .stat { text-align: center; }
-  .stat-num {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--c1);
-    line-height: 1;
-  }
-  .stat-label {
-    font-size: 11px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-top: 4px;
-  }
+  header{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:56px;flex-wrap:wrap}
+  .header-left{flex:1;min-width:280px}
+  .badge{display:inline-flex;align-items:center;gap:6px;background:var(--c1-dim);border:1px solid rgba(0,212,170,0.3);color:var(--c1);font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:16px;animation:fadeDown 0.5s ease both}
+  .badge::before{content:'●';font-size:7px;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+  h1{font-size:clamp(28px,4vw,44px);font-weight:700;line-height:1.15;letter-spacing:-0.02em;animation:fadeDown 0.5s 0.1s ease both}
+  h1 span{color:var(--c1)}
+  .subtitle{margin-top:12px;font-family:'Sarabun',sans-serif;font-size:15px;color:var(--muted);font-weight:300;animation:fadeDown 0.5s 0.2s ease both}
+  .stats-row{display:flex;gap:32px;margin-top:28px;flex-wrap:wrap;animation:fadeDown 0.5s 0.3s ease both}
+  .stat{text-align:center}
+  .stat-num{font-size:28px;font-weight:700;color:var(--c1);line-height:1}
+  .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px}
 
   /* Search */
-  .search-wrap {
-    position: relative;
-    width: 280px;
-    animation: fadeDown 0.5s 0.25s ease both;
-    flex-shrink: 0;
-  }
-  .search-icon {
-    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-    color: var(--muted); font-size: 14px; pointer-events: none;
-  }
-  #search {
-    width: 100%;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 14px 10px 40px;
-    color: var(--text);
-    font-family: 'Anuphan', sans-serif;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  #search:focus { border-color: rgba(0,212,170,0.5); }
-  #search::placeholder { color: var(--muted); }
+  .search-wrap{position:relative;width:280px;animation:fadeDown 0.5s 0.25s ease both;flex-shrink:0}
+  .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;pointer-events:none}
+  #search{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px 10px 40px;color:var(--text);font-family:'Anuphan',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s}
+  #search:focus{border-color:rgba(0,212,170,0.5)}
+  #search::placeholder{color:var(--muted)}
 
   /* ─── SECTION TABS ─── */
-  .tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 32px;
-    flex-wrap: wrap;
-    animation: fadeDown 0.5s 0.35s ease both;
-  }
-  .tab {
-    padding: 8px 18px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--muted);
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: 'Anuphan', sans-serif;
-  }
-  .tab:hover { border-color: rgba(255,255,255,0.15); color: var(--text); }
-  .tab.active { color: var(--tab-active-text); font-weight: 600; }
-  .tab[data-section="all"].active { background: var(--text); border-color: var(--text); color: var(--bg); }
-  .tab[data-section="recruitment"].active { background: var(--c1); border-color: var(--c1); }
-  .tab[data-section="development"].active { background: var(--c2); border-color: var(--c2); }
-  .tab[data-section="performance"].active { background: var(--c3); border-color: var(--c3); }
-  .tab[data-section="retention"].active { background: var(--c4); border-color: var(--c4); }
+  .tabs{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap;animation:fadeDown 0.5s 0.35s ease both}
+  .tab{padding:8px 18px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;font-family:'Anuphan',sans-serif}
+  .tab:hover{border-color:rgba(255,255,255,0.15);color:var(--text)}
+  html.light .tab:hover{border-color:rgba(0,0,0,0.2)}
+  .tab.active{color:var(--tab-active-text);font-weight:600}
+  .tab[data-section="all"].active{background:var(--text);border-color:var(--text);color:var(--bg)}
+  .tab[data-section="recruitment"].active{background:var(--c1);border-color:var(--c1)}
+  .tab[data-section="development"].active{background:var(--c2);border-color:var(--c2)}
+  .tab[data-section="performance"].active{background:var(--c3);border-color:var(--c3)}
+  .tab[data-section="retention"].active{background:var(--c4);border-color:var(--c4)}
 
   /* ─── SECTION DIVIDER ─── */
-  .section-divider {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin: 36px 0 20px;
-  }
-  .section-divider h2 {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-  .section-divider .line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-  .section-divider .count {
-    font-size: 11px;
-    color: var(--muted);
-    padding: 2px 8px;
-    border-radius: 100px;
-    border: 1px solid var(--border);
-  }
+  .section-divider{display:flex;align-items:center;gap:16px;margin:36px 0 20px}
+  .section-divider h2{font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap}
+  .section-divider .line{flex:1;height:1px;background:var(--border)}
+  .section-divider .count{font-size:11px;color:var(--muted);padding:2px 8px;border-radius:100px;border:1px solid var(--border)}
 
   /* ─── CARD GRID ─── */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-  }
+  .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
 
   /* ─── CARD ─── */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px;
-    cursor: pointer;
-    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-    position: relative;
-    overflow: hidden;
-    animation: fadeUp 0.4s ease both;
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-  .card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 16px 40px var(--shadow);
-  }
-  .card:hover::before { opacity: 1; }
-
-  .card[data-section="recruitment"]::before { background: var(--c1); }
-  .card[data-section="recruitment"]:hover { border-color: rgba(0,212,170,0.3); }
-  .card[data-section="development"]::before { background: var(--c2); }
-  .card[data-section="development"]:hover { border-color: rgba(79,142,247,0.3); }
-  .card[data-section="performance"]::before { background: var(--c3); }
-  .card[data-section="performance"]:hover { border-color: rgba(167,139,250,0.3); }
-  .card[data-section="retention"]::before { background: var(--c4); }
-  .card[data-section="retention"]:hover { border-color: rgba(52,211,153,0.3); }
-
-  .card-num {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    margin-bottom: 10px;
-    opacity: 0.7;
-  }
-  .card[data-section="recruitment"] .card-num { color: var(--c1); }
-  .card[data-section="development"] .card-num { color: var(--c2); }
-  .card[data-section="performance"] .card-num { color: var(--c3); }
-  .card[data-section="retention"] .card-num { color: var(--c4); }
-
-  .card-icon {
-    font-size: 24px;
-    margin-bottom: 10px;
-    display: block;
-  }
-
-  .card-title {
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.4;
-    margin-bottom: 10px;
-    color: var(--text);
-  }
-
-  .card-desc {
-    font-family: 'Sarabun', sans-serif;
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.6;
-    margin-bottom: 14px;
-  }
-
-  .card-tags {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .tag {
-    font-size: 10px;
-    font-weight: 500;
-    padding: 3px 8px;
-    border-radius: 4px;
-    letter-spacing: 0.05em;
-  }
-  .card[data-section="recruitment"] .tag { background: var(--c1-dim); color: var(--c1); }
-  .card[data-section="development"] .tag { background: var(--c2-dim); color: var(--c2); }
-  .card[data-section="performance"] .tag { background: var(--c3-dim); color: var(--c3); }
-  .card[data-section="retention"] .tag { background: var(--c4-dim); color: var(--c4); }
-
-  .card-arrow {
-    position: absolute;
-    bottom: 18px; right: 18px;
-    font-size: 16px;
-    opacity: 0;
-    transition: opacity 0.2s, transform 0.2s;
-    transform: translateX(-4px);
-  }
-  .card:hover .card-arrow { opacity: 0.5; transform: translateX(0); }
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;cursor:pointer;transition:transform 0.2s,border-color 0.2s,box-shadow 0.2s;position:relative;overflow:hidden;animation:fadeUp 0.4s ease both}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity 0.2s}
+  .card:hover{transform:translateY(-3px);box-shadow:0 16px 40px var(--shadow)}
+  .card:hover::before{opacity:1}
+  html.light .card:hover{box-shadow:0 8px 32px var(--shadow)}
+  .card[data-section="recruitment"]::before{background:var(--c1)}
+  .card[data-section="recruitment"]:hover{border-color:rgba(0,212,170,0.3)}
+  .card[data-section="development"]::before{background:var(--c2)}
+  .card[data-section="development"]:hover{border-color:rgba(79,142,247,0.3)}
+  .card[data-section="performance"]::before{background:var(--c3)}
+  .card[data-section="performance"]:hover{border-color:rgba(167,139,250,0.3)}
+  .card[data-section="retention"]::before{background:var(--c4)}
+  .card[data-section="retention"]:hover{border-color:rgba(52,211,153,0.3)}
+  .card-num{font-size:11px;font-weight:700;letter-spacing:0.1em;margin-bottom:10px;opacity:0.7}
+  .card[data-section="recruitment"] .card-num{color:var(--c1)}
+  .card[data-section="development"] .card-num{color:var(--c2)}
+  .card[data-section="performance"] .card-num{color:var(--c3)}
+  .card[data-section="retention"] .card-num{color:var(--c4)}
+  .card-icon{font-size:24px;margin-bottom:10px;display:block}
+  .card-title{font-size:14px;font-weight:600;line-height:1.4;margin-bottom:10px;color:var(--text)}
+  .card-desc{font-family:'Sarabun',sans-serif;font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+  .card-tags{display:flex;gap:6px;flex-wrap:wrap}
+  .tag{font-size:10px;font-weight:500;padding:3px 8px;border-radius:4px;letter-spacing:0.05em}
+  .card[data-section="recruitment"] .tag{background:var(--c1-dim);color:var(--c1)}
+  .card[data-section="development"] .tag{background:var(--c2-dim);color:var(--c2)}
+  .card[data-section="performance"] .tag{background:var(--c3-dim);color:var(--c3)}
+  .card[data-section="retention"] .tag{background:var(--c4-dim);color:var(--c4)}
+  .card-arrow{position:absolute;bottom:18px;right:18px;font-size:16px;opacity:0;transition:opacity 0.2s,transform 0.2s;transform:translateX(-4px)}
+  .card:hover .card-arrow{opacity:0.5;transform:translateX(0)}
 
   /* ─── MODAL ─── */
-  .modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(12px);
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s;
-  }
-  .modal-overlay.open { opacity: 1; pointer-events: all; }
-
-  .modal {
-    background: var(--modal-bg);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 20px;
-    width: 100%;
-    max-width: 720px;
-    max-height: 88vh;
-    overflow-y: auto;
-    transform: scale(0.95) translateY(16px);
-    transition: transform 0.25s;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
-  }
-  .modal-overlay.open .modal { transform: scale(1) translateY(0); }
-
-  .modal-header {
-    padding: 28px 28px 0;
-    position: sticky; top: 0;
-    background: var(--modal-bg);
-    z-index: 1;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-    transition: background 0.35s;
-  }
-  .modal-top-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
-  }
-  .modal-num {
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  .modal-title { font-size: 20px; font-weight: 700; line-height: 1.3; }
-  .close-btn {
-    width: 32px; height: 32px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--muted);
-    font-size: 18px;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s;
-    flex-shrink: 0;
-    line-height: 1;
-  }
-  .close-btn:hover { background: var(--surface2); color: var(--text); }
-
-  .modal-obj {
-    margin-top: 12px;
-    font-family: 'Sarabun', sans-serif;
-    font-size: 13px;
-    color: var(--muted);
-    font-style: italic;
-    line-height: 1.6;
-  }
-
-  .modal-body { padding: 24px 28px 28px; }
-
-  .prompt-block { margin-bottom: 24px; }
-  .prompt-label {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .prompt-label::before {
-    content: '';
-    display: inline-block;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-  }
-  .prompt-code {
-    background: var(--code-bg);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 10px;
-    padding: 16px 18px;
-    position: relative;
-    font-family: 'Sarabun', monospace;
-    font-size: 13px;
-    line-height: 1.8;
-    color: var(--code-text);
-    white-space: pre-wrap;
-    word-break: break-word;
-    transition: background 0.35s, color 0.35s;
-  }
-  .copy-btn {
-    position: absolute;
-    top: 10px; right: 10px;
-    padding: 4px 10px;
-    font-size: 10px;
-    font-weight: 600;
-    border-radius: 6px;
-    border: 1px solid rgba(255,255,255,0.1);
-    background: rgba(255,255,255,0.05);
-    color: var(--muted);
-    cursor: pointer;
-    font-family: 'Anuphan', sans-serif;
-    transition: all 0.2s;
-    letter-spacing: 0.05em;
-  }
-  .copy-btn:hover { background: rgba(255,255,255,0.1); color: var(--text); }
-  .copy-btn.copied { color: var(--c1); border-color: rgba(0,212,170,0.4); background: var(--c1-dim); }
-
-  .tip-box {
-    margin-top: 20px;
-    padding: 14px 16px;
-    border-radius: 10px;
-    border-left: 3px solid;
-    background: rgba(255,255,255,0.03);
-    font-family: 'Sarabun', sans-serif;
-    font-size: 13px;
-    line-height: 1.7;
-  }
-  .tip-box strong { font-weight: 600; display: block; margin-bottom: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
-
-  /* Section colors for modal */
-  .modal[data-section="recruitment"] .modal-num,
-  .modal[data-section="recruitment"] .prompt-label { color: var(--c1); }
-  .modal[data-section="recruitment"] .prompt-label::before { background: var(--c1); }
-  .modal[data-section="recruitment"] .tip-box { border-color: var(--c1); }
-  .modal[data-section="recruitment"] .tip-box strong { color: var(--c1); }
-
-  .modal[data-section="development"] .modal-num,
-  .modal[data-section="development"] .prompt-label { color: var(--c2); }
-  .modal[data-section="development"] .prompt-label::before { background: var(--c2); }
-  .modal[data-section="development"] .tip-box { border-color: var(--c2); }
-  .modal[data-section="development"] .tip-box strong { color: var(--c2); }
-
-  .modal[data-section="performance"] .modal-num,
-  .modal[data-section="performance"] .prompt-label { color: var(--c3); }
-  .modal[data-section="performance"] .prompt-label::before { background: var(--c3); }
-  .modal[data-section="performance"] .tip-box { border-color: var(--c3); }
-  .modal[data-section="performance"] .tip-box strong { color: var(--c3); }
-
-  .modal[data-section="retention"] .modal-num,
-  .modal[data-section="retention"] .prompt-label { color: var(--c4); }
-  .modal[data-section="retention"] .prompt-label::before { background: var(--c4); }
-  .modal[data-section="retention"] .tip-box { border-color: var(--c4); }
-  .modal[data-section="retention"] .tip-box strong { color: var(--c4); }
-
-  .modal-nav {
-    display: flex;
-    gap: 8px;
-    justify-content: flex-end;
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-  }
-  .modal-nav button {
-    padding: 8px 16px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--surface2);
-    color: var(--text);
-    font-family: 'Anuphan', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .modal-nav button:hover { border-color: rgba(255,255,255,0.2); }
-  .modal-nav button:disabled { opacity: 0.3; cursor: default; }
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(12px);z-index:800;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 0.25s}
+  .modal-overlay.open{opacity:1;pointer-events:all}
+  .modal{background:var(--modal-bg);border:1px solid rgba(255,255,255,0.1);border-radius:20px;width:100%;max-width:720px;max-height:88vh;overflow-y:auto;transform:scale(0.95) translateY(16px);transition:transform 0.25s;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+  html.light .modal{border-color:rgba(0,0,0,0.08)}
+  .modal-overlay.open .modal{transform:scale(1) translateY(0)}
+  .modal-header{padding:28px 28px 0;position:sticky;top:0;background:var(--modal-bg);z-index:1;padding-bottom:20px;border-bottom:1px solid var(--border);transition:background 0.35s}
+  .modal-top-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+  .modal-num{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px}
+  .modal-title{font-size:20px;font-weight:700;line-height:1.3}
+  .close-btn{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0;line-height:1}
+  .close-btn:hover{background:var(--surface2);color:var(--text)}
+  .modal-obj{margin-top:12px;font-family:'Sarabun',sans-serif;font-size:13px;color:var(--muted);font-style:italic;line-height:1.6}
+  .modal-body{padding:24px 28px 28px}
+  .prompt-block{margin-bottom:24px}
+  .prompt-label{font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .prompt-label::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%}
+  .prompt-code{background:var(--code-bg);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px 18px;position:relative;font-family:'Sarabun',monospace;font-size:13px;line-height:1.8;color:var(--code-text);white-space:pre-wrap;word-break:break-word;transition:background 0.35s,color 0.35s}
+  html.light .prompt-code{border-color:rgba(0,0,0,0.08)}
+  .copy-btn{position:absolute;top:10px;right:10px;padding:4px 10px;font-size:10px;font-weight:600;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:var(--muted);cursor:pointer;font-family:'Anuphan',sans-serif;transition:all 0.2s;letter-spacing:0.05em}
+  .copy-btn:hover{background:rgba(255,255,255,0.1);color:var(--text)}
+  .copy-btn.copied{color:var(--c1);border-color:rgba(0,212,170,0.4);background:var(--c1-dim)}
+  .tip-box{margin-top:20px;padding:14px 16px;border-radius:10px;border-left:3px solid;background:rgba(255,255,255,0.03);font-family:'Sarabun',sans-serif;font-size:13px;line-height:1.7}
+  .tip-box strong{font-weight:600;display:block;margin-bottom:4px;font-size:11px;text-transform:uppercase;letter-spacing:0.08em}
+  .modal[data-section="recruitment"] .modal-num,.modal[data-section="recruitment"] .prompt-label{color:var(--c1)}
+  .modal[data-section="recruitment"] .prompt-label::before{background:var(--c1)}
+  .modal[data-section="recruitment"] .tip-box{border-color:var(--c1)}
+  .modal[data-section="recruitment"] .tip-box strong{color:var(--c1)}
+  .modal[data-section="development"] .modal-num,.modal[data-section="development"] .prompt-label{color:var(--c2)}
+  .modal[data-section="development"] .prompt-label::before{background:var(--c2)}
+  .modal[data-section="development"] .tip-box{border-color:var(--c2)}
+  .modal[data-section="development"] .tip-box strong{color:var(--c2)}
+  .modal[data-section="performance"] .modal-num,.modal[data-section="performance"] .prompt-label{color:var(--c3)}
+  .modal[data-section="performance"] .prompt-label::before{background:var(--c3)}
+  .modal[data-section="performance"] .tip-box{border-color:var(--c3)}
+  .modal[data-section="performance"] .tip-box strong{color:var(--c3)}
+  .modal[data-section="retention"] .modal-num,.modal[data-section="retention"] .prompt-label{color:var(--c4)}
+  .modal[data-section="retention"] .prompt-label::before{background:var(--c4)}
+  .modal[data-section="retention"] .tip-box{border-color:var(--c4)}
+  .modal[data-section="retention"] .tip-box strong{color:var(--c4)}
+  .modal-nav{display:flex;gap:8px;justify-content:flex-end;margin-top:24px;padding-top:20px;border-top:1px solid var(--border)}
+  .modal-nav button{padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:'Anuphan',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s}
+  .modal-nav button:hover{border-color:rgba(255,255,255,0.2)}
+  html.light .modal-nav button:hover{border-color:rgba(0,0,0,0.25)}
+  .modal-nav button:disabled{opacity:0.3;cursor:default}
 
   /* ─── EMPTY STATE ─── */
-  .empty { text-align: center; padding: 64px 24px; color: var(--muted); }
-  .empty-icon { font-size: 40px; margin-bottom: 16px; opacity: 0.4; }
-  .empty p { font-size: 14px; }
+  .empty{text-align:center;padding:64px 24px;color:var(--muted)}
+  .empty-icon{font-size:40px;margin-bottom:16px;opacity:0.4}
+  .empty p{font-size:14px}
 
   /* ─── ANIMATIONS ─── */
-  @keyframes fadeDown { from { opacity:0; transform: translateY(-12px); } to { opacity:1; transform:none; } }
-  @keyframes fadeUp   { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform:none; } }
+  @keyframes fadeDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 
   /* ─── THEME TOGGLE ─── */
-  .theme-toggle {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    padding: 9px 16px;
-    border-radius: 100px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    font-family: 'Anuphan', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s;
-    white-space: nowrap;
-    flex-shrink: 0;
-    align-self: flex-start;
-    margin-top: 4px;
-    animation: fadeDown 0.5s 0.3s ease both;
-    box-shadow: 0 2px 8px var(--shadow);
-  }
-  .theme-toggle:hover {
-    border-color: var(--c1);
-    color: var(--c1);
-    box-shadow: 0 4px 16px var(--shadow);
-  }
-  .theme-icon { font-size: 15px; line-height: 1; transition: transform 0.4s; }
-  .theme-toggle:hover .theme-icon { transform: rotate(20deg); }
+  .theme-toggle{display:flex;align-items:center;gap:7px;padding:9px 16px;border-radius:100px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-family:'Anuphan',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.25s;white-space:nowrap;flex-shrink:0;align-self:flex-start;margin-top:4px;animation:fadeDown 0.5s 0.3s ease both;box-shadow:0 2px 8px var(--shadow)}
+  .theme-toggle:hover{border-color:var(--c1);color:var(--c1);box-shadow:0 4px 16px var(--shadow)}
+  .theme-icon{font-size:15px;line-height:1;transition:transform 0.4s}
+  .theme-toggle:hover .theme-icon{transform:rotate(20deg)}
+  html.light body::before{opacity:0.015}
+  .hidden{display:none!important}
 
-  /* light mode adjustments */
-  html.light .tab:hover { border-color: rgba(0,0,0,0.2); }
-  html.light .card:hover { box-shadow: 0 8px 32px var(--shadow); }
-  html.light .modal { border-color: rgba(0,0,0,0.08); }
-  html.light .prompt-code { border-color: rgba(0,0,0,0.08); }
-  html.light .close-btn:hover { background: var(--surface2); }
-  html.light .modal-nav button:hover { border-color: rgba(0,0,0,0.25); }
-  html.light body::before { opacity: 0.015; }
+  /* ── BOTTOM NAV ── */
+  .bottom-nav{position:fixed;bottom:0;left:0;width:100%;height:72px;z-index:400;background:rgba(17,19,24,0.96);backdrop-filter:blur(12px);box-shadow:0 -1px 8px rgba(0,0,0,.3);border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-around;padding:0 4px 8px}
+  html.light .bottom-nav{background:rgba(255,255,255,0.96);box-shadow:0 -1px 8px rgba(0,0,0,.08);border-top:1px solid #e5e2e1}
+  .nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:8px 10px;border-radius:14px;text-decoration:none;color:var(--muted);font-size:11px;font-weight:600;transition:all .15s;min-width:52px;font-family:'IBM Plex Sans',sans-serif}
+  .nav-item:hover{background:rgba(255,255,255,.06)}
+  html.light .nav-item:hover{background:#f0eded;color:#40484e}
+  .nav-item.active{background:rgba(0,212,170,.15);color:var(--c1)}
+  html.light .nav-item.active{background:#83f5c6;color:var(--secondary)}
+  .nav-item .material-symbols-outlined{font-size:22px}
+  .nav-item.home-btn{background:var(--c1-dim);padding:6px 8px;border-radius:18px}
+  html.light .nav-item.home-btn{background:#E1F5EE}
+  .nav-item.home-btn .material-symbols-outlined{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:var(--c1);font-size:26px}
+  html.light .nav-item.home-btn .material-symbols-outlined{color:var(--primary)}
 
-  .hidden { display: none !important; }
+  @media(min-width:768px){.bottom-nav{display:none}.container{padding-bottom:52px}}
 </style>
 </head>
 <body>
 
 <div class="grid-bg"></div>
 
+<!-- ── OVERLAY ── -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+
+<!-- ── SIDE DRAWER ── -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <span class="material-symbols-outlined" style="color:var(--c1)">menu_book</span>
+    <span class="drawer-logo">KAIZEN SMART</span>
+  </div>
+  <nav class="drawer-nav">
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+      <span class="material-symbols-outlined di-home">home</span>Home
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank">
+      <span class="material-symbols-outlined di-kaizen">trending_up</span>KAIZEN
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank">
+      <span class="material-symbols-outlined di-chatgpt">bolt</span>ChatGPT Step
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank">
+      <span class="material-symbols-outlined di-gemini">auto_awesome</span>Gemini Step
+    </a>
+    <a class="drawer-item" href="https://kkaewounruan-rgb.github.io/prompt_web/Strategy01.html" target="_blank">
+      <span class="material-symbols-outlined di-strategy">architecture</span>Strategies
+    </a>
+    <a class="drawer-item active" href="#">
+      <span class="material-symbols-outlined di-prompt">psychology</span>Prompts
+    </a>
+  </nav>
+  <div class="drawer-footer">KAIZEN SMART PLAYBOOK<br>By Kachain_K 2026</div>
+</div>
+
+<!-- ── TOP APP BAR ── -->
+<header class="topbar" style="position:fixed;top:0;left:0;width:100%;height:64px;z-index:500">
+  <button class="topbar-btn" onclick="openDrawer()">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  <a class="topbar-title" href="https://sites.google.com/view/teprompt-web/home" target="_blank">KAIZEN SMART</a>
+  <button class="topbar-btn">
+    <span class="material-symbols-outlined">search</span>
+  </button>
+</header>
+
 <div class="container">
 
-  <!-- Header -->
-  <header>
+  <!-- Back link -->
+  <a class="back-link" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+    <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span>
+    KAIZEN SMART PLAYBOOK
+  </a>
+
+  <!-- Content Header -->
+  <header style="position:relative;z-index:1">
     <div class="header-left">
       <div class="badge">HR × AI Toolkit</div>
       <h1>Prompt Reference<br><span>Dashboard</span></h1>
@@ -621,9 +317,17 @@
     <button class="tab" data-section="retention">🌿 รักษาพนักงาน</button>
   </div>
 
-  <!-- Cards container -->
   <div id="cards-container"></div>
 
+  <!-- Footer -->
+  <div style="text-align:center;margin-top:40px;font-size:12px;color:var(--muted);line-height:1.7;position:relative;z-index:1">
+    จัดทำโดย คเชนท์ แก้วอุ่นเรือน · แผนกฝึกอบรม 2026<br>
+    HR AI Prompt Reference — ทุกคน ทุกที่ ทุกเวลา 🌱<br>
+    <a href="https://sites.google.com/view/teprompt-web/home" target="_blank"
+       style="color:var(--c1);font-weight:600;text-decoration:none;margin-top:4px;display:inline-block;font-family:'IBM Plex Sans',sans-serif">
+      ← กลับหน้า KAIZEN SMART PLAYBOOK
+    </a>
+  </div>
 </div>
 
 <!-- Modal -->
@@ -643,730 +347,135 @@
   </div>
 </div>
 
+<!-- ── BOTTOM NAV ── -->
+<nav class="bottom-nav">
+  <a class="nav-item home-btn" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+    <span class="material-symbols-outlined">home</span>
+    <span>Home</span>
+  </a>
+  <a class="nav-item" href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank">
+    <span class="material-symbols-outlined">trending_up</span>
+    <span>Kaizen</span>
+  </a>
+  <a class="nav-item" href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank">
+    <span class="material-symbols-outlined">bolt</span>
+    <span>ChatGPT</span>
+  </a>
+  <a class="nav-item" href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank">
+    <span class="material-symbols-outlined">auto_awesome</span>
+    <span>Gemini</span>
+  </a>
+  <a class="nav-item active" href="#">
+    <span class="material-symbols-outlined">psychology</span>
+    <span>Prompts</span>
+  </a>
+</nav>
+
 <script>
-const DATA = [
-  // ── RECRUITMENT ──
-  {
-    id: "4.1", section: "recruitment",
-    icon: "📋", title: "Job Description (JD)",
-    shortTitle: "เขียน JD",
-    desc: "สร้าง Job Description ที่ครบถ้วน ดึงดูด และสอดคล้องกับ Competency ขององค์กร",
-    tags: ["JD", "Competency", "Hiring"],
-    prompts: [
-      {
-        label: "สร้าง JD จากตำแหน่งงาน",
-        text: `คุณเป็น HR Specialist ที่เชี่ยวชาญด้านการเขียน Job Description
-กรุณาสร้าง Job Description สำหรับตำแหน่ง "[ชื่อตำแหน่ง]"
-ในอุตสาหกรรม [ประเภทอุตสาหกรรม] ขนาดบริษัท [ขนาด]
+/* ── Drawer ── */
+function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('overlay').classList.add('show');document.body.style.overflow='hidden'}
+function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('overlay').classList.remove('show');document.body.style.overflow=''}
 
-โครงสร้างที่ต้องการ:
-1. ชื่อตำแหน่งงาน (Job Title)
-2. วัตถุประสงค์ของตำแหน่ง (Job Purpose) 2-3 ประโยค
-3. หน้าที่และความรับผิดชอบหลัก (Key Responsibilities) 8-10 ข้อ
-4. คุณสมบัติที่ต้องการ: การศึกษา / ประสบการณ์ / ทักษะ
-5. Competency ที่จำเป็น 5 ด้าน
-6. เงื่อนไขการทำงาน (Working Conditions)`
-      },
-      {
-        label: "JD แบบ Competency-Based",
-        text: `สร้าง Competency-Based Job Description สำหรับ "[ตำแหน่ง]"
-โดยอ้างอิงกรอบ Competency ขององค์กรที่มี 3 ระดับ:
-- Core Competency (ทุกตำแหน่ง): [ระบุ]
-- Functional Competency (เฉพาะสายงาน): [ระบุ]
-- Leadership Competency (สำหรับระดับหัวหน้า): [ระบุ]
-
-ระบุ Behavioral Indicator สำหรับแต่ละ Competency ด้วย`
-      }
-    ],
-    tip: "ยิ่ง Context ละเอียด ยิ่งได้ JD ที่ตรงใจ ควรระบุอุตสาหกรรม ระดับตำแหน่ง และ Competency Framework ที่องค์กรใช้"
-  },
-  {
-    id: "4.2", section: "recruitment",
-    icon: "🔍", title: "Recruitment & Selection",
-    shortTitle: "สรรหาและคัดเลือก",
-    desc: "ออกแบบกระบวนการสรรหา คัดเลือก และเครื่องมือประเมินผู้สมัครอย่างมีประสิทธิภาพ",
-    tags: ["Interview", "STAR", "Selection"],
-    prompts: [
-      {
-        label: "ออกแบบ Structured Interview Guide",
-        text: `ออกแบบ Structured Interview Guide สำหรับตำแหน่ง "[ตำแหน่ง]"
-ที่มี Competency สำคัญ ได้แก่: [ระบุ Competency 3-5 ด้าน]
-
-สำหรับแต่ละ Competency ให้สร้าง:
-- คำถามแบบ STAR (Situation, Task, Action, Result) 2 ข้อ
-- Probing Questions 2-3 ข้อ
-- Scoring Rubric (1-5) พร้อมตัวอย่างคำตอบแต่ละระดับ`
-      },
-      {
-        label: "เขียนประกาศรับสมัครงาน",
-        text: `เขียนประกาศรับสมัครงานตำแหน่ง "[ตำแหน่ง]"
-ที่ดึงดูดใจและสื่อสาร Employer Brand ของบริษัท [ชื่อบริษัท]
-ซึ่งมีค่านิยม: [ระบุ Value 2-3 ข้อ]
-
-ใช้ภาษาที่ทันสมัย กระชับ และเน้นสิ่งที่ผู้สมัครจะได้รับ
-ความยาวไม่เกิน 300 คำ เหมาะสำหรับโพสต์บน LinkedIn`
-      }
-    ],
-    tip: "การระบุ Competency และ STAR Framework ช่วยให้ AI สร้างคำถามที่วัดพฤติกรรมได้จริง ไม่ใช่แค่คำถามทั่วไป"
-  },
-  {
-    id: "4.3", section: "recruitment",
-    icon: "🎯", title: "Onboarding Program",
-    shortTitle: "ต้อนรับพนักงานใหม่",
-    desc: "ออกแบบโปรแกรมต้อนรับพนักงานใหม่ที่ทำให้รู้สึก Engage ตั้งแต่วันแรก",
-    tags: ["Onboarding", "90 วัน", "Checklist"],
-    prompts: [
-      {
-        label: "ออกแบบแผน Onboarding 90 วัน",
-        text: `ออกแบบ Onboarding Program 90 วัน สำหรับพนักงานใหม่ตำแหน่ง "[ตำแหน่ง]"
-แบ่งเป็น 3 Phase:
-
-Phase 1 (วันที่ 1-30): Pre-boarding และ Orientation
-Phase 2 (วันที่ 31-60): Role Integration และ Skill Building
-Phase 3 (วันที่ 61-90): Performance Ramp-Up
-
-แต่ละ Phase ระบุ:
-- กิจกรรม / เป้าหมายการเรียนรู้
-- Checkpoint / ผู้รับผิดชอบ`
-      },
-      {
-        label: "สร้าง Onboarding Checklist",
-        text: `สร้าง Onboarding Checklist ที่ครอบคลุม 4 มิติ:
-1. Administrative (เอกสาร / อุปกรณ์ / การเข้าถึงระบบ)
-2. Cultural (ค่านิยม / วัฒนธรรมองค์กร / กฎระเบียบ)
-3. Functional (ความรู้งาน / กระบวนการ / เครื่องมือ)
-4. Social (ทีมงาน / Buddy System / Network)
-
-ระบุผู้รับผิดชอบ (HR/หัวหน้า/Buddy) และ Timeline สำหรับแต่ละรายการ`
-      }
-    ],
-    tip: "การแบ่ง Onboarding เป็น Phase ช่วยให้ AI วางแผนได้ละเอียดและสมจริง ควรระบุขนาดทีมและวัฒนธรรมองค์กรเพิ่มเติม"
-  },
-
-  // ── DEVELOPMENT ──
-  {
-    id: "4.4", section: "development",
-    icon: "🔬", title: "Training Needs Analysis",
-    shortTitle: "วิเคราะห์ Training Needs",
-    desc: "วิเคราะห์และระบุความต้องการพัฒนาบุคลากรอย่างเป็นระบบ",
-    tags: ["TNA", "Gap Analysis", "Survey"],
-    prompts: [
-      {
-        label: "วิเคราะห์ Training Needs จากผลประเมิน",
-        text: `วิเคราะห์ Training Needs สำหรับทีม [ชื่อทีม/ฝ่าย]
-จากข้อมูลต่อไปนี้:
-- ผลการประเมิน Competency: [ระบุคะแนนหรืออัตราการผ่าน]
-- ผล KPI ที่ไม่บรรลุเป้า: [ระบุ]
-- Feedback จากหัวหน้างาน: [ระบุ]
-
-วิเคราะห์ Gap และจัดลำดับความสำคัญ Training Needs
-พร้อมเสนอรูปแบบการพัฒนาที่เหมาะสม (Training/Coaching/E-Learning)`
-      },
-      {
-        label: "สร้างแบบสอบถาม TNA",
-        text: `สร้างแบบสอบถาม Training Needs Analysis (TNA)
-สำหรับพนักงานระดับ [ระดับ] ในสายงาน [สายงาน]
-
-ครอบคลุม 4 ด้าน:
-Technical Skills / Soft Skills / Leadership Skills / Digital Literacy
-
-ใช้ Rating Scale 1-5
-มีคำถามปลายเปิด 3-5 ข้อ พร้อมคำชี้แจงที่ชัดเจนและเป็นกันเอง`
-      }
-    ],
-    tip: "ใส่ข้อมูลผลการประเมินจริงหรือตัวอย่างเข้าไปใน Prompt จะได้ผลการวิเคราะห์ที่แม่นยำและนำไปใช้ได้ทันที"
-  },
-  {
-    id: "4.5", section: "development",
-    icon: "🗺️", title: "Training Roadmap (TRM)",
-    shortTitle: "วางแผน Training",
-    desc: "วางแผนการพัฒนาพนักงานรายปีและรายบุคคลอย่างเป็นระบบ",
-    tags: ["Roadmap", "Annual Plan", "Budget"],
-    prompts: [
-      {
-        label: "สร้าง Annual Training Roadmap",
-        text: `สร้าง Annual Training Roadmap สำหรับ [ชื่อแผนก] ปี [ปี]
-โดยอิง Training Needs ดังนี้: [สรุป TNA ที่ได้]
-
-จัดทำตาราง Roadmap แสดง:
-- หลักสูตร / รูปแบบ / ระยะเวลา / กลุ่มเป้าหมาย
-- เดือนที่จัด (Q1-Q4) / งบประมาณโดยประมาณ
-- ผู้รับผิดชอบ (Internal/External)
-- วิธีวัดผลหลังการอบรม`
-      }
-    ],
-    tip: "ระบุงบประมาณและจำนวนพนักงานในทีมเพื่อให้ Roadmap มีความเป็นไปได้จริงในทางปฏิบัติ"
-  },
-  {
-    id: "4.6", section: "development",
-    icon: "📊", title: "ประเมินผลการอบรม",
-    shortTitle: "วัดผลอบรม",
-    desc: "วัดผลการอบรมอย่างครบถ้วนตาม Kirkpatrick Model 4 ระดับ",
-    tags: ["Kirkpatrick", "ROI", "Evaluation"],
-    prompts: [
-      {
-        label: "ออกแบบเครื่องมือประเมิน 4 ระดับ",
-        text: `ออกแบบระบบประเมินผลการอบรมหลักสูตร "[ชื่อหลักสูตร]"
-ตาม Kirkpatrick Model 4 ระดับ:
-
-Level 1 Reaction: แบบสอบถามความพึงพอใจ (10 ข้อ)
-Level 2 Learning: Pre/Post Test (15 ข้อ)
-Level 3 Behavior: แบบประเมิน 30 วันหลังอบรม (สำหรับหัวหน้า)
-Level 4 Results: KPI ที่ใช้วัดผลกระทบต่อธุรกิจ
-
-ระบุ Timeline และผู้รับผิดชอบแต่ละระดับ`
-      }
-    ],
-    tip: "การระบุ Learning Objectives ของหลักสูตรก่อน จะช่วยให้ AI สร้างเครื่องมือวัดผลที่ตรงประเด็น"
-  },
-  {
-    id: "4.7", section: "development",
-    icon: "🌱", title: "Individual Development Plan (IDP)",
-    shortTitle: "แผนพัฒนารายบุคคล",
-    desc: "สร้างแผนพัฒนารายบุคคลที่ตอบโจทย์ทั้ง Career Goal และความต้องการองค์กร",
-    tags: ["IDP", "70:20:10", "Career"],
-    prompts: [
-      {
-        label: "สร้าง IDP รายบุคคล",
-        text: `สร้าง Individual Development Plan (IDP) สำหรับพนักงาน:
-- ตำแหน่งปัจจุบัน: [ตำแหน่ง] / ระดับ: [ระดับ]
-- เป้าหมาย Career ระยะ 2-3 ปี: [ระบุ]
-- Strength: [ระบุจุดแข็ง]
-- Development Area: [ระบุจุดที่ต้องพัฒนา]
-- รูปแบบการเรียนรู้ที่ชอบ: [Classroom/Online/OJT]
-
-จัดทำแผนพัฒนา 70:20:10 Model
-(70% Experience / 20% Exposure / 10% Education)`
-      }
-    ],
-    tip: "ให้พนักงานช่วยกรอก Context เกี่ยวกับตัวเองก่อน แล้วนำมาใส่ใน Prompt จะได้ IDP ที่ตรงความต้องการจริงๆ"
-  },
-  {
-    id: "4.8", section: "development",
-    icon: "⚙️", title: "OJT / Special Assignment / Job Shadow",
-    shortTitle: "เรียนรู้จากงานจริง",
-    desc: "ออกแบบการเรียนรู้จากประสบการณ์ในงานจริงอย่างมีโครงสร้าง",
-    tags: ["OJT", "Mentor", "Experiential"],
-    prompts: [
-      {
-        label: "ออกแบบแผน OJT",
-        text: `ออกแบบแผน On-the-Job Training (OJT) สำหรับ
-พนักงานใหม่ตำแหน่ง "[ตำแหน่ง]" ระยะเวลา [X] วัน
-
-Learning Objective ที่ต้องการ: [ระบุ 3-5 ข้อ]
-
-แผนต้องระบุ:
-- กิจกรรมการเรียนรู้รายวัน / Mentor ที่รับผิดชอบ
-- Milestone Checkpoint / วิธีประเมินความสำเร็จ
-- Signoff Criteria ก่อนเริ่มทำงานอิสระ`
-      }
-    ],
-    tip: "ระบุ Competency ที่ต้องการพัฒนาและตัวชี้วัดความสำเร็จที่วัดได้จริง เพื่อให้แผน OJT ไม่ใช่แค่ลำดับงานแต่เป็นการเรียนรู้จริง"
-  },
-  {
-    id: "4.9", section: "development",
-    icon: "🧮", title: "Skill Matrix",
-    shortTitle: "แผนภูมิทักษะทีม",
-    desc: "สร้างแผนภูมิทักษะทีมเพื่อระบุ Gap และวางแผนพัฒนา",
-    tags: ["Skill Map", "Gap", "Team"],
-    prompts: [
-      {
-        label: "สร้าง Skill Matrix",
-        text: `สร้าง Skill Matrix สำหรับทีม [ชื่อทีม] จำนวน [X] คน
-
-ทักษะที่ต้องการวัด: [ระบุ Technical / Soft / Leadership Skills]
-ระดับความสามารถ:
-1 = เริ่มต้น / 2 = พอใช้ / 3 = ชำนาญ
-4 = เชี่ยวชาญ / 5 = สอนคนอื่นได้
-
-จัดทำในรูปแบบตาราง พร้อมระบุ:
-- Required Level ของแต่ละตำแหน่ง
-- Gap Analysis สรุปรายบุคคลและรายทีม
-- แนวทางปิด Gap ที่แนะนำ`
-      }
-    ],
-    tip: "ถ้ามีข้อมูลผลประเมินอยู่แล้ว นำมาวางใน Prompt เลย AI จะช่วยวิเคราะห์ Gap และเสนอแนวทางพัฒนาได้ทันที"
-  },
-  {
-    id: "4.10", section: "development",
-    icon: "📚", title: "Knowledge Management (KM)",
-    shortTitle: "จัดการความรู้",
-    desc: "สร้างระบบจัดการและถ่ายทอดความรู้ในองค์กรอย่างยั่งยืน",
-    tags: ["KM", "Knowledge Transfer", "Brain Drain"],
-    prompts: [
-      {
-        label: "ออกแบบระบบ KM",
-        text: `ออกแบบ Knowledge Management System สำหรับองค์กร [ประเภท]
-ที่มีความเสี่ยงด้าน Brain Drain
-จาก [ระบุกลุ่มพนักงานที่มีความรู้สำคัญ]
-
-ระบุ:
-- Knowledge ที่ต้องจัดเก็บ / รูปแบบการจัดเก็บ
-- กระบวนการ Knowledge Transfer / เครื่องมือที่แนะนำ
-- แรงจูงใจให้พนักงานแบ่งปันความรู้
-- KPI วัดความสำเร็จของ KM Program`
-      }
-    ],
-    tip: "ให้ระบุประเภทของ Knowledge (Explicit vs Tacit) ที่ต้องจัดการ เพื่อให้ AI เสนอวิธีการที่เหมาะสมกับแต่ละประเภท"
-  },
-
-  // ── PERFORMANCE ──
-  {
-    id: "4.11", section: "performance",
-    icon: "🎯", title: "KPIs (Key Performance Indicators)",
-    shortTitle: "กำหนด KPIs",
-    desc: "กำหนดตัวชี้วัดผลงานที่ SMART และเชื่อมโยงกับเป้าหมายองค์กร",
-    tags: ["KPI", "SMART", "Cascade"],
-    prompts: [
-      {
-        label: "สร้าง KPI ระดับตำแหน่ง",
-        text: `กำหนด KPIs สำหรับตำแหน่ง "[ตำแหน่ง]" ในฝ่าย [ฝ่าย]
-ที่เชื่อมโยงกับเป้าหมายองค์กร: [ระบุ Strategic Goal]
-
-สร้าง KPI จำนวน 5-7 ตัว แต่ละตัวระบุ:
-- ชื่อ KPI และนิยาม
-- สูตรการคำนวณ
-- เป้าหมาย (Target) และ Threshold
-- ความถี่ในการวัด (รายเดือน/ไตรมาส/ปี)
-- แหล่งข้อมูล (Data Source)
-- น้ำหนักคะแนน (%)`
-      }
-    ],
-    tip: "ระบุ Strategy Map หรือ Corporate Goal ขององค์กรเพื่อให้ AI สร้าง KPI ที่ Cascade ลงมาจากระดับองค์กรได้อย่างถูกต้อง"
-  },
-  {
-    id: "4.12", section: "performance",
-    icon: "🚀", title: "OKRs (Objectives & Key Results)",
-    shortTitle: "ออกแบบ OKRs",
-    desc: "ออกแบบ Objectives และ Key Results ที่ท้าทายและขับเคลื่อนการเติบโต",
-    tags: ["OKR", "Moonshot", "Alignment"],
-    prompts: [
-      {
-        label: "สร้าง OKRs ระดับทีม",
-        text: `ออกแบบ OKRs สำหรับทีม [ชื่อทีม] ประจำ Q[X] ปี [ปี]
-โดยสอดคล้องกับ Company OKR:
-"[ระบุ Objective ระดับบริษัท]"
-
-สร้าง OKRs 2-3 ชุด แต่ละชุดมี:
-- 1 Objective (สร้างแรงบันดาลใจ กระชับ ชัดเจน)
-- 3-4 Key Results (วัดได้ มีตัวเลข Ambitious แต่ไม่เกินจริง)
-
-พร้อมระบุ Initiatives / Action Plans สำหรับแต่ละ Key Result`
-      }
-    ],
-    tip: "OKR ที่ดีควรมี Moonshot อย่างน้อย 1 ชุด ลองให้ AI สร้างทั้งแบบ Stretch Goal และ Committed Goal เพื่อเปรียบเทียบ"
-  },
-  {
-    id: "4.13", section: "performance",
-    icon: "💡", title: "Expected Competency",
-    shortTitle: "กำหนด Competency คาดหวัง",
-    desc: "กำหนดระดับ Competency ที่คาดหวังตามตำแหน่งและระดับงาน",
-    tags: ["Competency", "Level", "Behavioral"],
-    prompts: [
-      {
-        label: "กำหนด Expected Competency Level",
-        text: `กำหนด Expected Competency Level สำหรับ
-ตำแหน่ง "[ตำแหน่ง]" ระดับ [Junior/Mid/Senior/Manager]
-
-Competency Framework ขององค์กร:
-- Core Competency: [รายชื่อ]
-- Functional Competency: [รายชื่อ]
-- Leadership Competency: [รายชื่อ]
-
-ระบุระดับที่คาดหวัง (1-5) พร้อม Behavioral Indicator
-สำหรับแต่ละ Competency และเปรียบเทียบกับระดับถัดไป`
-      }
-    ],
-    tip: "การเปรียบเทียบกับระดับถัดไปจะช่วยสร้าง Career Progression ที่ชัดเจนและโปร่งใสให้พนักงานเห็นเส้นทางการเติบโต"
-  },
-  {
-    id: "4.14", section: "performance",
-    icon: "📐", title: "กรอบการประเมิน Competency",
-    shortTitle: "ออกแบบการประเมิน",
-    desc: "ออกแบบกระบวนการและเครื่องมือประเมิน Competency ที่เป็นธรรมและมีประสิทธิภาพ",
-    tags: ["Assessment", "Calibration", "Fairness"],
-    prompts: [
-      {
-        label: "ออกแบบกรอบการประเมิน Competency",
-        text: `ออกแบบกรอบการประเมิน Competency สำหรับรอบประเมิน [ปี/รอบ]
-
-ระบุ:
-- วิธีการประเมิน (Self / Boss / Peer / 360)
-- น้ำหนักของแต่ละแหล่งประเมิน
-- Rating Scale และคำจำกัดความแต่ละระดับ
-- Behavioral Evidence ที่ใช้ในการพิจารณา
-- กระบวนการ Calibration เพื่อความเป็นธรรม
-- การเชื่อมโยงผลกับ Salary/Bonus/Promotion`
-      }
-    ],
-    tip: "ระบุปัญหาที่เคยพบในการประเมินที่ผ่านมา เช่น Halo Effect หรือ Central Tendency เพื่อให้ AI ออกแบบกลไกป้องกัน"
-  },
-  {
-    id: "4.15", section: "performance",
-    icon: "💬", title: "Performance Feedback & Coaching",
-    shortTitle: "Feedback & Coaching",
-    desc: "สร้างทักษะและเครื่องมือให้หัวหน้างานสามารถให้ Feedback และ Coach ได้อย่างมีประสิทธิภาพ",
-    tags: ["SBI", "GROW", "Coaching"],
-    prompts: [
-      {
-        label: "สร้าง Feedback Script (SBI Model)",
-        text: `ช่วยเขียน Performance Feedback Script โดยใช้ SBI Model:
-
-Situation: [ระบุสถานการณ์]
-Behavior: [ระบุพฤติกรรมที่สังเกตได้]
-Impact: [ผลกระทบที่เกิดขึ้น]
-
-เขียน Feedback แบบ Constructive 2 เวอร์ชัน:
-1. สำหรับพฤติกรรมที่ต้องปรับปรุง
-2. สำหรับพฤติกรรมที่ต้องการยกย่อง`
-      },
-      {
-        label: "ออกแบบ Coaching Conversation (GROW)",
-        text: `ออกแบบ Coaching Conversation Guide สำหรับหัวหน้างาน
-ที่ต้อง Coach พนักงานในเรื่อง: [ระบุปัญหา/เป้าหมาย]
-
-ใช้ GROW Model: Goal / Reality / Options / Will
-สร้าง Powerful Questions 3-4 ข้อต่อ Stage
-และระบุ Do/Don't สำหรับหัวหน้างานในแต่ละขั้นตอน`
-      }
-    ],
-    tip: "ใส่ตัวอย่างสถานการณ์จริงหรือ Case Study ลงไปใน Prompt จะได้ Script ที่หัวหน้างานนำไปใช้ได้ทันทีโดยไม่ต้องปรับมาก"
-  },
-  {
-    id: "4.16", section: "performance",
-    icon: "🔄", title: "การประเมิน 360 องศา",
-    shortTitle: "360° Feedback",
-    desc: "ออกแบบกระบวนการประเมิน 360 องศาที่น่าเชื่อถือและนำไปสู่การพัฒนาจริง",
-    tags: ["360°", "Multi-rater", "Bias"],
-    prompts: [
-      {
-        label: "ออกแบบแบบสอบถาม 360",
-        text: `ออกแบบแบบสอบถาม 360-Degree Feedback สำหรับ
-ระดับ [หัวหน้างาน/ผู้บริหาร]
-ที่มี Competency หลัก: [ระบุ]
-
-สร้างคำถาม 20-25 ข้อ แบ่งตาม Competency
-ใช้ Rating Scale 5 ระดับ + คำถามปลายเปิด 3 ข้อ
-สำหรับกลุ่มผู้ประเมิน: หัวหน้า / เพื่อนร่วมงาน / ลูกน้อง
-
-ระบุ Guidelines สำหรับผู้ประเมินเพื่อลด Bias`
-      }
-    ],
-    tip: "แยก Prompt สำหรับผู้ประเมินแต่ละกลุ่ม เพราะมุมมองและบริบทของ Boss / Peer / Subordinate ต่างกันมาก"
-  },
-
-  // ── RETENTION ──
-  {
-    id: "4.17", section: "retention",
-    icon: "🛤️", title: "Career Path",
-    shortTitle: "ออกแบบ Career Path",
-    desc: "สร้างเส้นทางความก้าวหน้าในอาชีพที่ชัดเจนและดึงดูดให้พนักงานอยากเติบโตกับองค์กร",
-    tags: ["Career", "Growth", "Progression"],
-    prompts: [
-      {
-        label: "ออกแบบ Career Path Framework",
-        text: `ออกแบบ Career Path Framework สำหรับสายงาน [ชื่อสายงาน]
-ขององค์กร [ประเภทองค์กร]
-
-แสดง Career Tracks ทั้งแบบ:
-1. Vertical (เลื่อนตำแหน่ง): ระบุระดับ/ตำแหน่ง/เกณฑ์เลื่อน
-2. Horizontal (เปลี่ยนสายงาน): ระบุสายงานที่ข้ามได้และ Qualification
-3. Expert Track (เชี่ยวชาญเฉพาะด้าน): ระบุ Level และการยอมรับ
-
-ระบุ Competency / ประสบการณ์ / ผลงานที่ต้องการแต่ละระดับ`
-      }
-    ],
-    tip: "ให้ AI สร้างทั้ง 3 Track จะช่วยให้พนักงานที่ไม่ต้องการเป็นผู้บริหารยังเห็นเส้นทางการเติบโตของตัวเองได้"
-  },
-  {
-    id: "4.18", section: "retention",
-    icon: "👑", title: "Succession Planning",
-    shortTitle: "วางแผนสืบทอดตำแหน่ง",
-    desc: "เตรียมความพร้อมผู้สืบทอดตำแหน่งสำคัญอย่างเป็นระบบ",
-    tags: ["Succession", "9-Box", "Talent"],
-    prompts: [
-      {
-        label: "จัดทำ Succession Plan",
-        text: `จัดทำ Succession Planning Framework สำหรับตำแหน่ง Critical Roles
-ขององค์กร โดยระบุ:
-
-- Critical Positions ที่ต้องวางแผนสืบทอด
-- เกณฑ์ระบุ Successor Candidate (9-Box Grid / Readiness Assessment)
-- แผนพัฒนา Successor แต่ละราย:
-  Ready Now / 1-2 ปี / 3-5 ปี
-- กิจกรรมพัฒนา: Stretch Assignment / Mentoring / Cross-function
-- แผนสำรอง (Emergency Succession) กรณีฉุกเฉิน`
-      }
-    ],
-    tip: "ระบุ Critical Roles และเกณฑ์ Readiness ที่ชัดเจนก่อน เพื่อให้ AI ช่วยออกแบบแผนพัฒนาที่ตรงเป้า"
-  },
-  {
-    id: "4.19", section: "retention",
-    icon: "❤️", title: "Employee Engagement & Experience",
-    shortTitle: "Engagement & Experience",
-    desc: "ออกแบบกลยุทธ์เพิ่มความผูกพันและสร้างประสบการณ์ที่ดีให้พนักงาน",
-    tags: ["Engagement", "Survey", "EX"],
-    prompts: [
-      {
-        label: "ออกแบบ Engagement Survey",
-        text: `ออกแบบ Employee Engagement Survey สำหรับองค์กร [ประเภท]
-วัด 5 มิติหลัก:
-1. Pride & Belonging (ความภาคภูมิใจ)
-2. Manager Relationship (ความสัมพันธ์กับหัวหน้า)
-3. Growth & Development (การเติบโต)
-4. Well-being (ความเป็นอยู่ที่ดี)
-5. Purpose & Alignment (เป้าหมายและทิศทาง)
-
-สร้างคำถาม 3-5 ข้อต่อมิติ
-พร้อม Action Plan Template หลังสำรวจ`
-      },
-      {
-        label: "Employee Journey Mapping",
-        text: `จัดทำ Employee Experience Journey Map
-ตั้งแต่ขั้นตอน Attraction จนถึง Alumni
-
-แต่ละ Touchpoint ระบุ:
-- ประสบการณ์ที่พนักงานรับรู้ (Experience)
-- Pain Points ที่พบบ่อย
-- โอกาสในการปรับปรุง (Moment of Truth)
-- KPI วัดความสำเร็จ`
-      }
-    ],
-    tip: "ให้ AI ช่วยวิเคราะห์ผล Survey ด้วยการ Copy ผลดิบใส่ Prompt แล้วขอสรุป Insight + Priority Actions เพิ่มเติมได้เลย"
-  },
-  {
-    id: "4.20", section: "retention",
-    icon: "💰", title: "Compensation Design",
-    shortTitle: "ออกแบบค่าตอบแทน",
-    desc: "ออกแบบโครงสร้างค่าตอบแทนที่ยุติธรรม แข่งขันได้ และจูงใจพนักงาน",
-    tags: ["Pay Structure", "Equity", "Benefits"],
-    prompts: [
-      {
-        label: "ออกแบบโครงสร้างค่าตอบแทน",
-        text: `ออกแบบโครงสร้างค่าตอบแทน (Compensation Structure)
-สำหรับองค์กร [ประเภท] ขนาด [จำนวนพนักงาน] คน
-อุตสาหกรรม: [ระบุ]
-
-ครอบคลุม:
-1. Job Grading / Job Level Framework
-2. Pay Range (Min-Mid-Max) แต่ละระดับ
-3. Fixed vs Variable Pay Ratio
-4. Benefits Package ที่แนะนำ
-5. กลยุทธ์ Salary Survey และการปรับค่าตอบแทนประจำปี
-6. Pay for Performance Matrix`
-      },
-      {
-        label: "วิเคราะห์ Pay Equity / Gap",
-        text: `วิเคราะห์ Pay Equity และ Internal Equity
-จากข้อมูลต่อไปนี้:
-[วาง Data เงินเดือนพนักงาน หรือ Summary Statistics]
-
-ระบุ:
-- ตำแหน่ง/ระดับที่มี Pay Gap ที่ควรแก้ไข
-- สาเหตุที่เป็นไปได้ / ผลกระทบต่อ Retention
-- Priority Action Plan ในการปรับ`
-      }
-    ],
-    tip: "Compensation เป็นหัวข้อ Sensitive ให้ใช้ AI เป็น Thinking Partner ออกแบบ Framework ก่อน แล้วนำข้อมูลจริงมาประกอบการตัดสินใจในภายหลัง"
-  }
+const DATA=[
+  {id:"4.1",section:"recruitment",icon:"📋",title:"Job Description (JD)",shortTitle:"เขียน JD",desc:"สร้าง Job Description ที่ครบถ้วน ดึงดูด และสอดคล้องกับ Competency ขององค์กร",tags:["JD","Competency","Hiring"],prompts:[{label:"สร้าง JD จากตำแหน่งงาน",text:`คุณเป็น HR Specialist ที่เชี่ยวชาญด้านการเขียน Job Description\nกรุณาสร้าง Job Description สำหรับตำแหน่ง "[ชื่อตำแหน่ง]"\nในอุตสาหกรรม [ประเภทอุตสาหกรรม] ขนาดบริษัท [ขนาด]\n\nโครงสร้างที่ต้องการ:\n1. ชื่อตำแหน่งงาน (Job Title)\n2. วัตถุประสงค์ของตำแหน่ง (Job Purpose) 2-3 ประโยค\n3. หน้าที่และความรับผิดชอบหลัก (Key Responsibilities) 8-10 ข้อ\n4. คุณสมบัติที่ต้องการ: การศึกษา / ประสบการณ์ / ทักษะ\n5. Competency ที่จำเป็น 5 ด้าน\n6. เงื่อนไขการทำงาน (Working Conditions)`},{label:"JD แบบ Competency-Based",text:`สร้าง Competency-Based Job Description สำหรับ "[ตำแหน่ง]"\nโดยอ้างอิงกรอบ Competency ขององค์กรที่มี 3 ระดับ:\n- Core Competency (ทุกตำแหน่ง): [ระบุ]\n- Functional Competency (เฉพาะสายงาน): [ระบุ]\n- Leadership Competency (สำหรับระดับหัวหน้า): [ระบุ]\n\nระบุ Behavioral Indicator สำหรับแต่ละ Competency ด้วย`}],tip:"ยิ่ง Context ละเอียด ยิ่งได้ JD ที่ตรงใจ ควรระบุอุตสาหกรรม ระดับตำแหน่ง และ Competency Framework ที่องค์กรใช้"},
+  {id:"4.2",section:"recruitment",icon:"🔍",title:"Recruitment & Selection",shortTitle:"สรรหาและคัดเลือก",desc:"ออกแบบกระบวนการสรรหา คัดเลือก และเครื่องมือประเมินผู้สมัครอย่างมีประสิทธิภาพ",tags:["Interview","STAR","Selection"],prompts:[{label:"ออกแบบ Structured Interview Guide",text:`ออกแบบ Structured Interview Guide สำหรับตำแหน่ง "[ตำแหน่ง]"\nที่มี Competency สำคัญ ได้แก่: [ระบุ Competency 3-5 ด้าน]\n\nสำหรับแต่ละ Competency ให้สร้าง:\n- คำถามแบบ STAR (Situation, Task, Action, Result) 2 ข้อ\n- Probing Questions 2-3 ข้อ\n- Scoring Rubric (1-5) พร้อมตัวอย่างคำตอบแต่ละระดับ`},{label:"เขียนประกาศรับสมัครงาน",text:`เขียนประกาศรับสมัครงานตำแหน่ง "[ตำแหน่ง]"\nที่ดึงดูดใจและสื่อสาร Employer Brand ของบริษัท [ชื่อบริษัท]\nซึ่งมีค่านิยม: [ระบุ Value 2-3 ข้อ]\n\nใช้ภาษาที่ทันสมัย กระชับ และเน้นสิ่งที่ผู้สมัครจะได้รับ\nความยาวไม่เกิน 300 คำ เหมาะสำหรับโพสต์บน LinkedIn`}],tip:"การระบุ Competency และ STAR Framework ช่วยให้ AI สร้างคำถามที่วัดพฤติกรรมได้จริง ไม่ใช่แค่คำถามทั่วไป"},
+  {id:"4.3",section:"recruitment",icon:"🎯",title:"Onboarding Program",shortTitle:"ต้อนรับพนักงานใหม่",desc:"ออกแบบโปรแกรมต้อนรับพนักงานใหม่ที่ทำให้รู้สึก Engage ตั้งแต่วันแรก",tags:["Onboarding","90 วัน","Checklist"],prompts:[{label:"ออกแบบแผน Onboarding 90 วัน",text:`ออกแบบ Onboarding Program 90 วัน สำหรับพนักงานใหม่ตำแหน่ง "[ตำแหน่ง]"\nแบ่งเป็น 3 Phase:\n\nPhase 1 (วันที่ 1-30): Pre-boarding และ Orientation\nPhase 2 (วันที่ 31-60): Role Integration และ Skill Building\nPhase 3 (วันที่ 61-90): Performance Ramp-Up\n\nแต่ละ Phase ระบุ:\n- กิจกรรม / เป้าหมายการเรียนรู้\n- Checkpoint / ผู้รับผิดชอบ`},{label:"สร้าง Onboarding Checklist",text:`สร้าง Onboarding Checklist ที่ครอบคลุม 4 มิติ:\n1. Administrative (เอกสาร / อุปกรณ์ / การเข้าถึงระบบ)\n2. Cultural (ค่านิยม / วัฒนธรรมองค์กร / กฎระเบียบ)\n3. Functional (ความรู้งาน / กระบวนการ / เครื่องมือ)\n4. Social (ทีมงาน / Buddy System / Network)\n\nระบุผู้รับผิดชอบ (HR/หัวหน้า/Buddy) และ Timeline สำหรับแต่ละรายการ`}],tip:"การแบ่ง Onboarding เป็น Phase ช่วยให้ AI วางแผนได้ละเอียดและสมจริง ควรระบุขนาดทีมและวัฒนธรรมองค์กรเพิ่มเติม"},
+  {id:"4.4",section:"development",icon:"🔬",title:"Training Needs Analysis",shortTitle:"วิเคราะห์ Training Needs",desc:"วิเคราะห์และระบุความต้องการพัฒนาบุคลากรอย่างเป็นระบบ",tags:["TNA","Gap Analysis","Survey"],prompts:[{label:"วิเคราะห์ Training Needs จากผลประเมิน",text:`วิเคราะห์ Training Needs สำหรับทีม [ชื่อทีม/ฝ่าย]\nจากข้อมูลต่อไปนี้:\n- ผลการประเมิน Competency: [ระบุคะแนนหรืออัตราการผ่าน]\n- ผล KPI ที่ไม่บรรลุเป้า: [ระบุ]\n- Feedback จากหัวหน้างาน: [ระบุ]\n\nวิเคราะห์ Gap และจัดลำดับความสำคัญ Training Needs\nพร้อมเสนอรูปแบบการพัฒนาที่เหมาะสม (Training/Coaching/E-Learning)`},{label:"สร้างแบบสอบถาม TNA",text:`สร้างแบบสอบถาม Training Needs Analysis (TNA)\nสำหรับพนักงานระดับ [ระดับ] ในสายงาน [สายงาน]\n\nครอบคลุม 4 ด้าน:\nTechnical Skills / Soft Skills / Leadership Skills / Digital Literacy\n\nใช้ Rating Scale 1-5\nมีคำถามปลายเปิด 3-5 ข้อ พร้อมคำชี้แจงที่ชัดเจนและเป็นกันเอง`}],tip:"ใส่ข้อมูลผลการประเมินจริงหรือตัวอย่างเข้าไปใน Prompt จะได้ผลการวิเคราะห์ที่แม่นยำและนำไปใช้ได้ทันที"},
+  {id:"4.5",section:"development",icon:"🗺️",title:"Training Roadmap (TRM)",shortTitle:"วางแผน Training",desc:"วางแผนการพัฒนาพนักงานรายปีและรายบุคคลอย่างเป็นระบบ",tags:["Roadmap","Annual Plan","Budget"],prompts:[{label:"สร้าง Annual Training Roadmap",text:`สร้าง Annual Training Roadmap สำหรับ [ชื่อแผนก] ปี [ปี]\nโดยอิง Training Needs ดังนี้: [สรุป TNA ที่ได้]\n\nจัดทำตาราง Roadmap แสดง:\n- หลักสูตร / รูปแบบ / ระยะเวลา / กลุ่มเป้าหมาย\n- เดือนที่จัด (Q1-Q4) / งบประมาณโดยประมาณ\n- ผู้รับผิดชอบ (Internal/External)\n- วิธีวัดผลหลังการอบรม`}],tip:"ระบุงบประมาณและจำนวนพนักงานในทีมเพื่อให้ Roadmap มีความเป็นไปได้จริงในทางปฏิบัติ"},
+  {id:"4.6",section:"development",icon:"📊",title:"ประเมินผลการอบรม",shortTitle:"วัดผลอบรม",desc:"วัดผลการอบรมอย่างครบถ้วนตาม Kirkpatrick Model 4 ระดับ",tags:["Kirkpatrick","ROI","Evaluation"],prompts:[{label:"ออกแบบเครื่องมือประเมิน 4 ระดับ",text:`ออกแบบระบบประเมินผลการอบรมหลักสูตร "[ชื่อหลักสูตร]"\nตาม Kirkpatrick Model 4 ระดับ:\n\nLevel 1 Reaction: แบบสอบถามความพึงพอใจ (10 ข้อ)\nLevel 2 Learning: Pre/Post Test (15 ข้อ)\nLevel 3 Behavior: แบบประเมิน 30 วันหลังอบรม (สำหรับหัวหน้า)\nLevel 4 Results: KPI ที่ใช้วัดผลกระทบต่อธุรกิจ\n\nระบุ Timeline และผู้รับผิดชอบแต่ละระดับ`}],tip:"การระบุ Learning Objectives ของหลักสูตรก่อน จะช่วยให้ AI สร้างเครื่องมือวัดผลที่ตรงประเด็น"},
+  {id:"4.7",section:"development",icon:"🌱",title:"Individual Development Plan (IDP)",shortTitle:"แผนพัฒนารายบุคคล",desc:"สร้างแผนพัฒนารายบุคคลที่ตอบโจทย์ทั้ง Career Goal และความต้องการองค์กร",tags:["IDP","70:20:10","Career"],prompts:[{label:"สร้าง IDP รายบุคคล",text:`สร้าง Individual Development Plan (IDP) สำหรับพนักงาน:\n- ตำแหน่งปัจจุบัน: [ตำแหน่ง] / ระดับ: [ระดับ]\n- เป้าหมาย Career ระยะ 2-3 ปี: [ระบุ]\n- Strength: [ระบุจุดแข็ง]\n- Development Area: [ระบุจุดที่ต้องพัฒนา]\n- รูปแบบการเรียนรู้ที่ชอบ: [Classroom/Online/OJT]\n\nจัดทำแผนพัฒนา 70:20:10 Model\n(70% Experience / 20% Exposure / 10% Education)`}],tip:"ให้พนักงานช่วยกรอก Context เกี่ยวกับตัวเองก่อน แล้วนำมาใส่ใน Prompt จะได้ IDP ที่ตรงความต้องการจริงๆ"},
+  {id:"4.8",section:"development",icon:"⚙️",title:"OJT / Special Assignment / Job Shadow",shortTitle:"เรียนรู้จากงานจริง",desc:"ออกแบบการเรียนรู้จากประสบการณ์ในงานจริงอย่างมีโครงสร้าง",tags:["OJT","Mentor","Experiential"],prompts:[{label:"ออกแบบแผน OJT",text:`ออกแบบแผน On-the-Job Training (OJT) สำหรับ\nพนักงานใหม่ตำแหน่ง "[ตำแหน่ง]" ระยะเวลา [X] วัน\n\nLearning Objective ที่ต้องการ: [ระบุ 3-5 ข้อ]\n\nแผนต้องระบุ:\n- กิจกรรมการเรียนรู้รายวัน / Mentor ที่รับผิดชอบ\n- Milestone Checkpoint / วิธีประเมินความสำเร็จ\n- Signoff Criteria ก่อนเริ่มทำงานอิสระ`}],tip:"ระบุ Competency ที่ต้องการพัฒนาและตัวชี้วัดความสำเร็จที่วัดได้จริง"},
+  {id:"4.9",section:"development",icon:"🧮",title:"Skill Matrix",shortTitle:"แผนภูมิทักษะทีม",desc:"สร้างแผนภูมิทักษะทีมเพื่อระบุ Gap และวางแผนพัฒนา",tags:["Skill Map","Gap","Team"],prompts:[{label:"สร้าง Skill Matrix",text:`สร้าง Skill Matrix สำหรับทีม [ชื่อทีม] จำนวน [X] คน\n\nทักษะที่ต้องการวัด: [ระบุ Technical / Soft / Leadership Skills]\nระดับความสามารถ:\n1 = เริ่มต้น / 2 = พอใช้ / 3 = ชำนาญ\n4 = เชี่ยวชาญ / 5 = สอนคนอื่นได้\n\nจัดทำในรูปแบบตาราง พร้อมระบุ:\n- Required Level ของแต่ละตำแหน่ง\n- Gap Analysis สรุปรายบุคคลและรายทีม\n- แนวทางปิด Gap ที่แนะนำ`}],tip:"ถ้ามีข้อมูลผลประเมินอยู่แล้ว นำมาวางใน Prompt เลย AI จะช่วยวิเคราะห์ Gap และเสนอแนวทางพัฒนาได้ทันที"},
+  {id:"4.10",section:"development",icon:"📚",title:"Knowledge Management (KM)",shortTitle:"จัดการความรู้",desc:"สร้างระบบจัดการและถ่ายทอดความรู้ในองค์กรอย่างยั่งยืน",tags:["KM","Knowledge Transfer","Brain Drain"],prompts:[{label:"ออกแบบระบบ KM",text:`ออกแบบ Knowledge Management System สำหรับองค์กร [ประเภท]\nที่มีความเสี่ยงด้าน Brain Drain\nจาก [ระบุกลุ่มพนักงานที่มีความรู้สำคัญ]\n\nระบุ:\n- Knowledge ที่ต้องจัดเก็บ / รูปแบบการจัดเก็บ\n- กระบวนการ Knowledge Transfer / เครื่องมือที่แนะนำ\n- แรงจูงใจให้พนักงานแบ่งปันความรู้\n- KPI วัดความสำเร็จของ KM Program`}],tip:"ให้ระบุประเภทของ Knowledge (Explicit vs Tacit) ที่ต้องจัดการ"},
+  {id:"4.11",section:"performance",icon:"🎯",title:"KPIs (Key Performance Indicators)",shortTitle:"กำหนด KPIs",desc:"กำหนดตัวชี้วัดผลงานที่ SMART และเชื่อมโยงกับเป้าหมายองค์กร",tags:["KPI","SMART","Cascade"],prompts:[{label:"สร้าง KPI ระดับตำแหน่ง",text:`กำหนด KPIs สำหรับตำแหน่ง "[ตำแหน่ง]" ในฝ่าย [ฝ่าย]\nที่เชื่อมโยงกับเป้าหมายองค์กร: [ระบุ Strategic Goal]\n\nสร้าง KPI จำนวน 5-7 ตัว แต่ละตัวระบุ:\n- ชื่อ KPI และนิยาม\n- สูตรการคำนวณ\n- เป้าหมาย (Target) และ Threshold\n- ความถี่ในการวัด (รายเดือน/ไตรมาส/ปี)\n- แหล่งข้อมูล (Data Source)\n- น้ำหนักคะแนน (%)`}],tip:"ระบุ Strategy Map หรือ Corporate Goal ขององค์กรเพื่อให้ AI สร้าง KPI ที่ Cascade ลงมาได้ถูกต้อง"},
+  {id:"4.12",section:"performance",icon:"🚀",title:"OKRs (Objectives & Key Results)",shortTitle:"ออกแบบ OKRs",desc:"ออกแบบ Objectives และ Key Results ที่ท้าทายและขับเคลื่อนการเติบโต",tags:["OKR","Moonshot","Alignment"],prompts:[{label:"สร้าง OKRs ระดับทีม",text:`ออกแบบ OKRs สำหรับทีม [ชื่อทีม] ประจำ Q[X] ปี [ปี]\nโดยสอดคล้องกับ Company OKR:\n"[ระบุ Objective ระดับบริษัท]"\n\nสร้าง OKRs 2-3 ชุด แต่ละชุดมี:\n- 1 Objective (สร้างแรงบันดาลใจ กระชับ ชัดเจน)\n- 3-4 Key Results (วัดได้ มีตัวเลข Ambitious แต่ไม่เกินจริง)\n\nพร้อมระบุ Initiatives / Action Plans สำหรับแต่ละ Key Result`}],tip:"OKR ที่ดีควรมี Moonshot อย่างน้อย 1 ชุด ลองให้ AI สร้างทั้งแบบ Stretch Goal และ Committed Goal เพื่อเปรียบเทียบ"},
+  {id:"4.13",section:"performance",icon:"💡",title:"Expected Competency",shortTitle:"กำหนด Competency คาดหวัง",desc:"กำหนดระดับ Competency ที่คาดหวังตามตำแหน่งและระดับงาน",tags:["Competency","Level","Behavioral"],prompts:[{label:"กำหนด Expected Competency Level",text:`กำหนด Expected Competency Level สำหรับ\nตำแหน่ง "[ตำแหน่ง]" ระดับ [Junior/Mid/Senior/Manager]\n\nCompetency Framework ขององค์กร:\n- Core Competency: [รายชื่อ]\n- Functional Competency: [รายชื่อ]\n- Leadership Competency: [รายชื่อ]\n\nระบุระดับที่คาดหวัง (1-5) พร้อม Behavioral Indicator\nสำหรับแต่ละ Competency และเปรียบเทียบกับระดับถัดไป`}],tip:"การเปรียบเทียบกับระดับถัดไปจะช่วยสร้าง Career Progression ที่ชัดเจน"},
+  {id:"4.14",section:"performance",icon:"📐",title:"กรอบการประเมิน Competency",shortTitle:"ออกแบบการประเมิน",desc:"ออกแบบกระบวนการและเครื่องมือประเมิน Competency ที่เป็นธรรมและมีประสิทธิภาพ",tags:["Assessment","Calibration","Fairness"],prompts:[{label:"ออกแบบกรอบการประเมิน Competency",text:`ออกแบบกรอบการประเมิน Competency สำหรับรอบประเมิน [ปี/รอบ]\n\nระบุ:\n- วิธีการประเมิน (Self / Boss / Peer / 360)\n- น้ำหนักของแต่ละแหล่งประเมิน\n- Rating Scale และคำจำกัดความแต่ละระดับ\n- Behavioral Evidence ที่ใช้ในการพิจารณา\n- กระบวนการ Calibration เพื่อความเป็นธรรม\n- การเชื่อมโยงผลกับ Salary/Bonus/Promotion`}],tip:"ระบุปัญหาที่เคยพบในการประเมินที่ผ่านมา เช่น Halo Effect หรือ Central Tendency เพื่อให้ AI ออกแบบกลไกป้องกัน"},
+  {id:"4.15",section:"performance",icon:"💬",title:"Performance Feedback & Coaching",shortTitle:"Feedback & Coaching",desc:"สร้างทักษะและเครื่องมือให้หัวหน้างานสามารถให้ Feedback และ Coach ได้อย่างมีประสิทธิภาพ",tags:["SBI","GROW","Coaching"],prompts:[{label:"สร้าง Feedback Script (SBI Model)",text:`ช่วยเขียน Performance Feedback Script โดยใช้ SBI Model:\n\nSituation: [ระบุสถานการณ์]\nBehavior: [ระบุพฤติกรรมที่สังเกตได้]\nImpact: [ผลกระทบที่เกิดขึ้น]\n\nเขียน Feedback แบบ Constructive 2 เวอร์ชัน:\n1. สำหรับพฤติกรรมที่ต้องปรับปรุง\n2. สำหรับพฤติกรรมที่ต้องการยกย่อง`},{label:"ออกแบบ Coaching Conversation (GROW)",text:`ออกแบบ Coaching Conversation Guide สำหรับหัวหน้างาน\nที่ต้อง Coach พนักงานในเรื่อง: [ระบุปัญหา/เป้าหมาย]\n\nใช้ GROW Model: Goal / Reality / Options / Will\nสร้าง Powerful Questions 3-4 ข้อต่อ Stage\nและระบุ Do/Don't สำหรับหัวหน้างานในแต่ละขั้นตอน`}],tip:"ใส่ตัวอย่างสถานการณ์จริงหรือ Case Study ลงไปใน Prompt จะได้ Script ที่หัวหน้างานนำไปใช้ได้ทันที"},
+  {id:"4.16",section:"performance",icon:"🔄",title:"การประเมิน 360 องศา",shortTitle:"360° Feedback",desc:"ออกแบบกระบวนการประเมิน 360 องศาที่น่าเชื่อถือและนำไปสู่การพัฒนาจริง",tags:["360°","Multi-rater","Bias"],prompts:[{label:"ออกแบบแบบสอบถาม 360",text:`ออกแบบแบบสอบถาม 360-Degree Feedback สำหรับ\nระดับ [หัวหน้างาน/ผู้บริหาร]\nที่มี Competency หลัก: [ระบุ]\n\nสร้างคำถาม 20-25 ข้อ แบ่งตาม Competency\nใช้ Rating Scale 5 ระดับ + คำถามปลายเปิด 3 ข้อ\nสำหรับกลุ่มผู้ประเมิน: หัวหน้า / เพื่อนร่วมงาน / ลูกน้อง\n\nระบุ Guidelines สำหรับผู้ประเมินเพื่อลด Bias`}],tip:"แยก Prompt สำหรับผู้ประเมินแต่ละกลุ่ม เพราะมุมมองของ Boss / Peer / Subordinate ต่างกันมาก"},
+  {id:"4.17",section:"retention",icon:"🛤️",title:"Career Path",shortTitle:"ออกแบบ Career Path",desc:"สร้างเส้นทางความก้าวหน้าในอาชีพที่ชัดเจนและดึงดูดให้พนักงานอยากเติบโตกับองค์กร",tags:["Career","Growth","Progression"],prompts:[{label:"ออกแบบ Career Path Framework",text:`ออกแบบ Career Path Framework สำหรับสายงาน [ชื่อสายงาน]\nขององค์กร [ประเภทองค์กร]\n\nแสดง Career Tracks ทั้งแบบ:\n1. Vertical (เลื่อนตำแหน่ง): ระบุระดับ/ตำแหน่ง/เกณฑ์เลื่อน\n2. Horizontal (เปลี่ยนสายงาน): ระบุสายงานที่ข้ามได้และ Qualification\n3. Expert Track (เชี่ยวชาญเฉพาะด้าน): ระบุ Level และการยอมรับ\n\nระบุ Competency / ประสบการณ์ / ผลงานที่ต้องการแต่ละระดับ`}],tip:"ให้ AI สร้างทั้ง 3 Track จะช่วยให้พนักงานที่ไม่ต้องการเป็นผู้บริหารยังเห็นเส้นทางการเติบโตของตัวเองได้"},
+  {id:"4.18",section:"retention",icon:"👑",title:"Succession Planning",shortTitle:"วางแผนสืบทอดตำแหน่ง",desc:"เตรียมความพร้อมผู้สืบทอดตำแหน่งสำคัญอย่างเป็นระบบ",tags:["Succession","9-Box","Talent"],prompts:[{label:"จัดทำ Succession Plan",text:`จัดทำ Succession Planning Framework สำหรับตำแหน่ง Critical Roles\nขององค์กร โดยระบุ:\n\n- Critical Positions ที่ต้องวางแผนสืบทอด\n- เกณฑ์ระบุ Successor Candidate (9-Box Grid / Readiness Assessment)\n- แผนพัฒนา Successor แต่ละราย:\n  Ready Now / 1-2 ปี / 3-5 ปี\n- กิจกรรมพัฒนา: Stretch Assignment / Mentoring / Cross-function\n- แผนสำรอง (Emergency Succession) กรณีฉุกเฉิน`}],tip:"ระบุ Critical Roles และเกณฑ์ Readiness ที่ชัดเจนก่อน เพื่อให้ AI ช่วยออกแบบแผนพัฒนาที่ตรงเป้า"},
+  {id:"4.19",section:"retention",icon:"❤️",title:"Employee Engagement & Experience",shortTitle:"Engagement & Experience",desc:"ออกแบบกลยุทธ์เพิ่มความผูกพันและสร้างประสบการณ์ที่ดีให้พนักงาน",tags:["Engagement","Survey","EX"],prompts:[{label:"ออกแบบ Engagement Survey",text:`ออกแบบ Employee Engagement Survey สำหรับองค์กร [ประเภท]\nวัด 5 มิติหลัก:\n1. Pride & Belonging (ความภาคภูมิใจ)\n2. Manager Relationship (ความสัมพันธ์กับหัวหน้า)\n3. Growth & Development (การเติบโต)\n4. Well-being (ความเป็นอยู่ที่ดี)\n5. Purpose & Alignment (เป้าหมายและทิศทาง)\n\nสร้างคำถาม 3-5 ข้อต่อมิติ\nพร้อม Action Plan Template หลังสำรวจ`},{label:"Employee Journey Mapping",text:`จัดทำ Employee Experience Journey Map\nตั้งแต่ขั้นตอน Attraction จนถึง Alumni\n\nแต่ละ Touchpoint ระบุ:\n- ประสบการณ์ที่พนักงานรับรู้ (Experience)\n- Pain Points ที่พบบ่อย\n- โอกาสในการปรับปรุง (Moment of Truth)\n- KPI วัดความสำเร็จ`}],tip:"ให้ AI ช่วยวิเคราะห์ผล Survey ด้วยการ Copy ผลดิบใส่ Prompt แล้วขอสรุป Insight + Priority Actions เพิ่มเติมได้เลย"},
+  {id:"4.20",section:"retention",icon:"💰",title:"Compensation Design",shortTitle:"ออกแบบค่าตอบแทน",desc:"ออกแบบโครงสร้างค่าตอบแทนที่ยุติธรรม แข่งขันได้ และจูงใจพนักงาน",tags:["Pay Structure","Equity","Benefits"],prompts:[{label:"ออกแบบโครงสร้างค่าตอบแทน",text:`ออกแบบโครงสร้างค่าตอบแทน (Compensation Structure)\nสำหรับองค์กร [ประเภท] ขนาด [จำนวนพนักงาน] คน\nอุตสาหกรรม: [ระบุ]\n\nครอบคลุม:\n1. Job Grading / Job Level Framework\n2. Pay Range (Min-Mid-Max) แต่ละระดับ\n3. Fixed vs Variable Pay Ratio\n4. Benefits Package ที่แนะนำ\n5. กลยุทธ์ Salary Survey และการปรับค่าตอบแทนประจำปี\n6. Pay for Performance Matrix`},{label:"วิเคราะห์ Pay Equity / Gap",text:`วิเคราะห์ Pay Equity และ Internal Equity\nจากข้อมูลต่อไปนี้:\n[วาง Data เงินเดือนพนักงาน หรือ Summary Statistics]\n\nระบุ:\n- ตำแหน่ง/ระดับที่มี Pay Gap ที่ควรแก้ไข\n- สาเหตุที่เป็นไปได้ / ผลกระทบต่อ Retention\n- Priority Action Plan ในการปรับ`}],tip:"Compensation เป็นหัวข้อ Sensitive ให้ใช้ AI เป็น Thinking Partner ออกแบบ Framework ก่อน แล้วนำข้อมูลจริงมาประกอบการตัดสินใจ"}
 ];
 
-const SECTIONS = {
-  recruitment: { label: "การสรรหาและคัดเลือก", color: "var(--c1)" },
-  development:  { label: "การพัฒนาบุคลากร",    color: "var(--c2)" },
-  performance:  { label: "การบริหารผลงาน",      color: "var(--c3)" },
-  retention:    { label: "การจูงใจและรักษา",    color: "var(--c4)" }
-};
+const SECTIONS={recruitment:{label:"การสรรหาและคัดเลือก",color:"var(--c1)"},development:{label:"การพัฒนาบุคลากร",color:"var(--c2)"},performance:{label:"การบริหารผลงาน",color:"var(--c3)"},retention:{label:"การจูงใจและรักษา",color:"var(--c4)"}};
 
-let activeSection = "all";
-let activeIdx = -1;
-let filteredData = [...DATA];
+let activeSection="all",activeIdx=-1,filteredData=[...DATA];
 
-// ── Build UI ──
-function renderCards(data) {
-  const container = document.getElementById("cards-container");
-  container.innerHTML = "";
-
-  if (!data.length) {
-    container.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div><p>ไม่พบหัวข้อที่ค้นหา</p></div>`;
-    return;
-  }
-
-  // Group by section
-  const grouped = {};
-  data.forEach(item => {
-    if (!grouped[item.section]) grouped[item.section] = [];
-    grouped[item.section].push(item);
-  });
-
-  let delay = 0;
-  Object.entries(grouped).forEach(([sec, items]) => {
-    // Section divider
-    const divider = document.createElement("div");
-    divider.className = "section-divider";
-    divider.innerHTML = `
-      <div class="line"></div>
-      <h2 style="color:${SECTIONS[sec].color}">${SECTIONS[sec].label}</h2>
-      <span class="count">${items.length} หัวข้อ</span>
-      <div class="line"></div>`;
+function renderCards(data){
+  const container=document.getElementById("cards-container");
+  container.innerHTML="";
+  if(!data.length){container.innerHTML=`<div class="empty"><div class="empty-icon">🔍</div><p>ไม่พบหัวข้อที่ค้นหา</p></div>`;return;}
+  const grouped={};
+  data.forEach(item=>{if(!grouped[item.section])grouped[item.section]=[];grouped[item.section].push(item);});
+  let delay=0;
+  Object.entries(grouped).forEach(([sec,items])=>{
+    const divider=document.createElement("div");
+    divider.className="section-divider";
+    divider.innerHTML=`<div class="line"></div><h2 style="color:${SECTIONS[sec].color}">${SECTIONS[sec].label}</h2><span class="count">${items.length} หัวข้อ</span><div class="line"></div>`;
     container.appendChild(divider);
-
-    // Grid
-    const grid = document.createElement("div");
-    grid.className = "cards-grid";
-
-    items.forEach((item) => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.dataset.section = item.section;
-      card.style.animationDelay = `${delay * 40}ms`;
-      delay++;
-
-      const tagsHtml = item.tags.map(t => `<span class="tag">${t}</span>`).join("");
-      card.innerHTML = `
-        <div class="card-num">${item.id}</div>
-        <span class="card-icon">${item.icon}</span>
-        <div class="card-title">${item.title}</div>
-        <div class="card-desc">${item.desc}</div>
-        <div class="card-tags">${tagsHtml}</div>
-        <span class="card-arrow">→</span>`;
-
-      card.addEventListener("click", () => openModal(DATA.indexOf(item)));
+    const grid=document.createElement("div");
+    grid.className="cards-grid";
+    items.forEach(item=>{
+      const card=document.createElement("div");
+      card.className="card";card.dataset.section=item.section;card.style.animationDelay=`${delay*40}ms`;delay++;
+      const tagsHtml=item.tags.map(t=>`<span class="tag">${t}</span>`).join("");
+      card.innerHTML=`<div class="card-num">${item.id}</div><span class="card-icon">${item.icon}</span><div class="card-title">${item.title}</div><div class="card-desc">${item.desc}</div><div class="card-tags">${tagsHtml}</div><span class="card-arrow">→</span>`;
+      card.addEventListener("click",()=>openModal(DATA.indexOf(item)));
       grid.appendChild(card);
     });
-
     container.appendChild(grid);
   });
 }
 
-// ── Modal ──
-function openModal(idx) {
-  activeIdx = idx;
-  const item = DATA[idx];
-  const overlay = document.getElementById("modal-overlay");
-  const modal = document.getElementById("modal");
-
-  modal.dataset.section = item.section;
-  document.getElementById("modal-num").textContent = `หัวข้อ ${item.id} · ${SECTIONS[item.section].label}`;
-  document.getElementById("modal-title").textContent = `${item.icon} ${item.title}`;
-  document.getElementById("modal-obj").textContent = `วัตถุประสงค์: ${item.desc}`;
-
-  const body = document.getElementById("modal-body");
-  let html = "";
-
-  item.prompts.forEach((p, i) => {
-    html += `
-      <div class="prompt-block">
-        <div class="prompt-label">Prompt ${item.prompts.length > 1 ? (i + 1) : ""}: ${p.label}</div>
-        <div class="prompt-code" id="prompt-code-${i}">${escapeHtml(p.text)}<button class="copy-btn" data-idx="${i}">คัดลอก</button></div>
-      </div>`;
-  });
-
-  html += `<div class="tip-box"><strong>💡 เคล็ดลับ</strong>${item.tip}</div>`;
-  html += `<div class="modal-nav">
-    <button id="prev-btn" ${idx === 0 ? "disabled" : ""}>← ก่อนหน้า</button>
-    <button id="next-btn" ${idx === DATA.length - 1 ? "disabled" : ""}>ถัดไป →</button>
-  </div>`;
-
-  body.innerHTML = html;
-
-  // Copy buttons
-  body.querySelectorAll(".copy-btn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const i = +btn.dataset.idx;
-      navigator.clipboard.writeText(item.prompts[i].text).then(() => {
-        btn.textContent = "✓ คัดลอกแล้ว";
-        btn.classList.add("copied");
-        setTimeout(() => { btn.textContent = "คัดลอก"; btn.classList.remove("copied"); }, 2000);
-      });
-    });
-  });
-
-  // Nav buttons
-  document.getElementById("prev-btn")?.addEventListener("click", () => openModal(idx - 1));
-  document.getElementById("next-btn")?.addEventListener("click", () => openModal(idx + 1));
-
-  overlay.classList.add("open");
-  modal.scrollTop = 0;
-  document.body.style.overflow = "hidden";
+function openModal(idx){
+  activeIdx=idx;
+  const item=DATA[idx];
+  const overlay=document.getElementById("modal-overlay");
+  const modal=document.getElementById("modal");
+  modal.dataset.section=item.section;
+  document.getElementById("modal-num").textContent=`หัวข้อ ${item.id} · ${SECTIONS[item.section].label}`;
+  document.getElementById("modal-title").textContent=`${item.icon} ${item.title}`;
+  document.getElementById("modal-obj").textContent=`วัตถุประสงค์: ${item.desc}`;
+  const body=document.getElementById("modal-body");
+  let html="";
+  item.prompts.forEach((p,i)=>{html+=`<div class="prompt-block"><div class="prompt-label">Prompt ${item.prompts.length>1?(i+1):""}: ${p.label}</div><div class="prompt-code" id="prompt-code-${i}">${escapeHtml(p.text)}<button class="copy-btn" data-idx="${i}">คัดลอก</button></div></div>`;});
+  html+=`<div class="tip-box"><strong>💡 เคล็ดลับ</strong>${item.tip}</div>`;
+  html+=`<div class="modal-nav"><button id="prev-btn" ${idx===0?"disabled":""}>← ก่อนหน้า</button><button id="next-btn" ${idx===DATA.length-1?"disabled":""}>ถัดไป →</button></div>`;
+  body.innerHTML=html;
+  body.querySelectorAll(".copy-btn").forEach(btn=>{btn.addEventListener("click",(e)=>{e.stopPropagation();const i=+btn.dataset.idx;navigator.clipboard.writeText(item.prompts[i].text).then(()=>{btn.textContent="✓ คัดลอกแล้ว";btn.classList.add("copied");setTimeout(()=>{btn.textContent="คัดลอก";btn.classList.remove("copied");},2000);});});});
+  document.getElementById("prev-btn")?.addEventListener("click",()=>openModal(idx-1));
+  document.getElementById("next-btn")?.addEventListener("click",()=>openModal(idx+1));
+  overlay.classList.add("open");modal.scrollTop=0;document.body.style.overflow="hidden";
 }
 
-function closeModal() {
-  document.getElementById("modal-overlay").classList.remove("open");
-  document.body.style.overflow = "";
-}
+function closeModal(){document.getElementById("modal-overlay").classList.remove("open");document.body.style.overflow="";}
+function escapeHtml(str){return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
 
-function escapeHtml(str) {
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
-
-// ── Filtering ──
-function applyFilters() {
-  const q = document.getElementById("search").value.toLowerCase().trim();
-  filteredData = DATA.filter(item => {
-    const matchSection = activeSection === "all" || item.section === activeSection;
-    const matchSearch = !q || item.title.toLowerCase().includes(q)
-      || item.desc.toLowerCase().includes(q)
-      || item.id.includes(q)
-      || item.tags.some(t => t.toLowerCase().includes(q));
-    return matchSection && matchSearch;
-  });
+function applyFilters(){
+  const q=document.getElementById("search").value.toLowerCase().trim();
+  filteredData=DATA.filter(item=>{const ms=activeSection==="all"||item.section===activeSection;const mq=!q||item.title.toLowerCase().includes(q)||item.desc.toLowerCase().includes(q)||item.id.includes(q)||item.tags.some(t=>t.toLowerCase().includes(q));return ms&&mq;});
   renderCards(filteredData);
 }
 
-// ── Events ──
-document.querySelectorAll(".tab").forEach(tab => {
-  tab.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    tab.classList.add("active");
-    activeSection = tab.dataset.section;
-    applyFilters();
-  });
-});
+document.querySelectorAll(".tab").forEach(tab=>{tab.addEventListener("click",()=>{document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));tab.classList.add("active");activeSection=tab.dataset.section;applyFilters();});});
+document.getElementById("search").addEventListener("input",applyFilters);
+document.getElementById("close-btn").addEventListener("click",closeModal);
+document.getElementById("modal-overlay").addEventListener("click",(e)=>{if(e.target===document.getElementById("modal-overlay"))closeModal();});
+document.addEventListener("keydown",(e)=>{if(e.key==="Escape")closeModal();if(e.key==="ArrowRight"&&activeIdx>=0&&activeIdx<DATA.length-1)openModal(activeIdx+1);if(e.key==="ArrowLeft"&&activeIdx>0)openModal(activeIdx-1);});
 
-document.getElementById("search").addEventListener("input", applyFilters);
+/* Theme */
+const htmlEl=document.documentElement;
+const toggleBtn=document.getElementById("theme-toggle");
+const themeIcon=toggleBtn.querySelector(".theme-icon");
+const themeLabel=toggleBtn.querySelector(".theme-label");
+let isLight=false;
+function applyTheme(light){isLight=light;if(light){htmlEl.classList.add("light");themeIcon.textContent="🌙";themeLabel.textContent="Dark";}else{htmlEl.classList.remove("light");themeIcon.textContent="☀️";themeLabel.textContent="Light";}localStorage.setItem("hrDashTheme",light?"light":"dark");}
+toggleBtn.addEventListener("click",()=>applyTheme(!isLight));
+const saved=localStorage.getItem("hrDashTheme");
+if(saved==="light")applyTheme(true);
 
-document.getElementById("close-btn").addEventListener("click", closeModal);
-document.getElementById("modal-overlay").addEventListener("click", (e) => {
-  if (e.target === document.getElementById("modal-overlay")) closeModal();
-});
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeModal();
-  if (e.key === "ArrowRight" && activeIdx >= 0 && activeIdx < DATA.length - 1) openModal(activeIdx + 1);
-  if (e.key === "ArrowLeft" && activeIdx > 0) openModal(activeIdx - 1);
-});
-
-// ── Theme Toggle ──
-const html = document.documentElement;
-const toggleBtn = document.getElementById("theme-toggle");
-const themeIcon = toggleBtn.querySelector(".theme-icon");
-const themeLabel = toggleBtn.querySelector(".theme-label");
-let isLight = false;
-
-function applyTheme(light) {
-  isLight = light;
-  if (light) {
-    html.classList.add("light");
-    themeIcon.textContent = "🌙";
-    themeLabel.textContent = "Dark";
-    toggleBtn.title = "เปลี่ยนเป็น Dark Mode";
-  } else {
-    html.classList.remove("light");
-    themeIcon.textContent = "☀️";
-    themeLabel.textContent = "Light";
-    toggleBtn.title = "เปลี่ยนเป็น Light Mode";
-  }
-  localStorage.setItem("hrDashTheme", light ? "light" : "dark");
-}
-
-toggleBtn.addEventListener("click", () => applyTheme(!isLight));
-
-// Restore saved preference
-const saved = localStorage.getItem("hrDashTheme");
-if (saved === "light") applyTheme(true);
-
-// ── Init ──
 renderCards(DATA);
 </script>
 </body>
