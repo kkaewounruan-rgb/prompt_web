@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>คู่มือการใช้งาน CHATGPT - KAIZEN SMART</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "surface-container-lowest":"#ffffff","on-primary":"#ffffff","secondary-fixed":"#86f8c9",
+          "on-primary-container":"#cfebff","status-error":"#D32F2F","on-tertiary":"#ffffff",
+          "surface":"#fcf9f8","on-error-container":"#93000a","on-tertiary-fixed-variant":"#332dbc",
+          "primary-fixed-dim":"#8ccef8","surface-dim":"#dcd9d9","surface-white":"#FFFFFF",
+          "outline":"#70787e","on-tertiary-container":"#e7e4ff","tertiary-fixed":"#e2dfff",
+          "tertiary-container":"#5654de","background-clean":"#F8FAFB","primary-fixed":"#c5e7ff",
+          "secondary":"#006c4e","surface-container-low":"#f6f3f2","secondary-container":"#83f5c6",
+          "on-secondary-container":"#007151","surface-container-highest":"#e5e2e1","tertiary":"#3d38c5",
+          "primary-container":"#226e93","on-error":"#ffffff","surface-bright":"#fcf9f8",
+          "inverse-on-surface":"#f3f0ef","outline-variant":"#c0c7ce","accent-purple":"#6366F1",
+          "surface-tint":"#13658a","on-primary-fixed-variant":"#004c6a","surface-container-high":"#eae7e7",
+          "on-surface-variant":"#40484e","on-secondary-fixed-variant":"#00513a","error":"#ba1a1a",
+          "primary":"#005576","inverse-surface":"#303030","on-secondary-fixed":"#002115",
+          "on-tertiary-fixed":"#0c006b","on-background":"#1b1c1c","surface-container":"#f0eded",
+          "tertiary-fixed-dim":"#c2c1ff","on-primary-fixed":"#001e2d","error-container":"#ffdad6",
+          "on-surface":"#1b1c1c","background":"#fcf9f8","secondary-fixed-dim":"#68dbae",
+          "surface-variant":"#e5e2e1","inverse-primary":"#8ccef8","on-secondary":"#ffffff"
+        },
+        borderRadius: {"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},
+        spacing: {"margin-mobile":"16px","base":"8px","stack-lg":"48px","stack-sm":"12px","gutter":"16px","stack-md":"24px","margin-desktop":"32px"},
+        fontFamily: {"headline-xl":["IBM Plex Sans"],"headline-lg":["IBM Plex Sans"],"body-lg":["IBM Plex Sans"],"label-md":["IBM Plex Sans"],"headline-md":["IBM Plex Sans"],"body-md":["IBM Plex Sans"],"label-sm":["IBM Plex Sans"],"headline-lg-mobile":["IBM Plex Sans"]},
+        fontSize: {
+          "headline-xl":["40px",{"lineHeight":"48px","letterSpacing":"-0.02em","fontWeight":"700"}],
+          "headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"600"}],
+          "body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],
+          "label-md":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"500"}],
+          "headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],
+          "body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],
+          "label-sm":["12px",{"lineHeight":"16px","fontWeight":"600"}],
+          "headline-lg-mobile":["28px",{"lineHeight":"36px","fontWeight":"600"}]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;display:inline-block;line-height:1}
+  .glass-card{background:#ffffff;border:1px solid rgba(0,85,118,0.08);box-shadow:0 4px 6px -1px rgba(0,0,0,0.05),0 2px 4px -1px rgba(0,0,0,0.03)}
+  .active-glow{box-shadow:0 4px 12px rgba(34,110,147,0.2)}
+
+  /* ── OVERLAY ── */
+  .overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.35);backdrop-filter:blur(2px)}
+  .overlay.show{display:block}
+
+  /* ── SIDE DRAWER ── */
+  .drawer{position:fixed;top:0;left:-280px;width:260px;height:100%;z-index:300;background:#fff;box-shadow:4px 0 20px rgba(0,0,0,.12);transition:left .25s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+  .drawer.open{left:0}
+  .drawer-header{height:64px;display:flex;align-items:center;padding:0 16px;gap:12px;border-bottom:1px solid #f0eded}
+  .drawer-logo{font-size:18px;font-weight:700;color:#005576;font-family:'IBM Plex Sans',sans-serif}
+  .drawer-nav{flex:1;padding:12px 8px;overflow-y:auto}
+  .drawer-item{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:14px;text-decoration:none;color:#1b1c1c;font-size:15px;font-weight:500;transition:background .15s;margin-bottom:2px;font-family:'IBM Plex Sans',sans-serif}
+  .drawer-item:hover{background:#f0eded}
+  .drawer-item.active{background:#E6F1FB;color:#005576}
+  .drawer-item.active .material-symbols-outlined{color:#005576}
+  .di-home,.di-kaizen,.di-prompt{color:#005576}
+  .di-chatgpt{color:#6366F1}
+  .di-gemini{color:#006c4e}
+  .di-strategy{color:#3d38c5}
+  .drawer-footer{padding:16px;border-top:1px solid #f0eded;font-size:11px;color:#94a3b8;text-align:center;line-height:1.6;font-family:'IBM Plex Sans',sans-serif}
+</style>
+</head>
+<body class="bg-surface-bright text-on-surface min-h-screen font-body-md flex flex-col">
+
+<!-- ── OVERLAY ── -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+
+<!-- ── SIDE DRAWER ── -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <span class="material-symbols-outlined" style="color:#005576">menu_book</span>
+    <span class="drawer-logo">KAIZEN SMART</span>
+  </div>
+  <nav class="drawer-nav">
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+      <span class="material-symbols-outlined di-home">home</span>Home
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank">
+      <span class="material-symbols-outlined di-kaizen">trending_up</span>KAIZEN
+    </a>
+    <a class="drawer-item active" href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank">
+      <span class="material-symbols-outlined di-chatgpt">bolt</span>ChatGPT Step
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank">
+      <span class="material-symbols-outlined di-gemini">auto_awesome</span>Gemini Step
+    </a>
+    <a class="drawer-item" href="https://kkaewounruan-rgb.github.io/prompt_web/Strategy01.html" target="_blank">
+      <span class="material-symbols-outlined di-strategy">architecture</span>Strategies
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/prompt" target="_blank">
+      <span class="material-symbols-outlined di-prompt">psychology</span>Prompts
+    </a>
+  </nav>
+  <div class="drawer-footer">KAIZEN SMART PLAYBOOK<br>By Kachain_K 2026</div>
+</div>
+
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface-white border-b border-surface-container shadow-sm">
+  <div class="flex items-center gap-3">
+    <button onclick="openDrawer()" class="text-primary hover:bg-surface-container-low transition-colors p-2 rounded-full">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <a href="https://sites.google.com/view/teprompt-web/home" target="_blank"
+       class="font-headline-md text-headline-md font-bold tracking-tight text-primary no-underline" style="text-decoration:none">
+      KAIZEN SMART
+    </a>
+  </div>
+  <button class="text-primary hover:bg-surface-container-low transition-colors p-2 rounded-full">
+    <span class="material-symbols-outlined">search</span>
+  </button>
+</header>
+
+<!-- Main Content Area -->
+<main class="flex-grow pt-16 pb-24 overflow-y-auto">
+
+  <!-- Back link -->
+  <div class="px-margin-mobile mt-4 mb-1">
+    <a href="https://sites.google.com/view/teprompt-web/home" target="_blank"
+       class="inline-flex items-center gap-2 text-primary text-sm font-semibold no-underline px-3 py-1.5 bg-primary-fixed rounded-full border border-primary-fixed-dim hover:bg-primary-fixed-dim transition-colors"
+       style="text-decoration:none">
+      <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span>
+      KAIZEN SMART PLAYBOOK
+    </a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="relative w-full aspect-video md:aspect-[21/9] overflow-hidden mt-2">
+    <img alt="4 เคล็ดลับการเขียนคำสั่ง ChatGPT ให้เป็นมืออาชีพ" class="w-full h-full object-cover" id="heroImg"
+         src="https://lh3.googleusercontent.com/aida/ADBb0uju6TmGbJAMtN4J0ES_fW9PEJXf8fkhicKkQPPhc4alurNJ1MMdocqZSimpvM2UqNneLF7HZNL9I27PS68LFU7G3zDUlBuPGyic46qLl2yvBJxpEJGf6z9XhCbZT-wb8-4WJ2Vl6nhPdpF-B3kf0XIV2h-cMGqr5A60AO7xYNzVcjCRYBunrhSe4Hc8fRJHgKHhu6vXIiD9lXfOZY98iATThbdIb32YZMYqrBHYO3LsXb9pLRk4BYktkUY"/>
+    <div class="absolute inset-0 bg-gradient-to-t from-surface-bright via-surface-bright/20 to-transparent"></div>
+    <div class="absolute bottom-4 left-margin-mobile right-margin-mobile">
+      <span class="inline-block px-3 py-1 bg-primary text-on-primary rounded-full font-label-sm text-label-sm mb-2 uppercase tracking-wider">Expert Guide</span>
+      <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">คู่มือการใช้งาน CHATGPT</h2>
+    </div>
+  </section>
+
+  <!-- Introduction Section -->
+  <section class="px-margin-mobile mt-stack-md">
+    <div class="flex items-center gap-2 mb-stack-sm">
+      <span class="material-symbols-outlined text-primary">info</span>
+      <h3 class="font-headline-md text-headline-md text-on-surface">Introduction</h3>
+    </div>
+    <div class="glass-card p-stack-md rounded-xl border-l-4 border-l-primary">
+      <p class="font-body-md text-on-surface-variant leading-relaxed">
+        เริ่มต้นการใช้งาน ChatGPT อย่างมีประสิทธิภาพด้วยเทคนิคการเขียน Prompt ที่ถูกต้อง ช่วยให้คุณได้รับคำตอบที่แม่นยำและตอบโจทย์การทำงานมากยิ่งขึ้น ไม่ว่าจะเป็นการตั้งค่าบทบาท (Role) หรือการกำหนดรูปแบบข้อมูลที่ต้องการ (Format)
+      </p>
+      <div class="mt-stack-sm flex flex-wrap gap-2">
+        <span class="px-3 py-1 bg-surface-container-low text-primary rounded-lg font-label-sm text-label-sm">#AIForBeginners</span>
+        <span class="px-3 py-1 bg-surface-container-low text-primary rounded-lg font-label-sm text-label-sm">#PromptEngineering</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resource Section -->
+  <section class="px-margin-mobile mt-stack-lg mb-stack-md">
+    <div class="flex items-center justify-between mb-stack-sm">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">cloud_download</span>
+        <h3 class="font-headline-md text-headline-md text-on-surface">Resources</h3>
+      </div>
+      <span class="text-label-sm font-label-sm text-outline">2 Files</span>
+    </div>
+    <div class="grid grid-cols-1 gap-base">
+
+      <!-- PDF Resource -->
+      <a href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank" style="text-decoration:none"
+         class="glass-card p-stack-sm rounded-xl flex items-center gap-stack-sm hover:bg-surface-container-low transition-all group active:scale-[0.98]">
+        <div class="w-14 h-14 bg-error-container/20 rounded-lg flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-error text-3xl">picture_as_pdf</span>
+        </div>
+        <div class="flex-grow min-w-0">
+          <p class="font-label-md text-label-md text-on-surface truncate">คู่มือการใช้งาน Chat GPT สำหรับผู้เริ่มต้น.pdf</p>
+          <p class="font-label-sm text-on-surface-variant opacity-70">4.2 MB • PDF Document</p>
+        </div>
+        <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">download</span>
+      </a>
+
+      <!-- PPTX Resource -->
+      <a href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank" style="text-decoration:none"
+         class="glass-card p-stack-sm rounded-xl flex items-center gap-stack-sm hover:bg-surface-container-low transition-all group active:scale-[0.98]">
+        <div class="w-14 h-14 bg-tertiary-container/20 rounded-lg flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-tertiary text-3xl">present_to_all</span>
+        </div>
+        <div class="flex-grow min-w-0">
+          <p class="font-label-md text-label-md text-on-surface truncate">Workplace_ChatGPT_Guide.pptx</p>
+          <p class="font-label-sm text-on-surface-variant opacity-70">8.7 MB • Presentation</p>
+        </div>
+        <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">download</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Prompt Tools Quick Links -->
+  <section class="px-margin-mobile mb-stack-md">
+    <div class="flex items-center gap-2 mb-stack-sm">
+      <span class="material-symbols-outlined text-primary">psychology</span>
+      <h3 class="font-headline-md text-headline-md text-on-surface">Prompt Tools</h3>
+    </div>
+    <div class="grid grid-cols-2 gap-base">
+      <a href="https://kkaewounruan-rgb.github.io/prompt_web/PromptEng01.html" target="_blank" style="text-decoration:none"
+         class="glass-card p-4 rounded-xl flex flex-col items-start gap-2 hover:bg-surface-container-low transition-all group active:scale-[0.98]">
+        <span class="material-symbols-outlined text-accent-purple text-2xl">link</span>
+        <p class="font-label-md text-label-md text-on-surface">Prompt Engineering</p>
+        <p class="font-label-sm text-label-sm text-on-surface-variant">Kaizen × AI</p>
+      </a>
+      <a href="https://kkaewounruan-rgb.github.io/prompt_web/Kaizen_Advanced_Prompt_Builder.html" target="_blank" style="text-decoration:none"
+         class="glass-card p-4 rounded-xl flex flex-col items-start gap-2 hover:bg-surface-container-low transition-all group active:scale-[0.98]">
+        <span class="material-symbols-outlined text-primary text-2xl">rocket_launch</span>
+        <p class="font-label-md text-label-md text-on-surface">Advanced Builder</p>
+        <p class="font-label-sm text-label-sm text-on-surface-variant">Super Prompt</p>
+      </a>
+      <a href="https://kkaewounruan-rgb.github.io/prompt_web/6Template_Prompt_Generator.html" target="_blank" style="text-decoration:none"
+         class="glass-card p-4 rounded-xl flex flex-col items-start gap-2 hover:bg-surface-container-low transition-all group active:scale-[0.98]">
+        <span class="material-symbols-outlined text-secondary text-2xl">auto_awesome</span>
+        <p class="font-label-md text-label-md text-on-surface">6 Templates</p>
+        <p class="font-label-sm text-label-sm text-on-surface-variant">Prompt Library</p>
+      </a>
+      <a href="https://kkaewounruan-rgb.github.io/prompt_web/Aihrtoolkit.html" target="_blank" style="text-decoration:none"
+         class="glass-card p-4 rounded-xl flex flex-col items-start gap-2 hover:bg-surface-container-low transition-all group active:scale-[0.98]">
+        <span class="material-symbols-outlined text-tertiary text-2xl">work</span>
+        <p class="font-label-md text-label-md text-on-surface">HR AI Toolkit</p>
+        <p class="font-label-sm text-label-sm text-on-surface-variant">20 หัวข้อ HR</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- Placeholder Section -->
+  <section class="px-margin-mobile mb-stack-lg">
+    <div class="h-32 w-full rounded-xl border border-dashed border-outline-variant flex flex-col items-center justify-center opacity-60 bg-surface-container-low/30">
+      <span class="material-symbols-outlined text-4xl mb-2 text-outline">auto_awesome</span>
+      <p class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Advanced Strategies Coming Soon</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="px-margin-mobile pb-4 text-center">
+    <p class="text-xs text-outline mb-1">จัดทำโดย คเชนท์ แก้วอุ่นเรือน · แผนกฝึกอบรม 2026</p>
+    <a href="https://sites.google.com/view/teprompt-web/home" target="_blank"
+       class="text-primary text-sm font-semibold hover:underline" style="text-decoration:none">
+      ← กลับหน้า KAIZEN SMART PLAYBOOK
+    </a>
+  </div>
+</main>
+
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 pb-safe bg-surface-white border-t border-surface-container shadow-[0_-4px_12px_rgba(0,0,0,0.03)]">
+  <a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-low transition-colors rounded-lg"
+     href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+    <span class="material-symbols-outlined">home</span>
+    <span class="text-label-sm font-label-sm mt-1">Home</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-low transition-colors rounded-lg"
+     href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank">
+    <span class="material-symbols-outlined">trending_up</span>
+    <span class="text-label-sm font-label-sm mt-1">Kaizen</span>
+  </a>
+  <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-2 duration-150 active-glow"
+     href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bolt</span>
+    <span class="text-label-sm font-label-sm mt-1">ChatGPT</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-low transition-colors rounded-lg"
+     href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank">
+    <span class="material-symbols-outlined">auto_awesome</span>
+    <span class="text-label-sm font-label-sm mt-1">Gemini</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-low transition-colors rounded-lg"
+     href="https://sites.google.com/view/teprompt-web/prompt" target="_blank">
+    <span class="material-symbols-outlined">psychology</span>
+    <span class="text-label-sm font-label-sm mt-1">Prompts</span>
+  </a>
+</nav>
+
+<script>
+function openDrawer(){
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',(e)=>{if(e.key==='Escape')closeDrawer();});
+
+// Micro-interactions for resource cards
+document.querySelectorAll('.glass-card').forEach(card=>{
+  card.addEventListener('mousedown',()=>{card.style.transform='scale(0.98)';card.style.transition='transform 0.1s ease-out';});
+  card.addEventListener('mouseup',()=>{card.style.transform='scale(1)';});
+  card.addEventListener('mouseleave',()=>{card.style.transform='scale(1)';});
+});
+
+// Scroll parallax for hero image
+window.addEventListener('scroll',()=>{
+  const scrolled=window.pageYOffset;
+  const heroImg=document.getElementById('heroImg');
+  if(heroImg)heroImg.style.transform=`translateY(${scrolled*0.15}px)`;
+});
+</script>
+</body>
+</html>
