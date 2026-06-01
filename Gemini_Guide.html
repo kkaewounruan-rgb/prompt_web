@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kaizen Smart - Gemini Step-by-Step</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "tertiary-fixed":"#e2dfff","tertiary":"#3d38c5","on-surface-variant":"#40484e",
+          "on-primary":"#ffffff","inverse-surface":"#303030","primary":"#005576",
+          "on-primary-container":"#cfebff","on-primary-fixed":"#001e2d","inverse-on-surface":"#f3f0ef",
+          "surface-tint":"#13658a","on-error":"#ffffff","on-secondary-fixed-variant":"#00513a",
+          "on-secondary":"#ffffff","tertiary-fixed-dim":"#c2c1ff","on-tertiary-fixed":"#0c006b",
+          "primary-fixed-dim":"#8ccef8","outline-variant":"#c0c7ce","background":"#fcf9f8",
+          "surface-container":"#f0eded","on-secondary-container":"#007151","on-tertiary-container":"#e7e4ff",
+          "surface-container-low":"#f6f3f2","on-surface":"#1b1c1c","secondary-fixed-dim":"#68dbae",
+          "status-error":"#D32F2F","on-primary-fixed-variant":"#004c6a","accent-purple":"#6366F1",
+          "error":"#ba1a1a","primary-container":"#226e93","surface-container-high":"#eae7e7",
+          "on-background":"#1b1c1c","secondary-container":"#83f5c6","secondary":"#006c4e",
+          "surface":"#fcf9f8","background-clean":"#F8FAFB","on-tertiary-fixed-variant":"#332dbc",
+          "surface-variant":"#e5e2e1","primary-fixed":"#c5e7ff","surface-container-highest":"#e5e2e1",
+          "outline":"#70787e","secondary-fixed":"#86f8c9","inverse-primary":"#8ccef8",
+          "error-container":"#ffdad6","on-secondary-fixed":"#002115","surface-dim":"#dcd9d9",
+          "surface-white":"#FFFFFF","surface-container-lowest":"#ffffff","tertiary-container":"#5654de",
+          "on-tertiary":"#ffffff","surface-bright":"#fcf9f8","on-error-container":"#93000a"
+        },
+        borderRadius: {"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},
+        spacing: {"margin-mobile":"16px","base":"8px","stack-sm":"12px","margin-desktop":"32px","stack-md":"24px","stack-lg":"48px","gutter":"16px"},
+        fontFamily: {"body-md":["IBM Plex Sans"],"label-md":["IBM Plex Sans"],"headline-xl":["IBM Plex Sans"],"headline-lg":["IBM Plex Sans"],"body-lg":["IBM Plex Sans"],"label-sm":["IBM Plex Sans"],"headline-lg-mobile":["IBM Plex Sans"],"headline-md":["IBM Plex Sans"]},
+        fontSize: {
+          "body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}],
+          "label-md":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"500"}],
+          "headline-xl":["40px",{"lineHeight":"48px","letterSpacing":"-0.02em","fontWeight":"700"}],
+          "headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"600"}],
+          "body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],
+          "label-sm":["12px",{"lineHeight":"16px","fontWeight":"600"}],
+          "headline-lg-mobile":["28px",{"lineHeight":"36px","fontWeight":"600"}],
+          "headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;display:inline-block;line-height:1}
+  .glass-card{background:rgba(255,255,255,0.7);backdrop-filter:blur(12px);border:1px solid rgba(0,85,118,0.1)}
+  body{background-color:#fcf9f8;color:#1b1c1c;font-family:'IBM Plex Sans',sans-serif}
+  .bento-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+
+  /* ── OVERLAY ── */
+  .overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.35);backdrop-filter:blur(2px)}
+  .overlay.show{display:block}
+
+  /* ── SIDE DRAWER ── */
+  .drawer{position:fixed;top:0;left:-280px;width:260px;height:100%;z-index:300;background:#fff;box-shadow:4px 0 20px rgba(0,0,0,.12);transition:left .25s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+  .drawer.open{left:0}
+  .drawer-header{height:64px;display:flex;align-items:center;padding:0 16px;gap:12px;border-bottom:1px solid #f0eded}
+  .drawer-logo{font-size:18px;font-weight:700;color:#005576;font-family:'IBM Plex Sans',sans-serif}
+  .drawer-nav{flex:1;padding:12px 8px;overflow-y:auto}
+  .drawer-item{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:14px;text-decoration:none;color:#1b1c1c;font-size:15px;font-weight:500;transition:background .15s;margin-bottom:2px;font-family:'IBM Plex Sans',sans-serif}
+  .drawer-item:hover{background:#f0eded}
+  .drawer-item.active{background:#E1F5EE;color:#005576}
+  .drawer-item.active .material-symbols-outlined{color:#005576}
+  .di-home,.di-kaizen,.di-prompt{color:#005576}
+  .di-chatgpt{color:#6366F1}
+  .di-gemini{color:#006c4e}
+  .di-strategy{color:#3d38c5}
+  .drawer-footer{padding:16px;border-top:1px solid #f0eded;font-size:11px;color:#94a3b8;text-align:center;line-height:1.6;font-family:'IBM Plex Sans',sans-serif}
+</style>
+</head>
+<body class="bg-background min-h-screen pb-32">
+
+<!-- ── OVERLAY ── -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+
+<!-- ── SIDE DRAWER ── -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <span class="material-symbols-outlined" style="color:#005576">menu_book</span>
+    <span class="drawer-logo">KAIZEN SMART</span>
+  </div>
+  <nav class="drawer-nav">
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+      <span class="material-symbols-outlined di-home">home</span>Home
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank">
+      <span class="material-symbols-outlined di-kaizen">trending_up</span>KAIZEN
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank">
+      <span class="material-symbols-outlined di-chatgpt">bolt</span>ChatGPT Step
+    </a>
+    <a class="drawer-item active" href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank">
+      <span class="material-symbols-outlined di-gemini">auto_awesome</span>Gemini Step
+    </a>
+    <a class="drawer-item" href="https://kkaewounruan-rgb.github.io/prompt_web/Strategy01.html" target="_blank">
+      <span class="material-symbols-outlined di-strategy">architecture</span>Strategies
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/prompt" target="_blank">
+      <span class="material-symbols-outlined di-prompt">psychology</span>Prompts
+    </a>
+  </nav>
+  <div class="drawer-footer">KAIZEN SMART PLAYBOOK<br>By Kachain_K 2026</div>
+</div>
+
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-surface-white shadow-sm border-b border-surface-container">
+  <div class="flex items-center gap-4">
+    <button onclick="openDrawer()" class="text-primary hover:bg-surface-container-high p-2 rounded-full transition-colors">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <a href="https://sites.google.com/view/teprompt-web/home" target="_blank"
+       class="font-headline-md text-headline-md font-bold tracking-tight text-primary" style="text-decoration:none">
+      KAIZEN SMART
+    </a>
+  </div>
+  <div class="flex items-center gap-2">
+    <button class="text-on-surface-variant hover:bg-surface-container-high p-2 rounded-full transition-colors">
+      <span class="material-symbols-outlined">search</span>
+    </button>
+  </div>
+</header>
+
+<main class="pt-16 max-w-[1440px] mx-auto px-4 md:px-margin-desktop">
+
+  <!-- Back link -->
+  <div class="mt-4 mb-2">
+    <a href="https://sites.google.com/view/teprompt-web/home" target="_blank"
+       class="inline-flex items-center gap-2 text-primary text-sm font-semibold px-3 py-1.5 bg-primary-fixed rounded-full border border-primary-fixed-dim hover:bg-primary-fixed-dim transition-colors"
+       style="text-decoration:none">
+      <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span>
+      KAIZEN SMART PLAYBOOK
+    </a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="relative mt-4 rounded-xl overflow-hidden aspect-[21/9] md:aspect-[3/1] group shadow-md">
+    <img alt="Gemini Hero" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+         src="https://lh3.googleusercontent.com/aida/ADBb0uhJis1nVgpnue3jA4IXlsu1jKU2nhsvZztNPCJXVBLMDupQj222SfaRo5zOYY3Z37RMVv_kEpdbrNjIvxJRD3dpf7Eb_jDvCAYOwX5QI7Sf1GYNIpt58xq6LhFyv1m-9knOsShTBUirW4GAB4KGCY-6_YGsiX8qlig04YebJs3VxgFnrljOky2qNRpCy6OvpRCzQdOfSEUqx1d-YoC42LcEztgQVHot7fcb7GcrhCIKq-AwPXRenJp7ONE"/>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex flex-col justify-end p-6 md:p-12">
+      <span class="inline-block px-3 py-1 bg-primary text-on-primary rounded-full font-label-sm text-label-sm mb-3 uppercase tracking-wider w-fit">Google AI</span>
+      <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-white drop-shadow-lg">Gemini Step</h2>
+      <p class="font-body-lg text-body-lg text-white/90 mt-2">Google AI Integration</p>
+    </div>
+  </section>
+
+  <!-- Intro Section: Multimodal AI Core -->
+  <section class="mt-12">
+    <div class="flex flex-col md:flex-row gap-8 items-start">
+      <div class="flex-1">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-8 h-[2px] bg-primary"></span>
+          <span class="text-label-md font-label-md text-primary tracking-widest uppercase">บทนำ</span>
+        </div>
+        <h3 class="font-headline-md text-headline-md text-on-surface mb-6">Google Gemini: Multimodal AI สำหรับการบริหารจัดการเชิงบริบท</h3>
+        <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+          Google Gemini ไม่ใช่เพียงแค่แชทบอท แต่เป็นเครื่องยนต์หลักของ AI ที่มีความสามารถแบบ Multimodal (หลายรูปแบบข้อมูล)
+          ซึ่งทำหน้าที่เป็น "Contextual Orchestration" หรือตัวประสานข้อมูลเชิงบริบทที่ซับซ้อน
+          ช่วยให้องค์กรสามารถประมวลผลทั้งข้อความ, รหัสโปรแกรม, วิดีโอ และเสียง ได้อย่างราบรื่นในระบบเดียว
+        </p>
+      </div>
+      <div class="w-full md:w-1/3 bg-surface-container-low p-6 rounded-xl border-l-4 border-secondary shadow-sm">
+        <h4 class="font-label-md text-label-md text-secondary mb-4">Multimodal Core</h4>
+        <ul class="space-y-3">
+          <li class="flex items-center gap-3 text-body-md font-body-md text-on-surface">
+            <span class="material-symbols-outlined text-secondary" style="font-size:20px">text_fields</span>ข้อความและเอกสาร
+          </li>
+          <li class="flex items-center gap-3 text-body-md font-body-md text-on-surface">
+            <span class="material-symbols-outlined text-secondary" style="font-size:20px">code</span>ชุดคำสั่งและการเขียนโค้ด
+          </li>
+          <li class="flex items-center gap-3 text-body-md font-body-md text-on-surface">
+            <span class="material-symbols-outlined text-secondary" style="font-size:20px">movie</span>วิดีโอและภาพเคลื่อนไหว
+          </li>
+          <li class="flex items-center gap-3 text-body-md font-body-md text-on-surface">
+            <span class="material-symbols-outlined text-secondary" style="font-size:20px">mic</span>เสียงและสื่อบันทึก
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bento Grid: Main Content -->
+  <section class="mt-16 grid grid-cols-1 md:grid-cols-12 gap-6">
+
+    <!-- Documentation Block -->
+    <div class="md:col-span-8 bg-surface-white p-8 rounded-xl border border-surface-container shadow-sm">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="font-headline-md text-headline-md text-on-surface">ขั้นตอนการติดตั้งและตั้งค่า</h3>
+        <span class="material-symbols-outlined text-outline">import_contacts</span>
+      </div>
+      <div class="space-y-6 font-body-md text-body-md text-on-surface-variant leading-relaxed">
+        <p>กระบวนการรวม Gemini เข้ากับ Kaizen Smart Playbook เริ่มต้นด้วยการระบุ Endpoint ของ API ที่ต้องการใช้งาน โดยเน้นที่ความปลอดภัยของข้อมูลเป็นอันดับแรก</p>
+        <div class="bg-surface-container-lowest p-4 rounded-lg border border-outline-variant">
+          <code class="text-primary font-mono text-sm">
+            config.gemini.integrate({<br/>
+            &nbsp;&nbsp;orchestration: "contextual",<br/>
+            &nbsp;&nbsp;multimodal: true,<br/>
+            &nbsp;&nbsp;region: "global-smart-hub"<br/>
+            });
+          </code>
+        </div>
+        <p>ระบบจะทำการเชื่อมต่อข้อมูลดิบจากฐานข้อมูลกลางเพื่อส่งให้ Gemini ประมวลผลล่วงหน้า (Pre-processing) เพื่อสร้างโครงข่ายการตัดสินใจที่แม่นยำที่สุดสำหรับแต่ละโปรเจกต์</p>
+        <p>การปรับแต่ง (Fine-tuning) จะกระทำผ่าน Interface ของ Playbook โดยตรง ทำให้ผู้ใช้งานไม่จำเป็นต้องเขียนโปรโตคอลการสื่อสารที่ซับซ้อนด้วยตนเอง</p>
+      </div>
+
+      <!-- Quick links to Prompt Tools -->
+      <div class="mt-8 pt-6 border-t border-surface-container">
+        <h4 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-4 flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary" style="font-size:18px">psychology</span>
+          เครื่องมือ Prompt ที่เกี่ยวข้อง
+        </h4>
+        <div class="grid grid-cols-2 gap-3">
+          <a href="https://kkaewounruan-rgb.github.io/prompt_web/PromptEng01.html" target="_blank" style="text-decoration:none"
+             class="flex items-center gap-2 p-3 bg-surface-container-low rounded-lg border border-outline-variant hover:border-secondary transition-all text-on-surface">
+            <span class="material-symbols-outlined text-accent-purple" style="font-size:18px">link</span>
+            <span class="font-label-md text-label-md">Prompt Engineering</span>
+          </a>
+          <a href="https://kkaewounruan-rgb.github.io/prompt_web/6Template_Prompt_Generator.html" target="_blank" style="text-decoration:none"
+             class="flex items-center gap-2 p-3 bg-surface-container-low rounded-lg border border-outline-variant hover:border-secondary transition-all text-on-surface">
+            <span class="material-symbols-outlined text-secondary" style="font-size:18px">auto_awesome</span>
+            <span class="font-label-md text-label-md">6 Templates</span>
+          </a>
+          <a href="https://kkaewounruan-rgb.github.io/prompt_web/Kaizen_Advanced_Prompt_Builder.html" target="_blank" style="text-decoration:none"
+             class="flex items-center gap-2 p-3 bg-surface-container-low rounded-lg border border-outline-variant hover:border-primary transition-all text-on-surface">
+            <span class="material-symbols-outlined text-primary" style="font-size:18px">rocket_launch</span>
+            <span class="font-label-md text-label-md">Advanced Builder</span>
+          </a>
+          <a href="https://kkaewounruan-rgb.github.io/prompt_web/Aihrtoolkit.html" target="_blank" style="text-decoration:none"
+             class="flex items-center gap-2 p-3 bg-surface-container-low rounded-lg border border-outline-variant hover:border-tertiary transition-all text-on-surface">
+            <span class="material-symbols-outlined text-tertiary" style="font-size:18px">work</span>
+            <span class="font-label-md text-label-md">HR AI Toolkit</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Side Cards -->
+    <div class="md:col-span-4 space-y-6">
+
+      <!-- Tech Insight Card -->
+      <div class="bg-primary-container text-white p-6 rounded-xl relative overflow-hidden group shadow-md">
+        <div class="absolute -right-4 -top-4 opacity-10 group-hover:rotate-12 transition-transform duration-500">
+          <span class="material-symbols-outlined text-white" style="font-size:100px">speed</span>
+        </div>
+        <h4 class="font-headline-md text-headline-md mb-3">Tech Insight</h4>
+        <p class="font-body-md text-body-md text-white/90 mb-4">ระบบ Self-Correction Loops ของ Gemini ช่วยยกระดับการทำงาน</p>
+        <div class="flex items-baseline gap-2">
+          <span class="text-4xl font-bold text-white">15%</span>
+          <span class="text-body-md text-white/80">Accuracy Boost</span>
+        </div>
+        <p class="text-xs text-white/70 mt-4 leading-tight italic">จากการทดสอบในสภาวะการทำงานแบบ Real-time Orchestration</p>
+      </div>
+
+      <!-- Download Resource -->
+      <a href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank" style="text-decoration:none"
+         class="bg-surface-container-high p-6 rounded-xl flex items-center justify-between group cursor-pointer hover:bg-surface-container-highest transition-all border border-outline-variant shadow-sm block">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-error-container text-error rounded-lg flex items-center justify-center">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">picture_as_pdf</span>
+          </div>
+          <div>
+            <p class="font-label-md text-label-md text-on-surface">Manual-Google-Gemini.pdf</p>
+            <p class="text-xs text-on-surface-variant">คู่มือฉบับเต็ม (2.4 MB)</p>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0">download</span>
+      </a>
+
+      <!-- Kaizen Strategies Link -->
+      <a href="https://kkaewounruan-rgb.github.io/prompt_web/Strategy01.html" target="_blank" style="text-decoration:none"
+         class="bg-tertiary-fixed p-6 rounded-xl flex items-center justify-between group cursor-pointer hover:bg-tertiary-fixed-dim transition-all border border-tertiary/10 shadow-sm block">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-tertiary/10 rounded-lg flex items-center justify-center">
+            <span class="material-symbols-outlined text-tertiary">architecture</span>
+          </div>
+          <div>
+            <p class="font-label-md text-label-md text-on-surface">กลยุทธ์ Kaizen</p>
+            <p class="text-xs text-on-surface-variant">3-Mu's & กลยุทธ์ 2,3,4,6</p>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-tertiary opacity-0 group-hover:opacity-100 transition-all -translate-x-4 group-hover:translate-x-0">arrow_forward</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Asymmetric Detail Section -->
+  <section class="mt-16 bento-grid mb-12">
+    <div class="col-span-12 md:col-span-5 bg-tertiary-fixed p-8 rounded-2xl flex flex-col justify-center border border-tertiary/10">
+      <h3 class="font-headline-md text-headline-md text-tertiary mb-4">ทำไมต้องใช้ Gemini ใน Kaizen Smart?</h3>
+      <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+        เพราะความซับซ้อนของข้อมูลในระบบ Kaizen ต้องการความเข้าใจในบริบทที่มากกว่าแค่คีย์เวิร์ด Gemini สามารถเชื่อมโยง 'เหตุและผล' จากแหล่งข้อมูลที่แตกต่างกันได้อย่างมีประสิทธิภาพสูงสุด
+      </p>
+      <a href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank"
+         class="mt-6 inline-flex items-center gap-2 px-5 py-2.5 bg-tertiary text-on-tertiary rounded-full font-label-md text-label-md hover:opacity-90 transition-all w-fit"
+         style="text-decoration:none">
+        <span class="material-symbols-outlined" style="font-size:18px">open_in_new</span>
+        เรียนรู้เพิ่มเติม
+      </a>
+    </div>
+    <div class="col-span-12 md:col-span-7 rounded-2xl overflow-hidden min-h-[300px] relative shadow-lg">
+      <img class="w-full h-full object-cover"
+           src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWtpXR2icrzCxjgK6_wamjk5Pj4nIgZLjkCyseJsTg4MmDMwyZTmXAOLw9ZlHZQ0LpEHkdvgdYxTvkb3qVF0AJAMdHtIA5ITloJon_PX0i6QsYAN3EHe0a68x2PgwWDn7js7oTllPBUf6OF7en5Jxrh0Cp9vc7cThWNlmanjHswthYb0h9JvRIH1Q5wE8GEow9D6Pa2wDmtuq7UI3dA3SzL2AyYWTYEoiFUcczv1j2VHRi2DhQcKDMkkBszQORfAGCcAYa_cwooUc"
+           alt="Smart Context Sensing"/>
+      <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-transparent flex items-center p-8">
+        <div class="max-w-xs text-white">
+          <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-white">auto_awesome</span>
+          </div>
+          <p class="text-label-md font-label-md">Smart Context Sensing</p>
+          <p class="text-sm text-white/80 mt-2">ประมวลผลข้อมูลเชิงบริบทแบบอัจฉริยะ</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="text-center pb-4">
+    <p class="text-xs text-outline mb-1">จัดทำโดย คเชนท์ แก้วอุ่นเรือน · แผนกฝึกอบรม 2026</p>
+    <a href="https://sites.google.com/view/teprompt-web/home" target="_blank"
+       class="text-primary text-sm font-semibold hover:underline" style="text-decoration:none">
+      ← กลับหน้า KAIZEN SMART PLAYBOOK
+    </a>
+  </div>
+</main>
+
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 pb-safe bg-surface-white border-t border-surface-container shadow-lg">
+  <a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container transition-colors rounded-lg"
+     href="https://sites.google.com/view/teprompt-web/home" target="_blank" style="text-decoration:none">
+    <span class="material-symbols-outlined">home</span>
+    <span class="font-label-sm text-label-sm mt-1">Home</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container transition-colors rounded-lg"
+     href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank" style="text-decoration:none">
+    <span class="material-symbols-outlined">trending_up</span>
+    <span class="font-label-sm text-label-sm mt-1">Kaizen</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container transition-colors rounded-lg"
+     href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank" style="text-decoration:none">
+    <span class="material-symbols-outlined">bolt</span>
+    <span class="font-label-sm text-label-sm mt-1">ChatGPT</span>
+  </a>
+  <a class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-xl px-4 py-1.5 shadow-md"
+     href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank" style="text-decoration:none">
+    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+    <span class="font-label-sm text-label-sm mt-0.5">Gemini</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container transition-colors rounded-lg"
+     href="https://sites.google.com/view/teprompt-web/prompt" target="_blank" style="text-decoration:none">
+    <span class="material-symbols-outlined">psychology</span>
+    <span class="font-label-sm text-label-sm mt-1">Prompts</span>
+  </a>
+</nav>
+
+<script>
+function openDrawer(){
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',(e)=>{if(e.key==='Escape')closeDrawer();});
+
+// Micro-interactions
+document.querySelectorAll('.glass-card,.bg-surface-white,.bg-primary-container,.bg-tertiary-fixed').forEach(card=>{
+  card.addEventListener('mouseenter',()=>{card.style.transform='translateY(-4px)';card.style.transition='all 0.3s ease';});
+  card.addEventListener('mouseleave',()=>{card.style.transform='translateY(0)';});
+});
+</script>
+</body>
+</html>
