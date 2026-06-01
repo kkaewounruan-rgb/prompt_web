@@ -4,19 +4,92 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kaizen × Advanced Prompt Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <style>
 :root{
+  --primary:#005576;--secondary:#006c4e;--accent:#6366F1;
   --green:#1D9E75;--gl:#E1F5EE;--gm:#9FE1CB;--gd:#0F6E56;
   --bd:#e2e8f0;--bg:#f8fafc;--bg2:#fff;--tx:#1a202c;--tx2:#64748b;--tx3:#94a3b8;
   --r:10px;--shadow:0 1px 4px rgba(0,0,0,.07);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
-.wrap{max-width:980px;margin:0 auto;padding:24px 16px 52px}
+body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+
+/* ── MATERIAL SYMBOLS ── */
+.material-symbols-outlined{
+  font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
+  display:inline-block;line-height:1;font-size:22px;
+}
+
+/* ── TOP APP BAR ── */
+.topbar{
+  position:fixed;top:0;left:0;width:100%;height:64px;z-index:100;
+  background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08);
+  display:flex;align-items:center;justify-content:space-between;padding:0 16px;
+}
+.topbar-btn{
+  width:40px;height:40px;border-radius:50%;border:none;background:transparent;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:var(--primary);transition:background .15s;
+}
+.topbar-btn:hover{background:#f0eded}
+.topbar-title{font-size:20px;font-weight:700;color:var(--primary);letter-spacing:-.3px;text-decoration:none}
+
+/* ── OVERLAY ── */
+.overlay{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.35);backdrop-filter:blur(2px);
+}
+.overlay.show{display:block}
+
+/* ── SIDE DRAWER ── */
+.drawer{
+  position:fixed;top:0;left:-280px;width:260px;height:100%;z-index:300;
+  background:#fff;box-shadow:4px 0 20px rgba(0,0,0,.12);
+  transition:left .25s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+}
+.drawer.open{left:0}
+.drawer-header{
+  height:64px;display:flex;align-items:center;padding:0 16px;gap:12px;
+  border-bottom:1px solid #f0eded;
+}
+.drawer-logo{font-size:18px;font-weight:700;color:var(--primary)}
+.drawer-nav{flex:1;padding:12px 8px;overflow-y:auto}
+.drawer-item{
+  display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:14px;
+  text-decoration:none;color:#1b1c1c;font-size:15px;font-weight:500;
+  transition:background .15s;margin-bottom:2px;
+}
+.drawer-item:hover{background:#f0eded}
+.drawer-item.active{background:#E1F5EE;color:var(--primary)}
+.drawer-item.active .material-symbols-outlined{color:var(--primary)}
+.di-home,.di-kaizen,.di-prompt{color:var(--primary)}
+.di-chatgpt{color:var(--accent)}
+.di-gemini{color:var(--secondary)}
+.di-strategy{color:#3d38c5}
+.drawer-footer{padding:16px;border-top:1px solid #f0eded;font-size:11px;color:#94a3b8;text-align:center;line-height:1.6}
+
+/* ── MAIN ── */
+.wrap{max-width:980px;margin:0 auto;padding:80px 16px 96px}
+
+/* Back link */
+.back-link{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--primary);font-size:13px;font-weight:500;text-decoration:none;
+  margin-bottom:14px;padding:6px 12px;background:#f0f9ff;border-radius:20px;
+  border:1px solid #c5e7ff;transition:background .15s;
+}
+.back-link:hover{background:#c5e7ff}
 
 /* Header */
 .hdr{text-align:center;margin-bottom:22px}
-.hdr-badge{display:inline-block;background:var(--gl);color:var(--gd);font-size:12px;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:10px}
+.hdr-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--gl);color:var(--gd);font-size:12px;font-weight:700;
+  padding:5px 16px;border-radius:20px;margin-bottom:10px;
+}
 .hdr h1{font-size:24px;font-weight:700;margin-bottom:6px}
 .hdr p{font-size:13px;color:var(--tx2);line-height:1.6;max-width:620px;margin:0 auto}
 
@@ -43,7 +116,7 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--t
 .tpl-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
 .tpl-tab{padding:7px 14px;border:1.5px solid var(--bd);border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;color:var(--tx2);background:var(--bg);transition:all .15s;font-family:inherit}
 .tpl-tab:hover{border-color:var(--gm);color:var(--tx)}
-.tpl-tab.sel{background:var(--green);color:#fff;border-color:var(--green)}
+.tpl-tab.sel{background:var(--primary);color:#fff;border-color:var(--primary)}
 
 /* Form */
 .form-panel{display:none}.form-panel.show{display:block}
@@ -79,7 +152,7 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--t
 
 /* Buttons */
 .btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.btn-primary{flex:1;min-width:140px;padding:11px 18px;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.btn-primary{flex:1;min-width:140px;padding:11px 18px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .15s}
 .btn-primary:hover{opacity:.88}
 .btn-secondary{padding:11px 16px;background:none;border:1px solid var(--bd);border-radius:8px;font-size:13px;color:var(--tx2);cursor:pointer;font-family:inherit;transition:all .15s}
 .btn-secondary:hover{background:var(--bg);color:var(--tx)}
@@ -100,7 +173,7 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--t
 .reset-btn:hover{background:var(--bg)}
 
 /* Counter */
-.tech-counter{font-size:11px;color:var(--gd);font-weight:600;background:var(--gl);padding:2px 9px;border-radius:10px;display:none}
+.tech-counter{font-size:11px;color:var(--gd);font-weight:600;background:var(--gl);padding:2px 9px;border-radius:10px;display:none;margin-left:auto}
 .tech-counter.show{display:inline-block}
 
 /* Select all */
@@ -108,428 +181,401 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--t
 .sel-all-btn{font-size:11px;padding:3px 10px;border:1px solid var(--bd);border-radius:20px;cursor:pointer;background:var(--bg);color:var(--tx2);font-family:inherit;transition:all .15s}
 .sel-all-btn:hover{background:var(--gl);color:var(--gd);border-color:var(--gm)}
 
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;width:100%;height:72px;z-index:100;
+  background:#fff;box-shadow:0 -1px 8px rgba(0,0,0,.08);
+  border-top:1px solid #e5e2e1;
+  display:flex;align-items:center;justify-content:space-around;
+  padding:0 4px 8px;
+}
+.nav-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;padding:8px 10px;border-radius:14px;text-decoration:none;
+  color:#40484e;font-size:11px;font-weight:600;transition:all .15s;min-width:52px;
+}
+.nav-item:hover{background:#f0eded}
+.nav-item.active{background:#83f5c6;color:var(--secondary)}
+.nav-item .material-symbols-outlined{font-size:22px}
+.nav-item.home-btn{background:#E1F5EE;padding:6px 8px;border-radius:18px}
+.nav-item.home-btn .material-symbols-outlined{
+  font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;
+  color:var(--primary);font-size:26px;
+}
+
+/* Footer */
 .footer{text-align:center;margin-top:40px;font-size:12px;color:var(--tx3);line-height:1.7}
+
+@media(min-width:768px){
+  .bottom-nav{display:none}
+  .wrap{padding-bottom:52px}
+}
 </style>
 </head>
 <body>
+
+<!-- ── OVERLAY ── -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+
+<!-- ── SIDE DRAWER ── -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <span class="material-symbols-outlined" style="color:var(--primary)">menu_book</span>
+    <span class="drawer-logo">KAIZEN SMART</span>
+  </div>
+  <nav class="drawer-nav">
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+      <span class="material-symbols-outlined di-home">home</span>Home
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank">
+      <span class="material-symbols-outlined di-kaizen">trending_up</span>KAIZEN
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank">
+      <span class="material-symbols-outlined di-chatgpt">bolt</span>ChatGPT Step
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank">
+      <span class="material-symbols-outlined di-gemini">auto_awesome</span>Gemini Step
+    </a>
+    <a class="drawer-item" href="https://kkaewounruan-rgb.github.io/prompt_web/Strategy01.html" target="_blank">
+      <span class="material-symbols-outlined di-strategy">architecture</span>Strategies
+    </a>
+    <a class="drawer-item active" href="#">
+      <span class="material-symbols-outlined di-prompt">psychology</span>Prompts
+    </a>
+  </nav>
+  <div class="drawer-footer">KAIZEN SMART PLAYBOOK<br>By Kachain_K 2026</div>
+</div>
+
+<!-- ── TOP APP BAR ── -->
+<header class="topbar">
+  <button class="topbar-btn" onclick="openDrawer()">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  <a class="topbar-title" href="https://sites.google.com/view/teprompt-web/home" target="_blank">KAIZEN SMART</a>
+  <button class="topbar-btn">
+    <span class="material-symbols-outlined">search</span>
+  </button>
+</header>
+
+<!-- ── MAIN ── -->
 <div class="wrap">
 
-<!-- Header -->
-<div class="hdr">
-  <div class="hdr-badge">🚀 Kaizen × Advanced Prompt Builder</div>
-  <h1>สร้าง Prompt ระดับ Expert ใน 3 ขั้นตอน</h1>
-  <p>เลือก Template Kaizen + เพิ่มเทคนิค Prompting ขั้นสูง → ได้ Super Prompt ที่ทรงพลังที่สุด</p>
-</div>
-
-<!-- Step Indicator -->
-<div class="steps">
-  <div class="step-item"><div class="step-num active" id="snum1">1</div><div class="step-label active">เลือก Template</div></div>
-  <div class="step-line" id="sl1"></div>
-  <div class="step-item"><div class="step-num" id="snum2">2</div><div class="step-label" id="slb2">เพิ่มเทคนิค</div></div>
-  <div class="step-line" id="sl2"></div>
-  <div class="step-item"><div class="step-num" id="snum3">3</div><div class="step-label" id="slb3">Super Prompt</div></div>
-</div>
-
-<!-- STEP 1: Template -->
-<div class="sec-block" id="step1">
-  <div class="sec-hdr">
-    <div class="sec-badge" style="background:#E1F5EE;color:#0F6E56">📋</div>
-    <div><div class="sec-title">ขั้นตอนที่ 1 — เลือก Kaizen Template</div><div class="sec-sub">เลือก 1 Template แล้วกรอกข้อมูลของคุณ</div></div>
+  <!-- Back link -->
+  <div style="text-align:center;margin-bottom:4px">
+    <a class="back-link" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+      <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span>
+      KAIZEN SMART PLAYBOOK
+    </a>
   </div>
 
-  <div class="tpl-tabs" id="tplTabs"></div>
-  <div id="formPanels"></div>
-
-  <div class="btn-row">
-    <button class="btn-primary" onclick="goStep2()">ถัดไป: เพิ่มเทคนิค Prompting →</button>
-    <button class="btn-secondary" onclick="clearAll()">🗑️ ล้างทั้งหมด</button>
-  </div>
-</div>
-
-<!-- STEP 2: Techniques -->
-<div class="sec-block" id="step2" style="display:none">
-  <div class="sec-hdr">
-    <div class="sec-badge" style="background:#FAEEDA;color:#854F0B">⚡</div>
-    <div>
-      <div class="sec-title">ขั้นตอนที่ 2 — เพิ่มเทคนิค Advanced Prompting</div>
-      <div class="sec-sub">เลือกเทคนิคที่ต้องการเสริม AI จะคิดลึกขึ้นและตอบแม่นยำขึ้น</div>
+  <!-- Header -->
+  <div class="hdr">
+    <div class="hdr-badge">
+      <span class="material-symbols-outlined" style="font-size:15px">rocket_launch</span>
+      Kaizen × Advanced Prompt Builder
     </div>
-    <span class="tech-counter" id="techCounter">0 เทคนิค</span>
+    <h1>สร้าง Prompt ระดับ Expert ใน 3 ขั้นตอน</h1>
+    <p>เลือก Template Kaizen + เพิ่มเทคนิค Prompting ขั้นสูง → ได้ Super Prompt ที่ทรงพลังที่สุด</p>
   </div>
 
-  <div class="select-row">
-    <button class="sel-all-btn" onclick="selectAll()">✅ เลือกทั้งหมด</button>
-    <button class="sel-all-btn" onclick="clearTech()">❌ ล้างทั้งหมด</button>
-    <span style="font-size:11px;color:var(--tx3)">แนะนำ: เลือก 3-5 เทคนิคเพื่อผลลัพธ์ที่ดีที่สุด</span>
+  <!-- Step Indicator -->
+  <div class="steps">
+    <div class="step-item"><div class="step-num active" id="snum1">1</div><div class="step-label active">เลือก Template</div></div>
+    <div class="step-line" id="sl1"></div>
+    <div class="step-item"><div class="step-num" id="snum2">2</div><div class="step-label" id="slb2">เพิ่มเทคนิค</div></div>
+    <div class="step-line" id="sl2"></div>
+    <div class="step-item"><div class="step-num" id="snum3">3</div><div class="step-label" id="slb3">Super Prompt</div></div>
   </div>
 
-  <div class="tech-grid" id="techGrid"></div>
-
-  <!-- Power Boosters -->
-  <div style="margin-top:14px">
-    <div style="font-size:12px;font-weight:700;color:#92400E;margin-bottom:8px">🏆 Power Boosters — คำเสริมพลัง (เลือกได้หลายข้อ)</div>
-    <div class="power-row" id="powerRow"></div>
+  <!-- STEP 1: Template -->
+  <div class="sec-block" id="step1">
+    <div class="sec-hdr">
+      <div class="sec-badge" style="background:#E1F5EE;color:#0F6E56">📋</div>
+      <div><div class="sec-title">ขั้นตอนที่ 1 — เลือก Kaizen Template</div><div class="sec-sub">เลือก 1 Template แล้วกรอกข้อมูลของคุณ</div></div>
+    </div>
+    <div class="tpl-tabs" id="tplTabs"></div>
+    <div id="formPanels"></div>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goStep2()">ถัดไป: เพิ่มเทคนิค Prompting →</button>
+      <button class="btn-secondary" onclick="clearAll()">🗑️ ล้างทั้งหมด</button>
+    </div>
   </div>
 
-  <div class="btn-row" style="margin-top:16px">
-    <button class="btn-primary" onclick="generatePrompt()">✨ สร้าง Super Prompt →</button>
-    <button class="btn-secondary" onclick="goBack()">← กลับ</button>
+  <!-- STEP 2: Techniques -->
+  <div class="sec-block" id="step2" style="display:none">
+    <div class="sec-hdr">
+      <div class="sec-badge" style="background:#FAEEDA;color:#854F0B">⚡</div>
+      <div>
+        <div class="sec-title">ขั้นตอนที่ 2 — เพิ่มเทคนิค Advanced Prompting</div>
+        <div class="sec-sub">เลือกเทคนิคที่ต้องการเสริม AI จะคิดลึกขึ้นและตอบแม่นยำขึ้น</div>
+      </div>
+      <span class="tech-counter" id="techCounter">0 เทคนิค</span>
+    </div>
+    <div class="select-row">
+      <button class="sel-all-btn" onclick="selectAll()">✅ เลือกทั้งหมด</button>
+      <button class="sel-all-btn" onclick="clearTech()">❌ ล้างทั้งหมด</button>
+      <span style="font-size:11px;color:var(--tx3)">แนะนำ: เลือก 3-5 เทคนิคเพื่อผลลัพธ์ที่ดีที่สุด</span>
+    </div>
+    <div class="tech-grid" id="techGrid"></div>
+    <div style="margin-top:14px">
+      <div style="font-size:12px;font-weight:700;color:#92400E;margin-bottom:8px">🏆 Power Boosters — คำเสริมพลัง (เลือกได้หลายข้อ)</div>
+      <div class="power-row" id="powerRow"></div>
+    </div>
+    <div class="btn-row" style="margin-top:16px">
+      <button class="btn-primary" onclick="generatePrompt()">✨ สร้าง Super Prompt →</button>
+      <button class="btn-secondary" onclick="goBack()">← กลับ</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Output -->
+  <div class="output-block" id="outputBlock">
+    <div class="out-hdr">
+      <div class="out-title">🌟 Super Prompt พร้อมใช้งาน</div>
+      <div class="out-tags" id="outTags"></div>
+    </div>
+    <div class="prompt-txt" id="promptTxt"></div>
+    <div class="out-actions">
+      <button class="copy-btn" onclick="copyPrompt()">📋 คัดลอก Super Prompt</button>
+      <button class="reset-btn" onclick="reset()">🔄 สร้างใหม่</button>
+    </div>
+  </div>
+
+  <div class="footer">
+    จัดทำโดย คเชนท์ แก้วอุ่นเรือน · แผนกฝึกอบรม 2026<br>
+    Kaizen × Advanced Prompt Builder — ทุกคน ทุกที่ ทุกเวลา 🌱<br>
+    <a href="https://sites.google.com/view/teprompt-web/home" target="_blank"
+       style="color:var(--primary);font-weight:600;text-decoration:none;margin-top:4px;display:inline-block">
+      ← กลับหน้า KAIZEN SMART PLAYBOOK
+    </a>
   </div>
 </div>
 
-<!-- STEP 3: Output -->
-<div class="output-block" id="outputBlock">
-  <div class="out-hdr">
-    <div class="out-title">🌟 Super Prompt พร้อมใช้งาน</div>
-    <div class="out-tags" id="outTags"></div>
-  </div>
-  <div class="prompt-txt" id="promptTxt"></div>
-  <div class="out-actions">
-    <button class="copy-btn" onclick="copyPrompt()">📋 คัดลอก Super Prompt</button>
-    <button class="reset-btn" onclick="reset()">🔄 สร้างใหม่</button>
-  </div>
-</div>
-
-<div class="footer">
-  จัดทำโดย คเชนท์ แก้วอุ่นเรือน · แผนกฝึกอบรม2026 <br>
-  Kaizen × Advanced Prompt Builder — ทุกคน ทุกที่ ทุกเวลา 🌱
-</div>
-</div>
+<!-- ── BOTTOM NAV ── -->
+<nav class="bottom-nav">
+  <a class="nav-item home-btn" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+    <span class="material-symbols-outlined">home</span>
+    <span>Home</span>
+  </a>
+  <a class="nav-item" href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank">
+    <span class="material-symbols-outlined">trending_up</span>
+    <span>Kaizen</span>
+  </a>
+  <a class="nav-item" href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank">
+    <span class="material-symbols-outlined">bolt</span>
+    <span>ChatGPT</span>
+  </a>
+  <a class="nav-item" href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank">
+    <span class="material-symbols-outlined">auto_awesome</span>
+    <span>Gemini</span>
+  </a>
+  <a class="nav-item active" href="#">
+    <span class="material-symbols-outlined">psychology</span>
+    <span>Prompts</span>
+  </a>
+</nav>
 
 <script>
-// ============================================================
-// KAIZEN TEMPLATES DATA
-// ============================================================
-const TEMPLATES = [
-  {
-    id:'t1', emoji:'📋', label:'1. Basic', name:'Basic Kaizen Idea Generator',
-    color:'#0F6E56', bg:'#E1F5EE',
-    desc:'ทั่วไป — สร้างไอเดีย Kaizen 10 ข้อ พร้อม KPI จัดเรียงตามความง่าย',
-    fields:[
-      {id:'area', label:'พื้นที่/กระบวนการที่ต้องการปรับปรุง', type:'text', ph:'เช่น งานขาย, การจัดการเวลา, กระบวนการอนุมัติเอกสาร', req:true},
-      {id:'ctx', label:'บริบทเพิ่มเติม', type:'textarea', ph:'เช่น ทีม 10 คน ปัญหาหลักคือ... งบประมาณจำกัด', req:false}
-    ],
-    build: f => `คุณคือผู้เชี่ยวชาญ Kaizen และ Lean Thinking ระดับโลก มีประสบการณ์ 20 ปี
-โหมด: Kaizen Continuous Improvement
+/* ── Drawer ── */
+function openDrawer(){
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+  document.body.style.overflow='';
+}
 
-ช่วยสร้างไอเดีย Kaizen สำหรับ "${f.area}"
-${f.ctx ? '\nบริบท: ' + f.ctx : ''}
-
-ข้อกำหนด:
-• สร้างไอเดียอย่างน้อย 10 ไอเดีย
-• แต่ละไอเดียต้องทำได้ภายใน 1-4 สัปดาห์
-• ระบุ: ปัญหาที่แก้ + วิธีทำ + ผลลัพธ์ที่คาดหวัง + KPI
-• จัดลำดับ Easiest → Harder
-• ใช้หลัก 5S, PDCA, Muda, Mura, Muri ประกอบ`
+/* ── Templates Data ── */
+const TEMPLATES=[
+  {id:'t1',emoji:'📋',label:'1. Basic',name:'Basic Kaizen Idea Generator',color:'#0F6E56',bg:'#E1F5EE',
+   desc:'ทั่วไป — สร้างไอเดีย Kaizen 10 ข้อ พร้อม KPI จัดเรียงตามความง่าย',
+   fields:[
+     {id:'area',label:'พื้นที่/กระบวนการที่ต้องการปรับปรุง',type:'text',ph:'เช่น งานขาย, การจัดการเวลา, กระบวนการอนุมัติเอกสาร',req:true},
+     {id:'ctx',label:'บริบทเพิ่มเติม',type:'textarea',ph:'เช่น ทีม 10 คน ปัญหาหลักคือ... งบประมาณจำกัด',req:false}
+   ],
+   build:f=>`คุณคือผู้เชี่ยวชาญ Kaizen และ Lean Thinking ระดับโลก มีประสบการณ์ 20 ปี\nโหมด: Kaizen Continuous Improvement\n\nช่วยสร้างไอเดีย Kaizen สำหรับ "${f.area}"\n${f.ctx?'\nบริบท: '+f.ctx:''}\n\nข้อกำหนด:\n• สร้างไอเดียอย่างน้อย 10 ไอเดีย\n• แต่ละไอเดียต้องทำได้ภายใน 1-4 สัปดาห์\n• ระบุ: ปัญหาที่แก้ + วิธีทำ + ผลลัพธ์ที่คาดหวัง + KPI\n• จัดลำดับ Easiest → Harder\n• ใช้หลัก 5S, PDCA, Muda, Mura, Muri ประกอบ`
   },
-  {
-    id:'t2', emoji:'🔴', label:'2. Advanced', name:'Advanced Multi-Perspective',
-    color:'#991B1B', bg:'#FEE2E2',
-    desc:'ขั้นสูง — 8 Wastes + PDCA + 5 Whys + 3 มุมมอง 15 ไอเดีย',
-    fields:[
-      {id:'topic', label:'หัวข้อที่ต้องการวิเคราะห์', type:'text', ph:'เช่น กระบวนการอนุมัติเอกสาร, ระบบ Customer Service', req:true},
-      {id:'dept', label:'แผนก/หน่วยงาน', type:'text', ph:'เช่น ฝ่ายบัญชี, สำนักงานคณบดี', req:true},
-      {id:'prob', label:'ปัญหาหลักที่พบ', type:'textarea', ph:'อธิบายปัญหาปัจจุบัน เช่น ขั้นตอนช้า ผิดพลาดบ่อย', req:false}
-    ],
-    build: f => `🔴 Priority Level: MAX | โหมด: Deep Kaizen Thinking
-
-คุณคือ Kaizen Master + Lean Six Sigma Black Belt + Behavioral Economist
-
-งาน: สร้างไอเดีย Kaizen สำหรับ "${f.topic}" ในแผนก "${f.dept}"
-${f.prob ? '\nปัญหาหลัก: ' + f.prob : ''}
-
-วิธีคิด (ทำตามลำดับ):
-1. วิเคราะห์ปัจจุบันด้วย 8 Wastes (Muda)
-2. คิดแบบ PDCA + 5 Whys
-3. พิจารณา 3 มุมมอง: Process, People, Technology
-4. สร้าง 12-15 ไอเดีย
-
-แบ่งเป็น:
-### Quick Wins (1-7 วัน)
-### Medium Term (2-4 สัปดาห์)
-### Strategic Kaizen (1-3 เดือน)
-
-แต่ละไอเดียต้องมี: ชื่อ + ปัญหาที่แก้ + Step-by-step + ผลกระทบ + ความเสี่ยง`
+  {id:'t2',emoji:'🔴',label:'2. Advanced',name:'Advanced Multi-Perspective',color:'#991B1B',bg:'#FEE2E2',
+   desc:'ขั้นสูง — 8 Wastes + PDCA + 5 Whys + 3 มุมมอง 15 ไอเดีย',
+   fields:[
+     {id:'topic',label:'หัวข้อที่ต้องการวิเคราะห์',type:'text',ph:'เช่น กระบวนการอนุมัติเอกสาร, ระบบ Customer Service',req:true},
+     {id:'dept',label:'แผนก/หน่วยงาน',type:'text',ph:'เช่น ฝ่ายบัญชี, สำนักงานคณบดี',req:true},
+     {id:'prob',label:'ปัญหาหลักที่พบ',type:'textarea',ph:'อธิบายปัญหาปัจจุบัน เช่น ขั้นตอนช้า ผิดพลาดบ่อย',req:false}
+   ],
+   build:f=>`🔴 Priority Level: MAX | โหมด: Deep Kaizen Thinking\n\nคุณคือ Kaizen Master + Lean Six Sigma Black Belt + Behavioral Economist\n\nงาน: สร้างไอเดีย Kaizen สำหรับ "${f.topic}" ในแผนก "${f.dept}"\n${f.prob?'\nปัญหาหลัก: '+f.prob:''}\n\nวิธีคิด (ทำตามลำดับ):\n1. วิเคราะห์ปัจจุบันด้วย 8 Wastes (Muda)\n2. คิดแบบ PDCA + 5 Whys\n3. พิจารณา 3 มุมมอง: Process, People, Technology\n4. สร้าง 12-15 ไอเดีย\n\nแบ่งเป็น:\n### Quick Wins (1-7 วัน)\n### Medium Term (2-4 สัปดาห์)\n### Strategic Kaizen (1-3 เดือน)\n\nแต่ละไอเดียต้องมี: ชื่อ + ปัญหาที่แก้ + Step-by-step + ผลกระทบ + ความเสี่ยง`
   },
-  {
-    id:'t3', emoji:'🏢', label:'3. ธุรกิจ', name:'Business / Organization',
-    color:'#185FA5', bg:'#E6F1FB',
-    desc:'องค์กร — Toyota Production System, Visual Management, Gemba Walk',
-    fields:[
-      {id:'biz', label:'ชื่อแผนก/ธุรกิจ', type:'text', ph:'เช่น คณะบริหารธุรกิจ มช., บริษัท ABC ฝ่ายผลิต', req:true},
-      {id:'focus', label:'ด้านที่ต้องการปรับปรุง', type:'text', ph:'เช่น การบริการลูกค้า, การบริหารต้นทุน', req:true},
-      {id:'res', label:'ทรัพยากรที่มีอยู่', type:'text', ph:'เช่น ทีม 8 คน คอมพิวเตอร์ Line Official', req:false},
-      {id:'goal', label:'เป้าหมายหลัก', type:'text', ph:'เช่น ลดต้นทุน 20%, เพิ่มความพึงพอใจลูกค้า', req:false}
-    ],
-    build: f => `คำสั่งพิเศษ: ใช้ Kaizen Philosophy แบบ Toyota Production System
-
-สร้างไอเดีย Kaizen ให้กับ "${f.biz}" ในด้าน "${f.focus}"
-${f.res ? '\nทรัพยากรที่มี: ' + f.res : ''}${f.goal ? '\nเป้าหมาย: ' + f.goal : ''}
-
-เงื่อนไข:
-• เน้นลดต้นทุน + เพิ่มประสิทธิภาพ + เพิ่มความพึงพอใจ
-• ไอเดียต้องทำได้ด้วยทรัพยากรที่มีอยู่ (Low-cost / No-cost)
-• รวมไอเดียที่ใช้ Visual Management (Kanban, Andon, Visual Control)
-• มีอย่างน้อย 1 ไอเดียที่ใช้ Gemba Walk
-
-สร้างมา 15 ไอเดีย และแนะนำ Top 5 ที่ควรทำก่อน พร้อมเหตุผล`
+  {id:'t3',emoji:'🏢',label:'3. ธุรกิจ',name:'Business / Organization',color:'#185FA5',bg:'#E6F1FB',
+   desc:'องค์กร — Toyota Production System, Visual Management, Gemba Walk',
+   fields:[
+     {id:'biz',label:'ชื่อแผนก/ธุรกิจ',type:'text',ph:'เช่น คณะบริหารธุรกิจ มช., บริษัท ABC ฝ่ายผลิต',req:true},
+     {id:'focus',label:'ด้านที่ต้องการปรับปรุง',type:'text',ph:'เช่น การบริการลูกค้า, การบริหารต้นทุน',req:true},
+     {id:'res',label:'ทรัพยากรที่มีอยู่',type:'text',ph:'เช่น ทีม 8 คน คอมพิวเตอร์ Line Official',req:false},
+     {id:'goal',label:'เป้าหมายหลัก',type:'text',ph:'เช่น ลดต้นทุน 20%, เพิ่มความพึงพอใจลูกค้า',req:false}
+   ],
+   build:f=>`คำสั่งพิเศษ: ใช้ Kaizen Philosophy แบบ Toyota Production System\n\nสร้างไอเดีย Kaizen ให้กับ "${f.biz}" ในด้าน "${f.focus}"\n${f.res?'\nทรัพยากรที่มี: '+f.res:''}${f.goal?'\nเป้าหมาย: '+f.goal:''}\n\nเงื่อนไข:\n• เน้นลดต้นทุน + เพิ่มประสิทธิภาพ + เพิ่มความพึงพอใจ\n• ไอเดียต้องทำได้ด้วยทรัพยากรที่มีอยู่ (Low-cost / No-cost)\n• รวมไอเดียที่ใช้ Visual Management (Kanban, Andon, Visual Control)\n• มีอย่างน้อย 1 ไอเดียที่ใช้ Gemba Walk\n\nสร้างมา 15 ไอเดีย และแนะนำ Top 5 ที่ควรทำก่อน พร้อมเหตุผล`
   },
-  {
-    id:'t4', emoji:'🌱', label:'4. ส่วนตัว', name:'Personal Kaizen',
-    color:'#854F0B', bg:'#FAEEDA',
-    desc:'ชีวิตส่วนตัว — 1% Better Every Day, Tiny Habits, Habit Stacking',
-    fields:[
-      {id:'area2', label:'ด้านที่ต้องการพัฒนา', type:'text', ph:'เช่น การออกกำลังกาย, การเงิน, การเรียน, สุขภาพจิต', req:true},
-      {id:'cur', label:'สถานการณ์ปัจจุบัน', type:'textarea', ph:'เช่น ออกกำลังกายไม่สม่ำเสมอ แค่ 1-2 ครั้ง/สัปดาห์', req:false},
-      {id:'obs', label:'อุปสรรคหลัก', type:'text', ph:'เช่น ไม่มีเวลา ขาดวินัย ไม่รู้จะเริ่มอย่างไร', req:false},
-      {id:'g3m', label:'เป้าหมาย 3 เดือน', type:'text', ph:'เช่น ออกกำลังกาย 5 ครั้ง/สัปดาห์', req:false}
-    ],
-    build: f => `Activate Personal Kaizen Mode
-
-ฉันต้องการพัฒนาตัวเองในด้าน "${f.area2}"
-${f.cur ? '\nสถานการณ์ปัจจุบัน: ' + f.cur : ''}${f.obs ? '\nอุปสรรค: ' + f.obs : ''}${f.g3m ? '\nเป้าหมาย 3 เดือน: ' + f.g3m : ''}
-
-สร้าง Personal Kaizen Ideas ใช้หลัก:
-• 1% Better Every Day
-• Habit Stacking & Tiny Habits
-• 5S ในชีวิตประจำวัน
-
-สร้าง 10 ไอเดีย แต่ละอันต้อง:
-- ทำได้จริง ไม่เกิน 15 นาที/วัน
-- วัดผลได้ด้วยตัวเลข
-- มีระบบติดตามความคืบหน้า
-- มีวิธีป้องกันการกลับสู่พฤติกรรมเดิม`
+  {id:'t4',emoji:'🌱',label:'4. ส่วนตัว',name:'Personal Kaizen',color:'#854F0B',bg:'#FAEEDA',
+   desc:'ชีวิตส่วนตัว — 1% Better Every Day, Tiny Habits, Habit Stacking',
+   fields:[
+     {id:'area2',label:'ด้านที่ต้องการพัฒนา',type:'text',ph:'เช่น การออกกำลังกาย, การเงิน, การเรียน, สุขภาพจิต',req:true},
+     {id:'cur',label:'สถานการณ์ปัจจุบัน',type:'textarea',ph:'เช่น ออกกำลังกายไม่สม่ำเสมอ แค่ 1-2 ครั้ง/สัปดาห์',req:false},
+     {id:'obs',label:'อุปสรรคหลัก',type:'text',ph:'เช่น ไม่มีเวลา ขาดวินัย ไม่รู้จะเริ่มอย่างไร',req:false},
+     {id:'g3m',label:'เป้าหมาย 3 เดือน',type:'text',ph:'เช่น ออกกำลังกาย 5 ครั้ง/สัปดาห์',req:false}
+   ],
+   build:f=>`Activate Personal Kaizen Mode\n\nฉันต้องการพัฒนาตัวเองในด้าน "${f.area2}"\n${f.cur?'\nสถานการณ์ปัจจุบัน: '+f.cur:''}${f.obs?'\nอุปสรรค: '+f.obs:''}${f.g3m?'\nเป้าหมาย 3 เดือน: '+f.g3m:''}\n\nสร้าง Personal Kaizen Ideas ใช้หลัก:\n• 1% Better Every Day\n• Habit Stacking & Tiny Habits\n• 5S ในชีวิตประจำวัน\n\nสร้าง 10 ไอเดีย แต่ละอันต้อง:\n- ทำได้จริง ไม่เกิน 15 นาที/วัน\n- วัดผลได้ด้วยตัวเลข\n- มีระบบติดตามความคืบหน้า\n- มีวิธีป้องกันการกลับสู่พฤติกรรมเดิม`
   },
-  {
-    id:'t5', emoji:'👥', label:'5. ทีม', name:'Team Kaizen Workshop',
-    color:'#534AB7', bg:'#EEEDFE',
-    desc:'ทีมงาน — Facilitator ออกแบบ Workshop ทั้งระดับบุคคล ทีม และระบบ',
-    fields:[
-      {id:'team', label:'ชื่อทีม/แผนก', type:'text', ph:'เช่น ทีมพัฒนา, สำนักงานเลขานุการ', req:true},
-      {id:'size', label:'จำนวนสมาชิก', type:'text', ph:'เช่น 8 คน', req:true},
-      {id:'pain', label:'ปัญหาหลักของทีม', type:'textarea', ph:'เช่น ประชุมบ่อยไม่ได้ผล สื่อสารไม่ชัด งานกระจุกที่คนเดียว', req:false},
-      {id:'dur', label:'ระยะเวลา Workshop', type:'select', options:['ครึ่งวัน (3-4 ชั่วโมง)','เต็มวัน (6-8 ชั่วโมง)','2 วัน'], req:false}
-    ],
-    build: f => `Team Kaizen Workshop Simulation
-
-คุณคือ Facilitator ระดับสูงของ Kaizen Event
-
-ออกแบบ Workshop "${f.dur}" สำหรับทีม "${f.team}" จำนวน ${f.size} คน
-${f.pain ? '\nปัญหาหลัก: ' + f.pain : ''}
-
-โฟกัส:
-• ปรับปรุงกระบวนการทำงาน
-• ลดการประชุมที่ไร้ประสิทธิภาพ
-• เพิ่ม Collaboration และลด Burnout
-
-สร้าง:
-- ไอเดียระดับบุคคล + ทีม + ระบบ/นโยบาย
-- Agenda Workshop ละเอียด
-- Ice Breaker Activity
-- วิธีติดตามผลหลัง Workshop`
+  {id:'t5',emoji:'👥',label:'5. ทีม',name:'Team Kaizen Workshop',color:'#534AB7',bg:'#EEEDFE',
+   desc:'ทีมงาน — Facilitator ออกแบบ Workshop ทั้งระดับบุคคล ทีม และระบบ',
+   fields:[
+     {id:'team',label:'ชื่อทีม/แผนก',type:'text',ph:'เช่น ทีมพัฒนา, สำนักงานเลขานุการ',req:true},
+     {id:'size',label:'จำนวนสมาชิก',type:'text',ph:'เช่น 8 คน',req:true},
+     {id:'pain',label:'ปัญหาหลักของทีม',type:'textarea',ph:'เช่น ประชุมบ่อยไม่ได้ผล สื่อสารไม่ชัด',req:false},
+     {id:'dur',label:'ระยะเวลา Workshop',type:'select',options:['ครึ่งวัน (3-4 ชั่วโมง)','เต็มวัน (6-8 ชั่วโมง)','2 วัน'],req:false}
+   ],
+   build:f=>`Team Kaizen Workshop Simulation\n\nคุณคือ Facilitator ระดับสูงของ Kaizen Event\n\nออกแบบ Workshop "${f.dur}" สำหรับทีม "${f.team}" จำนวน ${f.size} คน\n${f.pain?'\nปัญหาหลัก: '+f.pain:''}\n\nโฟกัส:\n• ปรับปรุงกระบวนการทำงาน\n• ลดการประชุมที่ไร้ประสิทธิภาพ\n• เพิ่ม Collaboration และลด Burnout\n\nสร้าง:\n- ไอเดียระดับบุคคล + ทีม + ระบบ/นโยบาย\n- Agenda Workshop ละเอียด\n- Ice Breaker Activity\n- วิธีติดตามผลหลัง Workshop`
   },
-  {
-    id:'t6', emoji:'🌟', label:'6. Mega', name:'ULTIMATE KAIZEN PROMPT',
-    color:'#92400E', bg:'#FEF3C7',
-    desc:'Mega — Kaizen Sensei + Excellence + Innovation + 90-Day Roadmap',
-    fields:[
-      {id:'top2', label:'หัวข้อหลัก', type:'text', ph:'เช่น ระบบการรับสมัครนักศึกษา, กระบวนการจัดซื้อ', req:true},
-      {id:'org2', label:'องค์กร/แผนก', type:'text', ph:'เช่น คณะบริหารธุรกิจ มช.', req:true},
-      {id:'scope', label:'ขอบเขตของปัญหา', type:'textarea', ph:'อธิบายขอบเขต เช่น ครอบคลุมตั้งแต่...ถึง... ใช้เวลา...วัน', req:false},
-      {id:'kpi2', label:'ตัวชี้วัดเป้าหมาย', type:'text', ph:'เช่น ลดเวลา 50%, ลดข้อร้องเรียน 80%', req:false},
-      {id:'tl', label:'ระยะเวลา', type:'select', options:['30 วัน','60 วัน','90 วัน','6 เดือน'], req:false}
-    ],
-    build: f => `🌟 ULTIMATE KAIZEN PROMPT 🌟
-
-บทบาท: Kaizen Sensei + Business Excellence Consultant + Innovation Expert
-
-งานหลัก: สร้างระบบ Kaizen สำหรับ "${f.top2}" ใน "${f.org2}"
-${f.scope ? '\nขอบเขต: ' + f.scope : ''}${f.kpi2 ? '\nKPI เป้าหมาย: ' + f.kpi2 : ''}${f.tl ? '\nระยะเวลา: ' + f.tl : ''}
-
-ขั้นตอน (บังคับทำตามลำดับ):
-1. วิเคราะห์สถานการณ์ปัจจุบัน (Current State)
-2. หา Muda ทั้ง 8 ประเภท
-3. ถาม 5 Whys อย่างละเอียด
-4. สร้างไอเดียด้วย Kaizen + Lean + Design Thinking
-5. ประเมินด้วย Effort-Impact Matrix
-6. ออกแบบ PDCA Cycle สำหรับแต่ละไอเดียหลัก
-
-ผลลัพธ์ที่ต้องการ:
-📌 Executive Summary
-🎯 Top 8 Kaizen Ideas (เรียงตามผลกระทบ)
-🗓️ Implementation Roadmap ${f.tl || '90 วัน'}
-📊 Metrics & Monitoring Plan
-⚠️ Risks & Countermeasures
-✅ Quick Win ที่ทำได้วันแรกทันที`
+  {id:'t6',emoji:'🌟',label:'6. Mega',name:'ULTIMATE KAIZEN PROMPT',color:'#92400E',bg:'#FEF3C7',
+   desc:'Mega — Kaizen Sensei + Excellence + Innovation + 90-Day Roadmap',
+   fields:[
+     {id:'top2',label:'หัวข้อหลัก',type:'text',ph:'เช่น ระบบการรับสมัครนักศึกษา, กระบวนการจัดซื้อ',req:true},
+     {id:'org2',label:'องค์กร/แผนก',type:'text',ph:'เช่น คณะบริหารธุรกิจ มช.',req:true},
+     {id:'scope',label:'ขอบเขตของปัญหา',type:'textarea',ph:'อธิบายขอบเขต เช่น ครอบคลุมตั้งแต่...ถึง...',req:false},
+     {id:'kpi2',label:'ตัวชี้วัดเป้าหมาย',type:'text',ph:'เช่น ลดเวลา 50%, ลดข้อร้องเรียน 80%',req:false},
+     {id:'tl',label:'ระยะเวลา',type:'select',options:['30 วัน','60 วัน','90 วัน','6 เดือน'],req:false}
+   ],
+   build:f=>`🌟 ULTIMATE KAIZEN PROMPT 🌟\n\nบทบาท: Kaizen Sensei + Business Excellence Consultant + Innovation Expert\n\nงานหลัก: สร้างระบบ Kaizen สำหรับ "${f.top2}" ใน "${f.org2}"\n${f.scope?'\nขอบเขต: '+f.scope:''}${f.kpi2?'\nKPI เป้าหมาย: '+f.kpi2:''}${f.tl?'\nระยะเวลา: '+f.tl:''}\n\nขั้นตอน (บังคับทำตามลำดับ):\n1. วิเคราะห์สถานการณ์ปัจจุบัน (Current State)\n2. หา Muda ทั้ง 8 ประเภท\n3. ถาม 5 Whys อย่างละเอียด\n4. สร้างไอเดียด้วย Kaizen + Lean + Design Thinking\n5. ประเมินด้วย Effort-Impact Matrix\n6. ออกแบบ PDCA Cycle\n\nผลลัพธ์:\n📌 Executive Summary\n🎯 Top 8 Kaizen Ideas\n🗓️ Implementation Roadmap ${f.tl||'90 วัน'}\n📊 Metrics & Monitoring Plan\n⚠️ Risks & Countermeasures\n✅ Quick Win ที่ทำได้วันแรกทันที`
   }
 ];
 
-// ============================================================
-// ADVANCED TECHNIQUES DATA
-// ============================================================
-const TECH_CATS = [
-  {
-    emoji:'🧠', label:'Reasoning', color:'#185FA5', bg:'#E6F1FB',
-    items:[
-      {id:'cot', name:'Chain of Thought (CoT)', desc:'คิดทีละขั้นตอนก่อนตอบ', inject:'คิดทีละขั้นตอนอย่างละเอียดก่อนตอบ แสดงกระบวนการคิดทุกขั้นไม่ข้าม'},
-      {id:'tot', name:'Tree of Thoughts (ToT)', desc:'สำรวจ 3 ทางเลือก แล้วเลือกทางที่ดีที่สุด', inject:'สำรวจ 3 ทางเลือกที่แตกต่างกัน แล้วเลือกทางที่ดีที่สุดพร้อมเหตุผลชัดเจน'},
-      {id:'5why', name:'5 Whys Deep Dive', desc:'ถามทำไม 5 ครั้งในแต่ละปัญหาหลัก', inject:'ใช้เทคนิค 5 Whys: ถาม "ทำไม?" อย่างน้อย 5 ครั้งในแต่ละปัญหาหลัก เพื่อหาสาเหตุที่แท้จริง'},
-      {id:'plan', name:'Plan-and-Solve', desc:'วางแผนขั้นตอนก่อน แล้วค่อยแก้ปัญหา', inject:'ก่อนตอบ จงวางแผนขั้นตอนทั้งหมดก่อน แล้วค่อยดำเนินการตามแผนทีละขั้น'},
-      {id:'step', name:'Step-Back Prompting', desc:'ถอยออกมา 1 ก้าวก่อน คิดหลักการพื้นฐาน', inject:'ก่อนตอบ ให้ถอยออกมาก่อน 1 ก้าว แล้วคิดถึงหลักการพื้นฐานและบริบทที่กว้างกว่า'}
-    ]
-  },
-  {
-    emoji:'🎭', label:'Role & Perspective', color:'#854F0B', bg:'#FAEEDA',
-    items:[
-      {id:'multi', name:'Multi-Persona', desc:'3 บุคลิก: นักวิเคราะห์ + นักสร้างสรรค์ + นักวิจารณ์', inject:'วิเคราะห์จาก 3 มุมมองพร้อมกัน: (1) นักวิเคราะห์ข้อมูล (2) นักสร้างสรรค์ (3) นักวิจารณ์ แล้วสังเคราะห์'},
-      {id:'devil', name:'Devil\'s Advocate', desc:'โต้แย้งคำตอบตัวเองเพื่อหาจุดอ่อน', inject:'หลังตอบเสร็จ ให้โต้แย้งคำตอบของตัวเองอย่างรุนแรงเพื่อหาจุดอ่อน แล้วปรับปรุง'},
-      {id:'gemba', name:'Gemba Walk Perspective', desc:'คิดจากมุมมองของผู้ปฏิบัติงานจริง', inject:'วิเคราะห์จากมุมมองของคนที่ทำงานจริงที่หน้างาน (Gemba) ไม่ใช่มุมมองจากบนลงล่าง'}
-    ]
-  },
-  {
-    emoji:'📐', label:'Structure & Output', color:'#534AB7', bg:'#EEEDFE',
-    items:[
-      {id:'skel', name:'Skeleton First', desc:'โครงสร้างก่อน แล้วค่อยขยาย', inject:'เริ่มด้วยโครงสร้างคำตอบทั้งหมดก่อน 1 รอบ แล้วค่อยขยายรายละเอียดแต่ละส่วน'},
-      {id:'table', name:'Table Format', desc:'นำเสนอเป็นตารางเปรียบเทียบ', inject:'นำเสนอส่วนสำคัญในรูปแบบตารางเปรียบเทียบที่ชัดเจน อ่านง่าย'},
-      {id:'md', name:'Markdown Structure', desc:'### หัวข้อ → คำอธิบาย → ตัวอย่าง → ข้อระวัง', inject:'ใช้โครงสร้าง Markdown: ### หัวข้อ → คำอธิบาย → ตัวอย่างจริง → ข้อควรระวัง'},
-      {id:'effort', name:'Effort-Impact Matrix', desc:'จัดลำดับด้วย Effort vs Impact', inject:'จัดลำดับไอเดียทั้งหมดด้วย Effort-Impact Matrix: แกน X = ความยาก แกน Y = ผลกระทบ'}
-    ]
-  },
-  {
-    emoji:'🔬', label:'Advanced Cognitive', color:'#A32D2D', bg:'#FCEBEB',
-    items:[
-      {id:'genk', name:'Generated Knowledge', desc:'เขียนความรู้ที่เกี่ยวข้อง 5-7 ข้อก่อน', inject:'ก่อนตอบ จงเขียนความรู้ที่เกี่ยวข้องทั้งหมดที่มีอยู่ 5-7 ข้อก่อน แล้วค่อยนำมาประกอบคำตอบ'},
-      {id:'anal', name:'Analogical Thinking', desc:'เปรียบเทียบกับกรณีที่คล้ายกันในสาขาอื่น', inject:'แก้ปัญหานี้โดยเปรียบเทียบกับกรณีที่คล้ายกันในอุตสาหกรรมหรือสาขาอื่น (Analogical Reasoning)'},
-      {id:'refine', name:'Self-Refine', desc:'ตอบ → วิจารณ์ → ปรับปรุง 2 รอบ', inject:'หลังตอบ: วิจารณ์คำตอบตัวเองอย่างตรงไปตรงมา แล้วปรับปรุงให้ดีขึ้น ทำซ้ำ 2 รอบ'},
-      {id:'road', name:'Implementation Roadmap', desc:'สร้าง Roadmap พร้อม Timeline ชัดเจน', inject:'สร้าง Implementation Roadmap ที่มี Timeline ชัดเจน ระบุผู้รับผิดชอบ และ Milestone สำคัญ'}
-    ]
-  }
+const TECH_CATS=[
+  {emoji:'🧠',label:'Reasoning',color:'#185FA5',bg:'#E6F1FB',items:[
+    {id:'cot',name:'Chain of Thought (CoT)',desc:'คิดทีละขั้นตอนก่อนตอบ',inject:'คิดทีละขั้นตอนอย่างละเอียดก่อนตอบ แสดงกระบวนการคิดทุกขั้นไม่ข้าม'},
+    {id:'tot',name:'Tree of Thoughts (ToT)',desc:'สำรวจ 3 ทางเลือก แล้วเลือกทางที่ดีที่สุด',inject:'สำรวจ 3 ทางเลือกที่แตกต่างกัน แล้วเลือกทางที่ดีที่สุดพร้อมเหตุผลชัดเจน'},
+    {id:'5why',name:'5 Whys Deep Dive',desc:'ถามทำไม 5 ครั้งในแต่ละปัญหาหลัก',inject:'ใช้เทคนิค 5 Whys: ถาม "ทำไม?" อย่างน้อย 5 ครั้งในแต่ละปัญหาหลัก เพื่อหาสาเหตุที่แท้จริง'},
+    {id:'plan',name:'Plan-and-Solve',desc:'วางแผนขั้นตอนก่อน แล้วค่อยแก้ปัญหา',inject:'ก่อนตอบ จงวางแผนขั้นตอนทั้งหมดก่อน แล้วค่อยดำเนินการตามแผนทีละขั้น'},
+    {id:'step',name:'Step-Back Prompting',desc:'ถอยออกมา 1 ก้าวก่อน คิดหลักการพื้นฐาน',inject:'ก่อนตอบ ให้ถอยออกมาก่อน 1 ก้าว แล้วคิดถึงหลักการพื้นฐานและบริบทที่กว้างกว่า'}
+  ]},
+  {emoji:'🎭',label:'Role & Perspective',color:'#854F0B',bg:'#FAEEDA',items:[
+    {id:'multi',name:'Multi-Persona',desc:'3 บุคลิก: นักวิเคราะห์ + นักสร้างสรรค์ + นักวิจารณ์',inject:'วิเคราะห์จาก 3 มุมมองพร้อมกัน: (1) นักวิเคราะห์ข้อมูล (2) นักสร้างสรรค์ (3) นักวิจารณ์ แล้วสังเคราะห์'},
+    {id:'devil',name:"Devil's Advocate",desc:'โต้แย้งคำตอบตัวเองเพื่อหาจุดอ่อน',inject:'หลังตอบเสร็จ ให้โต้แย้งคำตอบของตัวเองอย่างรุนแรงเพื่อหาจุดอ่อน แล้วปรับปรุง'},
+    {id:'gemba',name:'Gemba Walk Perspective',desc:'คิดจากมุมมองของผู้ปฏิบัติงานจริง',inject:'วิเคราะห์จากมุมมองของคนที่ทำงานจริงที่หน้างาน (Gemba) ไม่ใช่มุมมองจากบนลงล่าง'}
+  ]},
+  {emoji:'📐',label:'Structure & Output',color:'#534AB7',bg:'#EEEDFE',items:[
+    {id:'skel',name:'Skeleton First',desc:'โครงสร้างก่อน แล้วค่อยขยาย',inject:'เริ่มด้วยโครงสร้างคำตอบทั้งหมดก่อน 1 รอบ แล้วค่อยขยายรายละเอียดแต่ละส่วน'},
+    {id:'table',name:'Table Format',desc:'นำเสนอเป็นตารางเปรียบเทียบ',inject:'นำเสนอส่วนสำคัญในรูปแบบตารางเปรียบเทียบที่ชัดเจน อ่านง่าย'},
+    {id:'md',name:'Markdown Structure',desc:'### หัวข้อ → คำอธิบาย → ตัวอย่าง → ข้อระวัง',inject:'ใช้โครงสร้าง Markdown: ### หัวข้อ → คำอธิบาย → ตัวอย่างจริง → ข้อควรระวัง'},
+    {id:'effort',name:'Effort-Impact Matrix',desc:'จัดลำดับด้วย Effort vs Impact',inject:'จัดลำดับไอเดียทั้งหมดด้วย Effort-Impact Matrix: แกน X = ความยาก แกน Y = ผลกระทบ'}
+  ]},
+  {emoji:'🔬',label:'Advanced Cognitive',color:'#A32D2D',bg:'#FCEBEB',items:[
+    {id:'genk',name:'Generated Knowledge',desc:'เขียนความรู้ที่เกี่ยวข้อง 5-7 ข้อก่อน',inject:'ก่อนตอบ จงเขียนความรู้ที่เกี่ยวข้องทั้งหมดที่มีอยู่ 5-7 ข้อก่อน แล้วค่อยนำมาประกอบคำตอบ'},
+    {id:'anal',name:'Analogical Thinking',desc:'เปรียบเทียบกับกรณีที่คล้ายกันในสาขาอื่น',inject:'แก้ปัญหานี้โดยเปรียบเทียบกับกรณีที่คล้ายกันในอุตสาหกรรมหรือสาขาอื่น (Analogical Reasoning)'},
+    {id:'refine',name:'Self-Refine',desc:'ตอบ → วิจารณ์ → ปรับปรุง 2 รอบ',inject:'หลังตอบ: วิจารณ์คำตอบตัวเองอย่างตรงไปตรงมา แล้วปรับปรุงให้ดีขึ้น ทำซ้ำ 2 รอบ'},
+    {id:'road',name:'Implementation Roadmap',desc:'สร้าง Roadmap พร้อม Timeline ชัดเจน',inject:'สร้าง Implementation Roadmap ที่มี Timeline ชัดเจน ระบุผู้รับผิดชอบ และ Milestone สำคัญ'}
+  ]}
 ];
 
-const POWER_BOOSTERS = [
-  {id:'breath', label:'🧘 Deep Breath', inject:'Take a deep breath and work on this step by step.'},
-  {id:'quality', label:'💎 Quality First', inject:'Quality over speed. Take as much time as needed.'},
-  {id:'reason', label:'🔍 Show Reasoning', inject:'Show your reasoning. Do not skip any steps.'},
-  {id:'import', label:'❤️ This Matters', inject:'This is extremely important to me. I need your absolute best thinking.'},
-  {id:'expert', label:'🏆 World-Class', inject:'Think like a world-class expert. Your answer will be used in real implementation.'},
-  {id:'future', label:'🔮 Future Self', inject:'คุณในอนาคต 1 ปีข้างหน้า หลังจากปรับปรุงสำเร็จแล้ว จะมองย้อนกลับมาแนะนำอะไร?'}
+const POWER_BOOSTERS=[
+  {id:'breath',label:'🧘 Deep Breath',inject:'Take a deep breath and work on this step by step.'},
+  {id:'quality',label:'💎 Quality First',inject:'Quality over speed. Take as much time as needed.'},
+  {id:'reason',label:'🔍 Show Reasoning',inject:'Show your reasoning. Do not skip any steps.'},
+  {id:'import',label:'❤️ This Matters',inject:'This is extremely important to me. I need your absolute best thinking.'},
+  {id:'expert',label:'🏆 World-Class',inject:'Think like a world-class expert. Your answer will be used in real implementation.'},
+  {id:'future',label:'🔮 Future Self',inject:'คุณในอนาคต 1 ปีข้างหน้า หลังจากปรับปรุงสำเร็จแล้ว จะมองย้อนกลับมาแนะนำอะไร?'}
 ];
 
-// ============================================================
-// STATE
-// ============================================================
-let selectedTpl = null;
-let checkedTech = new Set();
-let checkedPower = new Set();
+/* ── State ── */
+let selectedTpl=null;
+let checkedTech=new Set();
+let checkedPower=new Set();
 
-// ============================================================
-// RENDER
-// ============================================================
+/* ── Render Templates ── */
 function renderTemplates(){
-  const tabs = document.getElementById('tplTabs');
-  const panels = document.getElementById('formPanels');
-  tabs.innerHTML = '';
-  panels.innerHTML = '';
-
-  TEMPLATES.forEach(t => {
-    // Tab button
-    const btn = document.createElement('button');
-    btn.className = 'tpl-tab';
-    btn.textContent = t.emoji + ' ' + t.label;
-    btn.onclick = () => selectTemplate(t.id);
+  const tabs=document.getElementById('tplTabs');
+  const panels=document.getElementById('formPanels');
+  tabs.innerHTML=''; panels.innerHTML='';
+  TEMPLATES.forEach(t=>{
+    const btn=document.createElement('button');
+    btn.className='tpl-tab';
+    btn.textContent=t.emoji+' '+t.label;
+    btn.onclick=()=>selectTemplate(t.id);
     tabs.appendChild(btn);
-
-    // Form panel
-    const panel = document.createElement('div');
-    panel.className = 'form-panel';
-    panel.id = 'fp_'+t.id;
-
-    const fields = t.fields.map(f => {
-      let inp = '';
+    const panel=document.createElement('div');
+    panel.className='form-panel'; panel.id='fp_'+t.id;
+    const fields=t.fields.map(f=>{
+      let inp='';
       if(f.type==='textarea') inp=`<textarea id="f_${t.id}_${f.id}" placeholder="${f.ph}"></textarea>`;
       else if(f.type==='select') inp=`<select id="f_${t.id}_${f.id}">${f.options.map(o=>`<option>${o}</option>`).join('')}</select>`;
       else inp=`<input type="text" id="f_${t.id}_${f.id}" placeholder="${f.ph}">`;
       return `<div class="field"><label>${f.label}${f.req?'<span class="req">*</span>':''}</label>${inp}</div>`;
     }).join('');
-
-    panel.innerHTML = `<div class="tpl-desc" style="border-left-color:${t.color}">📌 ${t.name} — ${t.desc}</div>${fields}`;
+    panel.innerHTML=`<div class="tpl-desc" style="border-left-color:${t.color}">📌 ${t.name} — ${t.desc}</div>${fields}`;
     panels.appendChild(panel);
   });
-
-  // Auto-select first
   selectTemplate('t1');
 }
 
 function selectTemplate(id){
-  selectedTpl = id;
-  document.querySelectorAll('.tpl-tab').forEach((b,i) => {
-    b.classList.toggle('sel', TEMPLATES[i].id===id);
-  });
-  document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('show'));
+  selectedTpl=id;
+  document.querySelectorAll('.tpl-tab').forEach((b,i)=>b.classList.toggle('sel',TEMPLATES[i].id===id));
+  document.querySelectorAll('.form-panel').forEach(p=>p.classList.remove('show'));
   document.getElementById('fp_'+id).classList.add('show');
 }
 
+/* ── Render Techniques ── */
 function renderTechniques(){
-  const grid = document.getElementById('techGrid');
-  grid.innerHTML = '';
-  TECH_CATS.forEach(cat => {
-    const col = document.createElement('div');
-    col.className = 'tech-cat';
-    const items = cat.items.map(item => `
+  const grid=document.getElementById('techGrid');
+  grid.innerHTML='';
+  TECH_CATS.forEach(cat=>{
+    const col=document.createElement('div');
+    col.className='tech-cat';
+    const items=cat.items.map(item=>`
       <div class="tech-item" onclick="toggleTech('${item.id}')">
         <div class="tech-cb" id="cb_${item.id}"></div>
         <div><div class="tech-name">${item.name}</div><div class="tech-desc">${item.desc}</div></div>
       </div>`).join('');
-    col.innerHTML = `<div class="tech-cat-hdr"><span style="background:${cat.bg};color:${cat.color};padding:2px 8px;border-radius:8px;font-size:11px">${cat.emoji} ${cat.label}</span></div>${items}`;
+    col.innerHTML=`<div class="tech-cat-hdr"><span style="background:${cat.bg};color:${cat.color};padding:2px 8px;border-radius:8px;font-size:11px">${cat.emoji} ${cat.label}</span></div>${items}`;
     grid.appendChild(col);
   });
-
-  const pr = document.getElementById('powerRow');
-  pr.innerHTML = '';
-  POWER_BOOSTERS.forEach(p => {
-    const chip = document.createElement('button');
-    chip.className = 'power-chip';
-    chip.id = 'pw_'+p.id;
-    chip.textContent = p.label;
-    chip.onclick = () => togglePower(p.id);
+  const pr=document.getElementById('powerRow');
+  pr.innerHTML='';
+  POWER_BOOSTERS.forEach(p=>{
+    const chip=document.createElement('button');
+    chip.className='power-chip'; chip.id='pw_'+p.id;
+    chip.textContent=p.label;
+    chip.onclick=()=>togglePower(p.id);
     pr.appendChild(chip);
   });
 }
 
 function toggleTech(id){
-  if(checkedTech.has(id)) checkedTech.delete(id);
-  else checkedTech.add(id);
-  const cb = document.getElementById('cb_'+id);
-  cb.classList.toggle('checked', checkedTech.has(id));
+  checkedTech.has(id)?checkedTech.delete(id):checkedTech.add(id);
+  document.getElementById('cb_'+id).classList.toggle('checked',checkedTech.has(id));
   updateCounter();
 }
-
 function togglePower(id){
-  if(checkedPower.has(id)) checkedPower.delete(id);
-  else checkedPower.add(id);
-  document.getElementById('pw_'+id).classList.toggle('on', checkedPower.has(id));
+  checkedPower.has(id)?checkedPower.delete(id):checkedPower.add(id);
+  document.getElementById('pw_'+id).classList.toggle('on',checkedPower.has(id));
   updateCounter();
 }
-
 function updateCounter(){
-  const n = checkedTech.size + checkedPower.size;
-  const el = document.getElementById('techCounter');
-  el.textContent = n + ' เทคนิค';
-  el.classList.toggle('show', n>0);
+  const n=checkedTech.size+checkedPower.size;
+  const el=document.getElementById('techCounter');
+  el.textContent=n+' เทคนิค';
+  el.classList.toggle('show',n>0);
 }
-
 function selectAll(){
-  TECH_CATS.forEach(cat => cat.items.forEach(item => {
+  TECH_CATS.forEach(cat=>cat.items.forEach(item=>{
     checkedTech.add(item.id);
     document.getElementById('cb_'+item.id).classList.add('checked');
   }));
-  POWER_BOOSTERS.forEach(p => {
+  POWER_BOOSTERS.forEach(p=>{
     checkedPower.add(p.id);
     document.getElementById('pw_'+p.id).classList.add('on');
   });
   updateCounter();
 }
-
 function clearTech(){
   checkedTech.clear(); checkedPower.clear();
   document.querySelectorAll('.tech-cb').forEach(c=>c.classList.remove('checked'));
@@ -537,30 +583,22 @@ function clearTech(){
   updateCounter();
 }
 
-// ============================================================
-// NAVIGATION
-// ============================================================
+/* ── Navigation ── */
 function goStep2(){
-  if(!selectedTpl){ alert('กรุณาเลือก Template ก่อน'); return; }
-  const t = TEMPLATES.find(x=>x.id===selectedTpl);
-  const req = t.fields.filter(f=>f.req && f.type!=='select');
-  const missing = req.filter(f=>!document.getElementById(`f_${t.id}_${f.id}`)?.value.trim());
-  if(missing.length>0){ alert('กรุณากรอก: ' + missing.map(m=>m.label).join(', ')); return; }
-
+  if(!selectedTpl){alert('กรุณาเลือก Template ก่อน');return;}
+  const t=TEMPLATES.find(x=>x.id===selectedTpl);
+  const missing=t.fields.filter(f=>f.req&&f.type!=='select'&&!document.getElementById(`f_${t.id}_${f.id}`)?.value.trim());
+  if(missing.length>0){alert('กรุณากรอก: '+missing.map(m=>m.label).join(', '));return;}
   document.getElementById('step1').style.display='none';
   document.getElementById('step2').style.display='block';
   document.getElementById('outputBlock').classList.remove('show');
-
-  // Update step indicator
-  ['snum1','snum2','snum3'].forEach((id,i) => {
-    document.getElementById(id).className = 'step-num' + (i===0?' done':i===1?' active':'');
-  });
+  document.getElementById('snum1').className='step-num done';
+  document.getElementById('snum2').className='step-num active';
   document.getElementById('sl1').classList.add('done');
   document.getElementById('slb2').classList.add('active');
   document.getElementById('slb3').classList.remove('active');
   window.scrollTo({top:0,behavior:'smooth'});
 }
-
 function goBack(){
   document.getElementById('step2').style.display='none';
   document.getElementById('step1').style.display='block';
@@ -571,79 +609,53 @@ function goBack(){
   document.getElementById('slb2').classList.remove('active');
 }
 
-// ============================================================
-// GENERATE
-// ============================================================
+/* ── Generate ── */
 function getFieldValues(t){
   const out={};
-  t.fields.forEach(f=>{ out[f.id]=document.getElementById(`f_${t.id}_${f.id}`)?.value.trim()||''; });
+  t.fields.forEach(f=>{out[f.id]=document.getElementById(`f_${t.id}_${f.id}`)?.value.trim()||'';});
   return out;
 }
-
 function generatePrompt(){
-  const t = TEMPLATES.find(x=>x.id===selectedTpl);
-  const fields = getFieldValues(t);
-  let base = t.build(fields);
-
-  // Collect technique injections
-  const techLines = [];
-  TECH_CATS.forEach(cat => cat.items.forEach(item => {
-    if(checkedTech.has(item.id)) techLines.push('• '+item.inject);
-  }));
-  POWER_BOOSTERS.forEach(p => {
-    if(checkedPower.has(p.id)) techLines.push('• '+p.inject);
-  });
-
-  let final = base;
-  if(techLines.length > 0){
-    final += '\n\n---\n🚀 เทคนิค Advanced Prompting ที่เพิ่มเข้ามา:\n' + techLines.join('\n');
-  }
-
-  // Display
-  document.getElementById('promptTxt').textContent = final;
-
-  // Tags
-  const tagsEl = document.getElementById('outTags');
-  tagsEl.innerHTML = `<span class="out-tag">${t.emoji} ${t.name}</span>`;
-  if(checkedTech.size>0) tagsEl.innerHTML += `<span class="out-tag boost">⚡ ${checkedTech.size} เทคนิค</span>`;
-  if(checkedPower.size>0) tagsEl.innerHTML += `<span class="out-tag boost">🏆 ${checkedPower.size} Boosters</span>`;
-
+  const t=TEMPLATES.find(x=>x.id===selectedTpl);
+  const fields=getFieldValues(t);
+  let base=t.build(fields);
+  const techLines=[];
+  TECH_CATS.forEach(cat=>cat.items.forEach(item=>{if(checkedTech.has(item.id))techLines.push('• '+item.inject);}));
+  POWER_BOOSTERS.forEach(p=>{if(checkedPower.has(p.id))techLines.push('• '+p.inject);});
+  let final=base;
+  if(techLines.length>0) final+='\n\n---\n🚀 เทคนิค Advanced Prompting ที่เพิ่มเข้ามา:\n'+techLines.join('\n');
+  document.getElementById('promptTxt').textContent=final;
+  const tagsEl=document.getElementById('outTags');
+  tagsEl.innerHTML=`<span class="out-tag">${t.emoji} ${t.name}</span>`;
+  if(checkedTech.size>0) tagsEl.innerHTML+=`<span class="out-tag boost">⚡ ${checkedTech.size} เทคนิค</span>`;
+  if(checkedPower.size>0) tagsEl.innerHTML+=`<span class="out-tag boost">🏆 ${checkedPower.size} Boosters</span>`;
   document.getElementById('outputBlock').classList.add('show');
-
-  // Step indicator
-  ['snum1','snum2','snum3'].forEach((id,i) => {
-    document.getElementById(id).className = 'step-num' + (i<2?' done':' active done');
-  });
+  document.getElementById('snum2').className='step-num done';
+  document.getElementById('snum3').className='step-num active done';
   document.getElementById('sl2').classList.add('done');
   document.getElementById('slb3').classList.add('active');
-
   setTimeout(()=>document.getElementById('outputBlock').scrollIntoView({behavior:'smooth',block:'nearest'}),100);
 }
-
 function copyPrompt(){
-  const txt = document.getElementById('promptTxt').textContent;
+  const txt=document.getElementById('promptTxt').textContent;
   navigator.clipboard.writeText(txt).then(()=>{
-    const btn = document.querySelector('.copy-btn');
+    const btn=document.querySelector('.copy-btn');
     btn.textContent='✅ คัดลอกแล้ว!';
     setTimeout(()=>btn.textContent='📋 คัดลอก Super Prompt',2000);
   });
 }
-
 function reset(){
   document.getElementById('step2').style.display='none';
   document.getElementById('step1').style.display='block';
   document.getElementById('outputBlock').classList.remove('show');
   clearTech();
-  document.getElementById('snum1').className='step-num active';
-  document.getElementById('snum2').className='step-num';
-  document.getElementById('snum3').className='step-num';
+  ['snum1','snum2','snum3'].forEach((id,i)=>document.getElementById(id).className='step-num'+(i===0?' active':''));
   document.getElementById('sl1').classList.remove('done');
   document.getElementById('sl2').classList.remove('done');
   document.getElementById('slb2').classList.remove('active');
   document.getElementById('slb3').classList.remove('active');
   window.scrollTo({top:0,behavior:'smooth'});
 }
-
 function clearAll(){
   if(selectedTpl){
     const t=TEMPLATES.find(x=>x.id===selectedTpl);
@@ -651,7 +663,6 @@ function clearAll(){
   }
 }
 
-// Init
 renderTemplates();
 renderTechniques();
 </script>
