@@ -1,25 +1,99 @@
 <!DOCTYPE html>
-
 <html lang="th">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>กลยุทธ์หลัก Kaizen 2,3,4,6 — Prompt Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <style>
-:root{--green:#1D9E75;--gl:#E1F5EE;--gm:#9FE1CB;--gd:#0F6E56;--bd:#e2e8f0;--bg:#f8fafc;--bg2:#fff;--tx:#1a202c;--tx2:#64748b;--tx3:#94a3b8;--r:10px}
+:root{
+  --primary:#005576;--secondary:#006c4e;--accent:#6366F1;
+  --green:#1D9E75;--gl:#E1F5EE;--gm:#9FE1CB;--gd:#0F6E56;
+  --bd:#e2e8f0;--bg:#f8fafc;--bg2:#fff;--tx:#1a202c;--tx2:#64748b;--tx3:#94a3b8;
+  --r:10px;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
-.wrap{max-width:900px;margin:0 auto;padding:24px 18px 48px}
-
+body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+ 
+/* ── MATERIAL SYMBOLS ── */
+.material-symbols-outlined{
+  font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
+  display:inline-block;line-height:1;font-size:22px;
+}
+ 
+/* ── TOP APP BAR ── */
+.topbar{
+  position:fixed;top:0;left:0;width:100%;height:64px;z-index:100;
+  background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08);
+  display:flex;align-items:center;justify-content:space-between;padding:0 16px;
+}
+.topbar-btn{
+  width:40px;height:40px;border-radius:50%;border:none;background:transparent;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:var(--primary);transition:background .15s;
+}
+.topbar-btn:hover{background:#f0eded}
+.topbar-title{font-size:20px;font-weight:700;color:var(--primary);letter-spacing:-.3px;text-decoration:none}
+ 
+/* ── OVERLAY ── */
+.overlay{
+  display:none;position:fixed;inset:0;z-index:200;
+  background:rgba(0,0,0,.35);backdrop-filter:blur(2px);
+}
+.overlay.show{display:block}
+ 
+/* ── SIDE DRAWER ── */
+.drawer{
+  position:fixed;top:0;left:-280px;width:260px;height:100%;z-index:300;
+  background:#fff;box-shadow:4px 0 20px rgba(0,0,0,.12);
+  transition:left .25s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+}
+.drawer.open{left:0}
+.drawer-header{
+  height:64px;display:flex;align-items:center;padding:0 16px;gap:12px;
+  border-bottom:1px solid #f0eded;
+}
+.drawer-logo{font-size:18px;font-weight:700;color:var(--primary)}
+.drawer-nav{flex:1;padding:12px 8px;overflow-y:auto}
+.drawer-item{
+  display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:14px;
+  text-decoration:none;color:#1b1c1c;font-size:15px;font-weight:500;
+  transition:background .15s;margin-bottom:2px;
+}
+.drawer-item:hover{background:#f0eded}
+.drawer-item.active{background:#E1F5EE;color:var(--primary)}
+.drawer-item.active .material-symbols-outlined{color:var(--primary)}
+.di-home,.di-kaizen,.di-prompt{color:var(--primary)}
+.di-chatgpt{color:var(--accent)}
+.di-gemini{color:var(--secondary)}
+.di-strategy{color:#3d38c5}
+.drawer-footer{padding:16px;border-top:1px solid #f0eded;font-size:11px;color:#94a3b8;text-align:center;line-height:1.6}
+ 
+/* ── MAIN ── */
+.wrap{max-width:900px;margin:0 auto;padding:80px 18px 96px}
+ 
 /* Header */
 .hdr{text-align:center;margin-bottom:22px}
-.hdr-badge{display:inline-block;background:var(–gl);color:var(–gd);font-size:12px;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:10px}
+.back-link{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--primary);font-size:13px;font-weight:500;text-decoration:none;
+  margin-bottom:14px;padding:6px 12px;background:#f0f9ff;border-radius:20px;
+  border:1px solid #c5e7ff;transition:background .15s;
+}
+.back-link:hover{background:#c5e7ff}
+.hdr-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--gl);color:var(--gd);font-size:12px;font-weight:700;
+  padding:5px 16px;border-radius:20px;margin-bottom:10px;
+}
 .hdr h1{font-size:22px;font-weight:700;margin-bottom:6px}
-.hdr p{font-size:13px;color:var(–tx2);line-height:1.6;max-width:600px;margin:0 auto}
-
+.hdr p{font-size:13px;color:var(--tx2);line-height:1.6;max-width:600px;margin:0 auto}
+ 
 /* Strategy overview */
 .ov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:20px}
-.ov-card{border-radius:var(–r);padding:12px 14px;border:1px solid}
+.ov-card{border-radius:var(--r);padding:12px 14px;border:1px solid}
 .ov-card .ov-num{font-size:11px;font-weight:700;opacity:.7;margin-bottom:3px}
 .ov-card .ov-name{font-size:13px;font-weight:700;margin-bottom:2px}
 .ov-card .ov-en{font-size:10px;opacity:.75}
@@ -27,326 +101,414 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--t
 .s3{background:#E6F1FB;color:#185FA5;border-color:#BCDBF7}
 .s4{background:#FAEEDA;color:#854F0B;border-color:#F5D6A8}
 .s6{background:#EEEDFE;color:#534AB7;border-color:#C9C6F9}
-
+ 
 /* Tabs */
-.tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:2px solid var(–bd);padding-bottom:0}
-.tab{padding:9px 18px;font-size:13px;font-weight:500;cursor:pointer;border-radius:8px 8px 0 0;color:var(–tx2);border:1px solid transparent;border-bottom:none;background:none;font-family:inherit;transition:all .15s;position:relative;bottom:-2px}
-.tab:hover{color:var(–tx);background:var(–bg)}
-.tab.active{color:var(–tx);background:var(–bg2);border-color:var(–bd);border-bottom-color:var(–bg2);font-weight:600}
-.tab .tab-ico{margin-right:5px}
-
+.tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:2px solid var(--bd);padding-bottom:0;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{
+  flex-shrink:0;padding:9px 18px;font-size:13px;font-weight:500;cursor:pointer;
+  border-radius:8px 8px 0 0;color:var(--tx2);border:1px solid transparent;
+  border-bottom:none;background:none;font-family:inherit;transition:all .15s;
+  position:relative;bottom:-2px;white-space:nowrap;
+}
+.tab:hover{color:var(--tx);background:var(--bg)}
+.tab.active{color:var(--tx);background:var(--bg2);border-color:var(--bd);border-bottom-color:var(--bg2);font-weight:600}
+ 
 /* Tab content */
 .tp{display:none}.tp.show{display:block}
-
-/* Section label */
-.sec{font-size:11px;font-weight:700;color:var(–tx3);text-transform:uppercase;letter-spacing:.8px;margin:18px 0 10px}
-
+ 
 /* Strategy header */
-.st-hdr{background:var(–bg2);border:1px solid var(–bd);border-radius:var(–r);padding:14px 18px;margin-bottom:14px}
-.st-title{font-size:15px;font-weight:700;color:var(–tx);margin-bottom:4px}
-.st-desc{font-size:12.5px;color:var(–tx2);line-height:1.6}
-
+.st-hdr{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:14px 18px;margin-bottom:14px}
+.st-title{font-size:15px;font-weight:700;color:var(--tx);margin-bottom:4px}
+.st-desc{font-size:12.5px;color:var(--tx2);line-height:1.6}
+ 
 /* Sub-group */
 .sg-list{display:flex;flex-direction:column;gap:8px}
-.sg-card{background:var(–bg2);border:1px solid var(–bd);border-radius:var(–r);overflow:hidden;transition:border-color .2s}
-.sg-card.open{border-color:var(–gm)}
-.sg-hdr{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer}
-.sg-hdr:hover{background:var(–bg)}
+.sg-card{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
+.sg-card.open{border-color:var(--gm)}
+.sg-hdr{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;user-select:none}
+.sg-hdr:hover{background:var(--bg)}
 .sg-ico{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
 .sg-info{flex:1}
-.sg-title{font-size:13.5px;font-weight:600;color:var(–tx)}
-.sg-hint{font-size:11px;color:var(–tx2)}
-.sg-arr{font-size:11px;color:var(–tx3);transition:transform .22s}
-.sg-card.open .sg-arr{transform:rotate(180deg);color:var(–green)}
-.sg-body{display:none;padding:0 14px 14px;border-top:1px solid var(–bd)}
+.sg-title{font-size:13.5px;font-weight:600;color:var(--tx)}
+.sg-hint{font-size:11px;color:var(--tx2)}
+.sg-arr{font-size:11px;color:var(--tx3);transition:transform .22s}
+.sg-card.open .sg-arr{transform:rotate(180deg);color:var(--green)}
+.sg-body{display:none;padding:0 14px 14px;border-top:1px solid var(--bd)}
 .sg-card.open .sg-body{display:block}
-
+ 
 /* Chips */
 .chip-row{display:flex;flex-wrap:wrap;gap:5px;padding:10px 0 6px}
 .chip{padding:5px 12px;border-radius:14px;font-size:11.5px;font-weight:500;cursor:pointer;border:1px solid;transition:all .15s;font-family:inherit}
 .chip:hover{opacity:.8;transform:translateY(-1px)}
 .chip.active{color:#fff!important;border-color:transparent!important;box-shadow:0 2px 6px rgba(0,0,0,.18)}
-
-/* Colors per strategy */
 .c2{background:#E1F5EE;color:#0F6E56;border-color:#9FE1CB}.c2.active{background:#0F6E56}
 .c3{background:#E6F1FB;color:#185FA5;border-color:#BCDBF7}.c3.active{background:#185FA5}
 .c4{background:#FAEEDA;color:#854F0B;border-color:#F5D6A8}.c4.active{background:#854F0B}
 .c6{background:#EEEDFE;color:#534AB7;border-color:#C9C6F9}.c6.active{background:#534AB7}
-
+ 
 /* Prompt output */
-.pout{display:none;margin-top:10px;background:var(–gl);border:1px solid var(–gm);border-radius:9px;padding:14px 16px;font-size:13px;line-height:1.8;color:var(–tx);position:relative;padding-right:90px}
+.pout{display:none;margin-top:10px;background:var(--gl);border:1px solid var(--gm);border-radius:9px;padding:14px 16px;font-size:13px;line-height:1.8;color:var(--tx);position:relative;padding-right:90px}
 .pout.show{display:block}
-.pout strong{color:var(–gd)}
-.copy-p{position:absolute;top:10px;right:12px;background:var(–bg2);border:1px solid var(–bd);border-radius:7px;padding:4px 10px;font-size:11px;cursor:pointer;color:var(–tx2);font-family:inherit;white-space:nowrap;transition:all .15s}
-.copy-p:hover{background:var(–gl);color:var(–gd);border-color:var(–gm)}
-
-/* Tip box */
+.copy-p{position:absolute;top:10px;right:12px;background:var(--bg2);border:1px solid var(--bd);border-radius:7px;padding:4px 10px;font-size:11px;cursor:pointer;color:var(--tx2);font-family:inherit;white-space:nowrap;transition:all .15s}
+.copy-p:hover{background:var(--gl);color:var(--gd);border-color:var(--gm)}
 .tip{font-size:11.5px;color:#92400e;background:#fffbeb;border:1px solid #fde68a;border-radius:7px;padding:8px 11px;line-height:1.6;margin-top:6px}
-
-.footer{text-align:center;margin-top:36px;font-size:12px;color:var(–tx3);line-height:1.7}
+ 
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;width:100%;height:72px;z-index:100;
+  background:#fff;box-shadow:0 -1px 8px rgba(0,0,0,.08);
+  border-top:1px solid #e5e2e1;
+  display:flex;align-items:center;justify-content:space-around;
+  padding:0 4px 8px;
+}
+.nav-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;padding:8px 10px;border-radius:14px;text-decoration:none;
+  color:#40484e;font-size:11px;font-weight:600;transition:all .15s;min-width:52px;
+}
+.nav-item:hover{background:#f0eded}
+.nav-item.active{background:#83f5c6;color:var(--secondary)}
+.nav-item .material-symbols-outlined{font-size:22px}
+.nav-item.home-btn{background:#E1F5EE;padding:6px 8px;border-radius:18px}
+.nav-item.home-btn .material-symbols-outlined{
+  font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;
+  color:var(--primary);font-size:26px;
+}
+ 
+/* Footer */
+.footer{text-align:center;margin-top:32px;font-size:12px;color:var(--tx3);line-height:1.7}
+ 
+@media(min-width:768px){
+  .bottom-nav{display:none}
+  .wrap{padding-bottom:52px}
+}
 </style>
-
 </head>
 <body>
+ 
+<!-- ── OVERLAY ── -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+ 
+<!-- ── SIDE DRAWER ── -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <span class="material-symbols-outlined" style="color:var(--primary)">menu_book</span>
+    <span class="drawer-logo">KAIZEN SMART</span>
+  </div>
+  <nav class="drawer-nav">
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+      <span class="material-symbols-outlined di-home">home</span>Home
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank">
+      <span class="material-symbols-outlined di-kaizen">trending_up</span>KAIZEN
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank">
+      <span class="material-symbols-outlined di-chatgpt">bolt</span>ChatGPT Step
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank">
+      <span class="material-symbols-outlined di-gemini">auto_awesome</span>Gemini Step
+    </a>
+    <a class="drawer-item active" href="#">
+      <span class="material-symbols-outlined di-strategy">architecture</span>Strategies
+    </a>
+    <a class="drawer-item" href="https://sites.google.com/view/teprompt-web/prompt" target="_blank">
+      <span class="material-symbols-outlined di-prompt">psychology</span>Prompts
+    </a>
+  </nav>
+  <div class="drawer-footer">KAIZEN SMART PLAYBOOK<br>By Kachain_K 2026</div>
+</div>
+ 
+<!-- ── TOP APP BAR ── -->
+<header class="topbar">
+  <button class="topbar-btn" onclick="openDrawer()">
+    <span class="material-symbols-outlined">menu</span>
+  </button>
+  <a class="topbar-title" href="https://sites.google.com/view/teprompt-web/home" target="_blank">KAIZEN SMART</a>
+  <button class="topbar-btn">
+    <span class="material-symbols-outlined">search</span>
+  </button>
+</header>
+ 
+<!-- ── MAIN ── -->
 <div class="wrap">
-
-<div class="hdr">
-  <div class="hdr-badge">🎯 กลยุทธ์หลัก Kaizen</div>
-  <h1>หัวข้อ 2, 3, 4, 6 — Prompt Generator</h1>
-  <p>แยกหัวข้อย่อยจาก 4 กลยุทธ์หลัก → คลิกเพื่อสร้าง Prompt ค้นหาแนวทางปรับปรุงแบบ Kaizen</p>
-</div>
-
-<!-- Overview -->
-
-<div class="ov-grid">
-  <div class="ov-card s2"><div class="ov-num">กลยุทธ์ที่ 2</div><div class="ov-name">หลักการ 5ส</div><div class="ov-en">5S — Seiri · Seiton · Seiso · Seiketsu · Shitsuke</div></div>
-  <div class="ov-card s3"><div class="ov-num">กลยุทธ์ที่ 3</div><div class="ov-name">หลักการ 5W 1H</div><div class="ov-en">Who · What · Where · When · Why · How</div></div>
-  <div class="ov-card s4"><div class="ov-num">กลยุทธ์ที่ 4</div><div class="ov-name">รายการตรวจสอบ 4M</div><div class="ov-en">Man · Machine · Material · Method</div></div>
-  <div class="ov-card s6"><div class="ov-num">กลยุทธ์ที่ 6</div><div class="ov-name">วงจร PDCA</div><div class="ov-en">Plan · Do · Check · Act</div></div>
-</div>
-
-<!-- Tabs -->
-
-<div class="tabs">
-  <button class="tab active" onclick="switchTab('t2',this)"><span class="tab-ico">🗂️</span>2 — 5ส</button>
-  <button class="tab" onclick="switchTab('t3',this)"><span class="tab-ico">🔎</span>3 — 5W1H</button>
-  <button class="tab" onclick="switchTab('t4',this)"><span class="tab-ico">🔩</span>4 — 4M</button>
-  <button class="tab" onclick="switchTab('t6',this)"><span class="tab-ico">🔄</span>6 — PDCA</button>
-</div>
-
-<!-- ===== TAB 2: 5S ===== -->
-
-<div class="tp show" id="t2">
-  <div class="st-hdr">
-    <div class="st-title">🗂️ กลยุทธ์ที่ 2 — หลักการ 5ส</div>
-    <div class="st-desc">ระบบจัดระเบียบสถานที่ทำงาน 5 ขั้นตอน เพื่อสร้างสภาพแวดล้อมที่ปลอดภัย สะอาด และมีประสิทธิภาพ</div>
+ 
+  <div class="hdr">
+    <a class="back-link" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+      <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span>
+      KAIZEN SMART PLAYBOOK
+    </a>
+    <div class="hdr-badge">
+      <span class="material-symbols-outlined" style="font-size:15px">architecture</span>
+      กลยุทธ์หลัก Kaizen
+    </div>
+    <h1>หัวข้อ 2, 3, 4, 6 — Prompt Generator</h1>
+    <p>แยกหัวข้อย่อยจาก 4 กลยุทธ์หลัก → คลิกเพื่อสร้าง Prompt ค้นหาแนวทางปรับปรุงแบบ Kaizen</p>
   </div>
-  <div class="sg-list" id="sg2"></div>
-</div>
-
-<!-- ===== TAB 3: 5W1H ===== -->
-
-<div class="tp" id="t3">
-  <div class="st-hdr">
-    <div class="st-title">🔎 กลยุทธ์ที่ 3 — หลักการ 5W 1H</div>
-    <div class="st-desc">เครื่องมือตั้งคำถามเพื่อวิเคราะห์ปัญหาและค้นหาแนวทางปรับปรุงงานอย่างครบถ้วนรอบด้าน</div>
+ 
+  <!-- Overview -->
+  <div class="ov-grid">
+    <div class="ov-card s2"><div class="ov-num">กลยุทธ์ที่ 2</div><div class="ov-name">หลักการ 5ส</div><div class="ov-en">5S — Seiri · Seiton · Seiso · Seiketsu · Shitsuke</div></div>
+    <div class="ov-card s3"><div class="ov-num">กลยุทธ์ที่ 3</div><div class="ov-name">หลักการ 5W 1H</div><div class="ov-en">Who · What · Where · When · Why · How</div></div>
+    <div class="ov-card s4"><div class="ov-num">กลยุทธ์ที่ 4</div><div class="ov-name">รายการตรวจสอบ 4M</div><div class="ov-en">Man · Machine · Material · Method</div></div>
+    <div class="ov-card s6"><div class="ov-num">กลยุทธ์ที่ 6</div><div class="ov-name">วงจร PDCA</div><div class="ov-en">Plan · Do · Check · Act</div></div>
   </div>
-  <div class="sg-list" id="sg3"></div>
-</div>
-
-<!-- ===== TAB 4: 4M ===== -->
-
-<div class="tp" id="t4">
-  <div class="st-hdr">
-    <div class="st-title">🔩 กลยุทธ์ที่ 4 — รายการตรวจสอบ 4M</div>
-    <div class="st-desc">ตรวจสอบ 4 ปัจจัยหลักในการทำงาน เพื่อค้นหาสาเหตุของปัญหาและแนวทางปรับปรุงอย่างเป็นระบบ</div>
+ 
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('t2',this)"><span>🗂️</span> 2 — 5ส</button>
+    <button class="tab" onclick="switchTab('t3',this)"><span>🔎</span> 3 — 5W1H</button>
+    <button class="tab" onclick="switchTab('t4',this)"><span>🔩</span> 4 — 4M</button>
+    <button class="tab" onclick="switchTab('t6',this)"><span>🔄</span> 6 — PDCA</button>
   </div>
-  <div class="sg-list" id="sg4"></div>
-</div>
-
-<!-- ===== TAB 6: PDCA ===== -->
-
-<div class="tp" id="t6">
-  <div class="st-hdr">
-    <div class="st-title">🔄 กลยุทธ์ที่ 6 — วงจร PDCA</div>
-    <div class="st-desc">วงจรการปรับปรุงงานอย่างต่อเนื่อง Plan→Do→Check→Act เป็นหัวใจของการทำ Kaizen</div>
+ 
+  <!-- TAB 2: 5S -->
+  <div class="tp show" id="t2">
+    <div class="st-hdr">
+      <div class="st-title">🗂️ กลยุทธ์ที่ 2 — หลักการ 5ส</div>
+      <div class="st-desc">ระบบจัดระเบียบสถานที่ทำงาน 5 ขั้นตอน เพื่อสร้างสภาพแวดล้อมที่ปลอดภัย สะอาด และมีประสิทธิภาพ</div>
+    </div>
+    <div class="sg-list" id="sg2"></div>
   </div>
-  <div class="sg-list" id="sg6"></div>
+ 
+  <!-- TAB 3: 5W1H -->
+  <div class="tp" id="t3">
+    <div class="st-hdr">
+      <div class="st-title">🔎 กลยุทธ์ที่ 3 — หลักการ 5W 1H</div>
+      <div class="st-desc">เครื่องมือตั้งคำถามเพื่อวิเคราะห์ปัญหาและค้นหาแนวทางปรับปรุงงานอย่างครบถ้วนรอบด้าน</div>
+    </div>
+    <div class="sg-list" id="sg3"></div>
+  </div>
+ 
+  <!-- TAB 4: 4M -->
+  <div class="tp" id="t4">
+    <div class="st-hdr">
+      <div class="st-title">🔩 กลยุทธ์ที่ 4 — รายการตรวจสอบ 4M</div>
+      <div class="st-desc">ตรวจสอบ 4 ปัจจัยหลักในการทำงาน เพื่อค้นหาสาเหตุของปัญหาและแนวทางปรับปรุงอย่างเป็นระบบ</div>
+    </div>
+    <div class="sg-list" id="sg4"></div>
+  </div>
+ 
+  <!-- TAB 6: PDCA -->
+  <div class="tp" id="t6">
+    <div class="st-hdr">
+      <div class="st-title">🔄 กลยุทธ์ที่ 6 — วงจร PDCA</div>
+      <div class="st-desc">วงจรการปรับปรุงงานอย่างต่อเนื่อง Plan→Do→Check→Act เป็นหัวใจของการทำ Kaizen</div>
+    </div>
+    <div class="sg-list" id="sg6"></div>
+  </div>
+ 
+  <div class="footer">
+    จัดทำโดย คเชนท์ แก้วอุ่นเรือน · แผนกฝึกอบรม 2026<br>
+    กลยุทธ์หลัก Kaizen × Prompt Generator — ทุกคน ทุกที่ ทุกเวลา 🌱<br>
+    <a href="https://sites.google.com/view/teprompt-web/home" target="_blank"
+       style="color:var(--primary);font-weight:600;text-decoration:none;margin-top:4px;display:inline-block">
+      ← กลับหน้า KAIZEN SMART PLAYBOOK
+    </a>
+  </div>
 </div>
-
-<div class="footer">
-  จัดทำโดย คเชนท์ แก้วอุ่นเรือน · แผนกฝึกอบรม2026<br>
-  กลยุทธ์หลัก Kaizen × Prompt Generator — ทุกคน ทุกที่ ทุกเวลา 🌱
-</div>
-</div>
-
+ 
+<!-- ── BOTTOM NAV ── -->
+<nav class="bottom-nav">
+  <a class="nav-item home-btn" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+    <span class="material-symbols-outlined">home</span>
+    <span>Home</span>
+  </a>
+  <a class="nav-item" href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank">
+    <span class="material-symbols-outlined">trending_up</span>
+    <span>Kaizen</span>
+  </a>
+  <a class="nav-item" href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank">
+    <span class="material-symbols-outlined">bolt</span>
+    <span>ChatGPT</span>
+  </a>
+  <a class="nav-item" href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank">
+    <span class="material-symbols-outlined">auto_awesome</span>
+    <span>Gemini</span>
+  </a>
+  <a class="nav-item active" href="#">
+    <span class="material-symbols-outlined">psychology</span>
+    <span>Prompts</span>
+  </a>
+</nav>
+ 
 <script>
-// ============================================================
-// DATA
-// ============================================================
+/* ── Drawer ── */
+function openDrawer(){
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+  document.body.style.overflow='';
+}
+ 
+/* ── Data ── */
 const DATA = {
-  s2: [
-    { ico:'🗃️', bg:'#E1F5EE', title:'สะสาง (Seiri)', hint:'แยกของจำเป็น vs ไม่จำเป็น',
-      subs:[
-        {label:'แยกของที่ใช้/ไม่ใช้บนโต๊ะทำงาน', tip:'ลองถามว่า "ของชิ้นนี้ใช้ครั้งสุดท้ายเมื่อไร?"'},
-        {label:'ลดเอกสารและไฟล์ที่ไม่จำเป็น', tip:'กำหนดเกณฑ์ว่าเก็บได้นานแค่ไหน'},
-        {label:'กำจัดอุปกรณ์ชำรุดหรือล้าสมัย', tip:'ตั้งกล่อง Red Tag สำหรับของที่สงสัย'},
-        {label:'ทบทวนซอฟต์แวร์/แอปที่ไม่ได้ใช้', tip:'ลดภาระ IT และค่าใช้จ่าย License'}
-      ]
-    },
-    { ico:'📐', bg:'#D1FAE5', title:'สะดวก (Seiton)', hint:'จัดวางให้หาง่าย ใช้ง่าย เก็บง่าย',
-      subs:[
-        {label:'กำหนดตำแหน่งที่ตั้งของทุกสิ่ง', tip:'ใช้ป้าย Label ระบุตำแหน่งชัดเจน'},
-        {label:'จัดระบบแฟ้มเอกสารให้หาง่าย', tip:'ตั้งชื่อแฟ้มแบบ Date-First เช่น 2024-01-report'},
-        {label:'ออกแบบพื้นที่ทำงานให้ไหลสะดวก', tip:'ของที่ใช้บ่อยต้องอยู่ใกล้มือที่สุด'},
-        {label:'ทำ Visual Board แสดงสถานะงาน', tip:'ทุกคนเห็นภาพรวมงานได้ทันที'}
-      ]
-    },
-    { ico:'🧹', bg:'#ECFDF5', title:'สะอาด (Seiso)', hint:'ทำความสะอาดและตรวจหาแหล่งสกปรก',
-      subs:[
-        {label:'กำหนดตารางทำความสะอาดประจำวัน', tip:'ใช้หลัก "ผู้ใช้คือผู้ดูแล"'},
-        {label:'ค้นหาและแก้ไขแหล่งกำเนิดความสกปรก', tip:'แก้ที่ต้นเหตุ ไม่ใช่แค่ทำความสะอาดซ้ำๆ'},
-        {label:'ดูแลบำรุงรักษาอุปกรณ์สม่ำเสมอ', tip:'ป้องกันดีกว่าซ่อม'},
-        {label:'สร้างนิสัยสะอาดก่อนเลิกงานทุกวัน', tip:'ใช้เวลาแค่ 5 นาทีสุดท้าย'}
-      ]
-    },
-    { ico:'📋', bg:'#F0FDF4', title:'สุขลักษณะ (Seiketsu)', hint:'สร้างมาตรฐานและ Visual Management',
-      subs:[
-        {label:'กำหนดมาตรฐานความสะอาดที่วัดได้', tip:'ถ่ายรูป "สภาพที่ดี" ไว้เป็น Reference'},
-        {label:'ทำ Checklist ตรวจสอบ 3ส แรก', tip:'ใช้ภาพมากกว่าตัวอักษร เข้าใจง่ายกว่า'},
-        {label:'ใช้สีและป้ายสัญลักษณ์บ่งบอกสถานะ', tip:'เช่น เขียว=ปกติ เหลือง=ระวัง แดง=แจ้งซ่อม'},
-        {label:'ทบทวนและอัปเดตมาตรฐานสม่ำเสมอ', tip:'ทบทวนทุก 3 เดือน หรือเมื่อมีการเปลี่ยนแปลง'}
-      ]
-    },
-    { ico:'🎯', bg:'#F7FEE7', title:'สร้างวินัย (Shitsuke)', hint:'ปฏิบัติต่อเนื่องจนเป็นวัฒนธรรม',
-      subs:[
-        {label:'สร้างการตรวจ 5ส สม่ำเสมอทุกสัปดาห์', tip:'หัวหน้าต้องเป็นตัวอย่างให้ทีม'},
-        {label:'ให้ Feedback และยกย่องทีมที่ทำดี', tip:'ชมต่อหน้า ติในที่ลับ'},
-        {label:'ผูก 5ส เข้ากับการประเมินผลงาน', tip:'ทำให้ 5ส เป็นส่วนหนึ่งของ KPI'},
-        {label:'จัดกิจกรรม 5ส Day เพื่อสร้างวัฒนธรรม', tip:'ทำร่วมกันทั้งองค์กร สร้างความสามัคคี'}
-      ]
-    }
+  s2:[
+    {ico:'🗃️',bg:'#E1F5EE',title:'สะสาง (Seiri)',hint:'แยกของจำเป็น vs ไม่จำเป็น',
+     subs:[
+      {label:'แยกของที่ใช้/ไม่ใช้บนโต๊ะทำงาน',tip:'ลองถามว่า "ของชิ้นนี้ใช้ครั้งสุดท้ายเมื่อไร?"'},
+      {label:'ลดเอกสารและไฟล์ที่ไม่จำเป็น',tip:'กำหนดเกณฑ์ว่าเก็บได้นานแค่ไหน'},
+      {label:'กำจัดอุปกรณ์ชำรุดหรือล้าสมัย',tip:'ตั้งกล่อง Red Tag สำหรับของที่สงสัย'},
+      {label:'ทบทวนซอฟต์แวร์/แอปที่ไม่ได้ใช้',tip:'ลดภาระ IT และค่าใช้จ่าย License'}
+    ]},
+    {ico:'📐',bg:'#D1FAE5',title:'สะดวก (Seiton)',hint:'จัดวางให้หาง่าย ใช้ง่าย เก็บง่าย',
+     subs:[
+      {label:'กำหนดตำแหน่งที่ตั้งของทุกสิ่ง',tip:'ใช้ป้าย Label ระบุตำแหน่งชัดเจน'},
+      {label:'จัดระบบแฟ้มเอกสารให้หาง่าย',tip:'ตั้งชื่อแฟ้มแบบ Date-First เช่น 2024-01-report'},
+      {label:'ออกแบบพื้นที่ทำงานให้ไหลสะดวก',tip:'ของที่ใช้บ่อยต้องอยู่ใกล้มือที่สุด'},
+      {label:'ทำ Visual Board แสดงสถานะงาน',tip:'ทุกคนเห็นภาพรวมงานได้ทันที'}
+    ]},
+    {ico:'🧹',bg:'#ECFDF5',title:'สะอาด (Seiso)',hint:'ทำความสะอาดและตรวจหาแหล่งสกปรก',
+     subs:[
+      {label:'กำหนดตารางทำความสะอาดประจำวัน',tip:'ใช้หลัก "ผู้ใช้คือผู้ดูแล"'},
+      {label:'ค้นหาและแก้ไขแหล่งกำเนิดความสกปรก',tip:'แก้ที่ต้นเหตุ ไม่ใช่แค่ทำความสะอาดซ้ำๆ'},
+      {label:'ดูแลบำรุงรักษาอุปกรณ์สม่ำเสมอ',tip:'ป้องกันดีกว่าซ่อม'},
+      {label:'สร้างนิสัยสะอาดก่อนเลิกงานทุกวัน',tip:'ใช้เวลาแค่ 5 นาทีสุดท้าย'}
+    ]},
+    {ico:'📋',bg:'#F0FDF4',title:'สุขลักษณะ (Seiketsu)',hint:'สร้างมาตรฐานและ Visual Management',
+     subs:[
+      {label:'กำหนดมาตรฐานความสะอาดที่วัดได้',tip:'ถ่ายรูป "สภาพที่ดี" ไว้เป็น Reference'},
+      {label:'ทำ Checklist ตรวจสอบ 3ส แรก',tip:'ใช้ภาพมากกว่าตัวอักษร เข้าใจง่ายกว่า'},
+      {label:'ใช้สีและป้ายสัญลักษณ์บ่งบอกสถานะ',tip:'เช่น เขียว=ปกติ เหลือง=ระวัง แดง=แจ้งซ่อม'},
+      {label:'ทบทวนและอัปเดตมาตรฐานสม่ำเสมอ',tip:'ทบทวนทุก 3 เดือน หรือเมื่อมีการเปลี่ยนแปลง'}
+    ]},
+    {ico:'🎯',bg:'#F7FEE7',title:'สร้างวินัย (Shitsuke)',hint:'ปฏิบัติต่อเนื่องจนเป็นวัฒนธรรม',
+     subs:[
+      {label:'สร้างการตรวจ 5ส สม่ำเสมอทุกสัปดาห์',tip:'หัวหน้าต้องเป็นตัวอย่างให้ทีม'},
+      {label:'ให้ Feedback และยกย่องทีมที่ทำดี',tip:'ชมต่อหน้า ติในที่ลับ'},
+      {label:'ผูก 5ส เข้ากับการประเมินผลงาน',tip:'ทำให้ 5ส เป็นส่วนหนึ่งของ KPI'},
+      {label:'จัดกิจกรรม 5ส Day เพื่อสร้างวัฒนธรรม',tip:'ทำร่วมกันทั้งองค์กร สร้างความสามัคคี'}
+    ]}
   ],
-  s3: [
-    { ico:'🧑‍💼', bg:'#E6F1FB', title:'Who — ใคร', hint:'ตรวจสอบว่าใครเป็นผู้รับผิดชอบ',
-      subs:[
-        {label:'ใครรับผิดชอบงานนี้ชัดเจนหรือไม่', tip:'ถ้าไม่ชัดจะเกิด Mura — ความรับผิดชอบขัดแย้ง'},
-        {label:'ทักษะของผู้ปฏิบัติเหมาะสมกับงานไหม', tip:'ตรวจสอบว่า Man ตรงกับ Method หรือไม่'},
-        {label:'มีผู้รับงานสำรองเมื่อขาดบุคลากรหลักไหม', tip:'ป้องกัน Single Point of Failure'},
-        {label:'การสื่อสารระหว่างผู้เกี่ยวข้องชัดเจนไหม', tip:'ใช้ RACI Matrix ช่วยกำหนดบทบาท'}
-      ]
-    },
-    { ico:'📌', bg:'#DBEAFE', title:'What — อะไร', hint:'ตรวจสอบว่าทำอะไรและได้ผลอะไร',
-      subs:[
-        {label:'งานที่ทำมีคุณค่าเพิ่มต่อองค์กรจริงไหม', tip:'ถามว่า "ถ้าไม่ทำสิ่งนี้จะเกิดอะไรขึ้น?"'},
-        {label:'ผลลัพธ์ที่ต้องการชัดเจนและวัดได้ไหม', tip:'ใช้หลัก SMART Goal ในการกำหนดเป้า'},
-        {label:'ขอบเขตงานชัดเจนป้องกัน Scope Creep ไหม', tip:'บันทึกและยืนยันขอบเขตเป็นลายลักษณ์อักษร'},
-        {label:'มีงานซ้ำซ้อนกับหน่วยงานอื่นไหม', tip:'ตรวจสอบ Process Map ร่วมกัน'}
-      ]
-    },
-    { ico:'📍', bg:'#BFDBFE', title:'Where — ที่ไหน', hint:'ตรวจสอบสถานที่และจุดที่เกิดปัญหา',
-      subs:[
-        {label:'สถานที่ทำงานเอื้อต่อประสิทธิภาพไหม', tip:'ใช้หลัก 5ส ประเมินสภาพแวดล้อม'},
-        {label:'จุดที่เกิดปัญหาบ่อยที่สุดอยู่ที่ไหน', tip:'ทำ Heatmap ปัญหาในแต่ละจุด'},
-        {label:'การเดินทาง/เคลื่อนย้ายระหว่างจุดสั้นที่สุดไหม', tip:'ลด Muda ด้านการเคลื่อนที่'},
-        {label:'ข้อมูลและทรัพยากรอยู่ในที่เข้าถึงได้ง่ายไหม', tip:'ใช้ Cloud หรือ Shared Drive ให้เข้าถึงได้ทุกที่'}
-      ]
-    },
-    { ico:'📅', bg:'#E0F2FE', title:'When — เมื่อไร', hint:'ตรวจสอบเวลาและความถี่ในการทำงาน',
-      subs:[
-        {label:'เวลาที่ทำงานนี้เหมาะสมที่สุดไหม', tip:'บางงานเหมาะทำตอนเช้า บางงานเหมาะบ่าย'},
-        {label:'ความถี่ในการทำงานเหมาะสมไหม', tip:'ลองถามว่าทำบ่อยเกินไป หรือน้อยเกินไปไหม'},
-        {label:'กำหนดส่งงานสมเหตุสมผลไหม', tip:'ควร Buffer เผื่อปัญหาที่อาจเกิดขึ้น'},
-        {label:'งานนี้ควรทำอัตโนมัติแทนทำด้วยมือไหม', tip:'ถ้าทำซ้ำๆ มากกว่า 10 ครั้ง/เดือน ควรทำ Automation'}
-      ]
-    },
-    { ico:'❓', bg:'#F0F9FF', title:'Why — ทำไม', hint:'ค้นหาสาเหตุที่แท้จริงของปัญหา',
-      subs:[
-        {label:'ทำไมถึงทำงานนี้ด้วยวิธีนี้', tip:'ใช้ Why 5 ครั้งเพื่อหาสาเหตุที่แท้จริง'},
-        {label:'ทำไมปัญหานี้ถึงยังไม่ได้รับการแก้ไข', tip:'อาจมี Limiting Beliefs ขัดขวางอยู่'},
-        {label:'ทำไมถึงยังใช้วิธีเดิมที่ไม่มีประสิทธิภาพ', tip:'ตรวจสอบว่าเป็นเรื่อง "ไม่รู้" หรือ "ไม่กล้าเปลี่ยน"'},
-        {label:'ทำไมคนในทีมไม่มีส่วนร่วมปรับปรุง', tip:'ทบทวนบรรยากาศและวัฒนธรรมองค์กร'}
-      ]
-    },
-    { ico:'⚡', bg:'#F0FDFA', title:'How — อย่างไร', hint:'ค้นหาวิธีการที่ดีกว่าเดิม',
-      subs:[
-        {label:'วิธีการปัจจุบันมีขั้นตอนที่ลดได้ไหม', tip:'ใช้เทคนิค เลิก-ลด-เปลี่ยน วิเคราะห์'},
-        {label:'มีเทคโนโลยีหรือเครื่องมือที่ช่วยได้ไหม', tip:'ลอง Digital Tools ก่อนลงทุนซื้อระบบใหม่'},
-        {label:'วิธีการสื่อสารและประสานงานดีพอไหม', tip:'ลองใช้ SOP หรือ Work Instruction ที่ชัดขึ้น'},
-        {label:'มีวิธีที่ทำได้ดีกว่า เร็วกว่า ถูกกว่าไหม', tip:'Benchmark กับหน่วยงานที่ทำดีกว่า'}
-      ]
-    }
+  s3:[
+    {ico:'🧑‍💼',bg:'#E6F1FB',title:'Who — ใคร',hint:'ตรวจสอบว่าใครเป็นผู้รับผิดชอบ',
+     subs:[
+      {label:'ใครรับผิดชอบงานนี้ชัดเจนหรือไม่',tip:'ถ้าไม่ชัดจะเกิด Mura — ความรับผิดชอบขัดแย้ง'},
+      {label:'ทักษะของผู้ปฏิบัติเหมาะสมกับงานไหม',tip:'ตรวจสอบว่า Man ตรงกับ Method หรือไม่'},
+      {label:'มีผู้รับงานสำรองเมื่อขาดบุคลากรหลักไหม',tip:'ป้องกัน Single Point of Failure'},
+      {label:'การสื่อสารระหว่างผู้เกี่ยวข้องชัดเจนไหม',tip:'ใช้ RACI Matrix ช่วยกำหนดบทบาท'}
+    ]},
+    {ico:'📌',bg:'#DBEAFE',title:'What — อะไร',hint:'ตรวจสอบว่าทำอะไรและได้ผลอะไร',
+     subs:[
+      {label:'งานที่ทำมีคุณค่าเพิ่มต่อองค์กรจริงไหม',tip:'ถามว่า "ถ้าไม่ทำสิ่งนี้จะเกิดอะไรขึ้น?"'},
+      {label:'ผลลัพธ์ที่ต้องการชัดเจนและวัดได้ไหม',tip:'ใช้หลัก SMART Goal ในการกำหนดเป้า'},
+      {label:'ขอบเขตงานชัดเจนป้องกัน Scope Creep ไหม',tip:'บันทึกและยืนยันขอบเขตเป็นลายลักษณ์อักษร'},
+      {label:'มีงานซ้ำซ้อนกับหน่วยงานอื่นไหม',tip:'ตรวจสอบ Process Map ร่วมกัน'}
+    ]},
+    {ico:'📍',bg:'#BFDBFE',title:'Where — ที่ไหน',hint:'ตรวจสอบสถานที่และจุดที่เกิดปัญหา',
+     subs:[
+      {label:'สถานที่ทำงานเอื้อต่อประสิทธิภาพไหม',tip:'ใช้หลัก 5ส ประเมินสภาพแวดล้อม'},
+      {label:'จุดที่เกิดปัญหาบ่อยที่สุดอยู่ที่ไหน',tip:'ทำ Heatmap ปัญหาในแต่ละจุด'},
+      {label:'การเดินทาง/เคลื่อนย้ายระหว่างจุดสั้นที่สุดไหม',tip:'ลด Muda ด้านการเคลื่อนที่'},
+      {label:'ข้อมูลและทรัพยากรอยู่ในที่เข้าถึงได้ง่ายไหม',tip:'ใช้ Cloud หรือ Shared Drive ให้เข้าถึงได้ทุกที่'}
+    ]},
+    {ico:'📅',bg:'#E0F2FE',title:'When — เมื่อไร',hint:'ตรวจสอบเวลาและความถี่ในการทำงาน',
+     subs:[
+      {label:'เวลาที่ทำงานนี้เหมาะสมที่สุดไหม',tip:'บางงานเหมาะทำตอนเช้า บางงานเหมาะบ่าย'},
+      {label:'ความถี่ในการทำงานเหมาะสมไหม',tip:'ลองถามว่าทำบ่อยเกินไป หรือน้อยเกินไปไหม'},
+      {label:'กำหนดส่งงานสมเหตุสมผลไหม',tip:'ควร Buffer เผื่อปัญหาที่อาจเกิดขึ้น'},
+      {label:'งานนี้ควรทำอัตโนมัติแทนทำด้วยมือไหม',tip:'ถ้าทำซ้ำๆ มากกว่า 10 ครั้ง/เดือน ควรทำ Automation'}
+    ]},
+    {ico:'❓',bg:'#F0F9FF',title:'Why — ทำไม',hint:'ค้นหาสาเหตุที่แท้จริงของปัญหา',
+     subs:[
+      {label:'ทำไมถึงทำงานนี้ด้วยวิธีนี้',tip:'ใช้ Why 5 ครั้งเพื่อหาสาเหตุที่แท้จริง'},
+      {label:'ทำไมปัญหานี้ถึงยังไม่ได้รับการแก้ไข',tip:'อาจมี Limiting Beliefs ขัดขวางอยู่'},
+      {label:'ทำไมถึงยังใช้วิธีเดิมที่ไม่มีประสิทธิภาพ',tip:'ตรวจสอบว่าเป็นเรื่อง "ไม่รู้" หรือ "ไม่กล้าเปลี่ยน"'},
+      {label:'ทำไมคนในทีมไม่มีส่วนร่วมปรับปรุง',tip:'ทบทวนบรรยากาศและวัฒนธรรมองค์กร'}
+    ]},
+    {ico:'⚡',bg:'#F0FDFA',title:'How — อย่างไร',hint:'ค้นหาวิธีการที่ดีกว่าเดิม',
+     subs:[
+      {label:'วิธีการปัจจุบันมีขั้นตอนที่ลดได้ไหม',tip:'ใช้เทคนิค เลิก-ลด-เปลี่ยน วิเคราะห์'},
+      {label:'มีเทคโนโลยีหรือเครื่องมือที่ช่วยได้ไหม',tip:'ลอง Digital Tools ก่อนลงทุนซื้อระบบใหม่'},
+      {label:'วิธีการสื่อสารและประสานงานดีพอไหม',tip:'ลองใช้ SOP หรือ Work Instruction ที่ชัดขึ้น'},
+      {label:'มีวิธีที่ทำได้ดีกว่า เร็วกว่า ถูกกว่าไหม',tip:'Benchmark กับหน่วยงานที่ทำดีกว่า'}
+    ]}
   ],
-  s4: [
-    { ico:'👷', bg:'#FAEEDA', title:'Man — กำลังคน', hint:'ตรวจสอบผู้ปฏิบัติงาน ทักษะ และความรับผิดชอบ',
-      subs:[
-        {label:'ทำงานตามมาตรฐานที่กำหนดไว้หรือไม่', tip:'ตรวจสอบด้วยการสังเกตจริง (Gemba Walk)'},
-        {label:'มีทักษะและความชำนาญเพียงพอหรือไม่', tip:'ทำ Skill Matrix ประเมินช่องว่างทักษะ'},
-        {label:'งานที่มอบหมายตรงกับความสามารถไหม', tip:'Right Person, Right Job คือหัวใจสำคัญ'},
-        {label:'มีความรับผิดชอบและแรงจูงใจในงานไหม', tip:'ตรวจสอบระบบแรงจูงใจและ Feedback Loop'}
-      ]
-    },
-    { ico:'🖥️', bg:'#FEF3C7', title:'Machine — เครื่องจักร/อุปกรณ์', hint:'ตรวจสอบเครื่องมือ ประสิทธิภาพ และการจัดวาง',
-      subs:[
-        {label:'อุปกรณ์สอดคล้องกับความต้องการของงานไหม', tip:'ใช้ OEE วัดประสิทธิภาพเครื่องจักร'},
-        {label:'เครื่องจักรขัดข้องบ่อยหรือมีสัญญาณผิดปกติไหม', tip:'ทำ Preventive Maintenance สม่ำเสมอ'},
-        {label:'การจัดวางอุปกรณ์เหมาะสมกับ Flow งานไหม', tip:'ใช้ Spaghetti Diagram วิเคราะห์การเคลื่อนที่'},
-        {label:'อุปกรณ์อยู่ในสภาพพร้อมใช้งานเสมอไหม', tip:'ทำ Daily Check Sheet ก่อนเริ่มงาน'}
-      ]
-    },
-    { ico:'📦', bg:'#FEF9C3', title:'Material — วัสดุ/ข้อมูล', hint:'ตรวจสอบคุณภาพ ปริมาณ และระบบจัดเก็บ',
-      subs:[
-        {label:'คุณภาพวัสดุหรือข้อมูลเป็นไปตามมาตรฐานไหม', tip:'กำหนด Spec ที่ชัดเจนก่อนรับวัสดุ'},
-        {label:'ปริมาณสำรองวัสดุเพียงพอ ไม่มากหรือน้อยเกินไหม', tip:'ใช้ Min-Max Stock Control'},
-        {label:'ระบบจัดเก็บวัสดุมีประสิทธิภาพและป้องกันความเสียหายไหม', tip:'ใช้หลัก FIFO ในการจัดเก็บ'},
-        {label:'ข้อมูลที่ใช้ในการตัดสินใจถูกต้องและทันสมัยไหม', tip:'กำหนด Single Source of Truth สำหรับข้อมูล'}
-      ]
-    },
-    { ico:'📊', bg:'#FEF08A', title:'Method — วิธีการ/มาตรฐาน', hint:'ตรวจสอบมาตรฐาน ความปลอดภัย และประสิทธิภาพกระบวนการ',
-      subs:[
-        {label:'มาตรฐานการทำงานมีเพียงพอและชัดเจนไหม', tip:'ทำ SOP เป็นภาพมากกว่าตัวอักษร'},
-        {label:'วิธีการปัจจุบันปลอดภัยต่อผู้ปฏิบัติไหม', tip:'ทำ Risk Assessment ทุกขั้นตอน'},
-        {label:'กระบวนการมีประสิทธิภาพและไม่มีความสูญเปล่าไหม', tip:'ทำ Value Stream Mapping'},
-        {label:'ลำดับขั้นตอนการทำงานเหมาะสมที่สุดแล้วไหม', tip:'ลองเรียงขั้นตอนใหม่แล้ว Simulate ผล'}
-      ]
-    }
+  s4:[
+    {ico:'👷',bg:'#FAEEDA',title:'Man — กำลังคน',hint:'ตรวจสอบผู้ปฏิบัติงาน ทักษะ และความรับผิดชอบ',
+     subs:[
+      {label:'ทำงานตามมาตรฐานที่กำหนดไว้หรือไม่',tip:'ตรวจสอบด้วยการสังเกตจริง (Gemba Walk)'},
+      {label:'มีทักษะและความชำนาญเพียงพอหรือไม่',tip:'ทำ Skill Matrix ประเมินช่องว่างทักษะ'},
+      {label:'งานที่มอบหมายตรงกับความสามารถไหม',tip:'Right Person, Right Job คือหัวใจสำคัญ'},
+      {label:'มีความรับผิดชอบและแรงจูงใจในงานไหม',tip:'ตรวจสอบระบบแรงจูงใจและ Feedback Loop'}
+    ]},
+    {ico:'🖥️',bg:'#FEF3C7',title:'Machine — เครื่องจักร/อุปกรณ์',hint:'ตรวจสอบเครื่องมือ ประสิทธิภาพ และการจัดวาง',
+     subs:[
+      {label:'อุปกรณ์สอดคล้องกับความต้องการของงานไหม',tip:'ใช้ OEE วัดประสิทธิภาพเครื่องจักร'},
+      {label:'เครื่องจักรขัดข้องบ่อยหรือมีสัญญาณผิดปกติไหม',tip:'ทำ Preventive Maintenance สม่ำเสมอ'},
+      {label:'การจัดวางอุปกรณ์เหมาะสมกับ Flow งานไหม',tip:'ใช้ Spaghetti Diagram วิเคราะห์การเคลื่อนที่'},
+      {label:'อุปกรณ์อยู่ในสภาพพร้อมใช้งานเสมอไหม',tip:'ทำ Daily Check Sheet ก่อนเริ่มงาน'}
+    ]},
+    {ico:'📦',bg:'#FEF9C3',title:'Material — วัสดุ/ข้อมูล',hint:'ตรวจสอบคุณภาพ ปริมาณ และระบบจัดเก็บ',
+     subs:[
+      {label:'คุณภาพวัสดุหรือข้อมูลเป็นไปตามมาตรฐานไหม',tip:'กำหนด Spec ที่ชัดเจนก่อนรับวัสดุ'},
+      {label:'ปริมาณสำรองวัสดุเพียงพอ ไม่มากหรือน้อยเกินไหม',tip:'ใช้ Min-Max Stock Control'},
+      {label:'ระบบจัดเก็บวัสดุมีประสิทธิภาพและป้องกันความเสียหายไหม',tip:'ใช้หลัก FIFO ในการจัดเก็บ'},
+      {label:'ข้อมูลที่ใช้ในการตัดสินใจถูกต้องและทันสมัยไหม',tip:'กำหนด Single Source of Truth สำหรับข้อมูล'}
+    ]},
+    {ico:'📊',bg:'#FEF08A',title:'Method — วิธีการ/มาตรฐาน',hint:'ตรวจสอบมาตรฐาน ความปลอดภัย และประสิทธิภาพกระบวนการ',
+     subs:[
+      {label:'มาตรฐานการทำงานมีเพียงพอและชัดเจนไหม',tip:'ทำ SOP เป็นภาพมากกว่าตัวอักษร'},
+      {label:'วิธีการปัจจุบันปลอดภัยต่อผู้ปฏิบัติไหม',tip:'ทำ Risk Assessment ทุกขั้นตอน'},
+      {label:'กระบวนการมีประสิทธิภาพและไม่มีความสูญเปล่าไหม',tip:'ทำ Value Stream Mapping'},
+      {label:'ลำดับขั้นตอนการทำงานเหมาะสมที่สุดแล้วไหม',tip:'ลองเรียงขั้นตอนใหม่แล้ว Simulate ผล'}
+    ]}
   ],
-  s6: [
-    { ico:'📝', bg:'#EEEDFE', title:'Plan — วางแผน', hint:'กำหนดเป้าหมาย วิเคราะห์ปัญหา วางแผนปรับปรุง',
-      subs:[
-        {label:'กำหนดเป้าหมายการปรับปรุงชัดเจนและวัดได้', tip:'ใช้ SMART: Specific Measurable Achievable Relevant Time-bound'},
-        {label:'วิเคราะห์สาเหตุที่แท้จริงด้วย Why 5 ครั้ง', tip:'อย่าหยุดแค่อาการ ต้องหาต้นเหตุ'},
-        {label:'วางแผนการปรับปรุงพร้อมกำหนดผู้รับผิดชอบ', tip:'ใช้ Action Plan Template: What-Who-When'},
-        {label:'ประเมินความเสี่ยงก่อนเริ่มปรับปรุง', tip:'ทำ Pre-mortem: "อะไรทำให้แผนนี้ล้มเหลวได้?"'}
-      ]
-    },
-    { ico:'⚡', bg:'#DDD6FE', title:'Do — ลงมือปฏิบัติ', hint:'ทดลองปฏิบัติ ฝึกอบรม ดำเนินการตามแผน',
-      subs:[
-        {label:'ทดลองปรับปรุงในขอบเขตเล็กก่อน (Pilot)', tip:'เริ่มเล็ก เรียนรู้เร็ว ขยายผลทีหลัง'},
-        {label:'ฝึกอบรมผู้เกี่ยวข้องให้เข้าใจวิธีการใหม่', tip:'ทำ OJT: On the Job Training จริง'},
-        {label:'บันทึกขั้นตอนและข้อมูลระหว่างปฏิบัติ', tip:'ข้อมูลระหว่างทำสำคัญพอๆ กับผลลัพธ์'},
-        {label:'สื่อสารความคืบหน้าให้ทีมรับทราบสม่ำเสมอ', tip:'Daily Stand-up 15 นาที ช่วยให้ทีม Sync กัน'}
-      ]
-    },
-    { ico:'🔍', bg:'#C4B5FD', title:'Check — ตรวจสอบผล', hint:'วัดผล เปรียบเทียบ และวิเคราะห์ความแตกต่าง',
-      subs:[
-        {label:'ผลลัพธ์เป็นไปตามเป้าหมายที่กำหนดไหม', tip:'เปรียบเทียบ Before vs After ด้วยตัวเลข'},
-        {label:'ตัวชี้วัดที่ใช้สะท้อนความสำเร็จจริงไหม', tip:'KPI ต้องวัดได้จริง ไม่ใช่แค่ความรู้สึก'},
-        {label:'มีผลข้างเคียงที่ไม่คาดคิดเกิดขึ้นไหม', tip:'มองทั้งผลดีและผลกระทบที่อาจเกิด'},
-        {label:'สิ่งที่เรียนรู้จากการปรับปรุงคืออะไร', tip:'บันทึก Lesson Learned ทุกครั้ง'}
-      ]
-    },
-    { ico:'🚀', bg:'#A78BFA', title:'Act — ปรับปรุงและขยายผล', hint:'ปรับมาตรฐาน ขยายผล และวางแผนรอบถัดไป',
-      subs:[
-        {label:'ปรับปรุงวิธีการให้เป็นมาตรฐานใหม่', tip:'อัปเดต SOP ทันทีที่พิสูจน์ว่าดีกว่า'},
-        {label:'ขยายผลการปรับปรุงไปยังหน่วยงานอื่น', tip:'Horizontal Deployment สู่ทีมอื่น'},
-        {label:'ถอดบทเรียนและแชร์ความสำเร็จให้องค์กร', tip:'Knowledge Sharing สร้างวัฒนธรรมการเรียนรู้'},
-        {label:'วางแผน PDCA รอบถัดไปจากสิ่งที่ยังปรับปรุงได้', tip:'Kaizen ไม่มีจุดสิ้นสุด ทุกรอบคือโอกาสใหม่'}
-      ]
-    }
+  s6:[
+    {ico:'📝',bg:'#EEEDFE',title:'Plan — วางแผน',hint:'กำหนดเป้าหมาย วิเคราะห์ปัญหา วางแผนปรับปรุง',
+     subs:[
+      {label:'กำหนดเป้าหมายการปรับปรุงชัดเจนและวัดได้',tip:'ใช้ SMART: Specific Measurable Achievable Relevant Time-bound'},
+      {label:'วิเคราะห์สาเหตุที่แท้จริงด้วย Why 5 ครั้ง',tip:'อย่าหยุดแค่อาการ ต้องหาต้นเหตุ'},
+      {label:'วางแผนการปรับปรุงพร้อมกำหนดผู้รับผิดชอบ',tip:'ใช้ Action Plan Template: What-Who-When'},
+      {label:'ประเมินความเสี่ยงก่อนเริ่มปรับปรุง',tip:'ทำ Pre-mortem: "อะไรทำให้แผนนี้ล้มเหลวได้?"'}
+    ]},
+    {ico:'⚡',bg:'#DDD6FE',title:'Do — ลงมือปฏิบัติ',hint:'ทดลองปฏิบัติ ฝึกอบรม ดำเนินการตามแผน',
+     subs:[
+      {label:'ทดลองปรับปรุงในขอบเขตเล็กก่อน (Pilot)',tip:'เริ่มเล็ก เรียนรู้เร็ว ขยายผลทีหลัง'},
+      {label:'ฝึกอบรมผู้เกี่ยวข้องให้เข้าใจวิธีการใหม่',tip:'ทำ OJT: On the Job Training จริง'},
+      {label:'บันทึกขั้นตอนและข้อมูลระหว่างปฏิบัติ',tip:'ข้อมูลระหว่างทำสำคัญพอๆ กับผลลัพธ์'},
+      {label:'สื่อสารความคืบหน้าให้ทีมรับทราบสม่ำเสมอ',tip:'Daily Stand-up 15 นาที ช่วยให้ทีม Sync กัน'}
+    ]},
+    {ico:'🔍',bg:'#C4B5FD',title:'Check — ตรวจสอบผล',hint:'วัดผล เปรียบเทียบ และวิเคราะห์ความแตกต่าง',
+     subs:[
+      {label:'ผลลัพธ์เป็นไปตามเป้าหมายที่กำหนดไหม',tip:'เปรียบเทียบ Before vs After ด้วยตัวเลข'},
+      {label:'ตัวชี้วัดที่ใช้สะท้อนความสำเร็จจริงไหม',tip:'KPI ต้องวัดได้จริง ไม่ใช่แค่ความรู้สึก'},
+      {label:'มีผลข้างเคียงที่ไม่คาดคิดเกิดขึ้นไหม',tip:'มองทั้งผลดีและผลกระทบที่อาจเกิด'},
+      {label:'สิ่งที่เรียนรู้จากการปรับปรุงคืออะไร',tip:'บันทึก Lesson Learned ทุกครั้ง'}
+    ]},
+    {ico:'🚀',bg:'#A78BFA',title:'Act — ปรับปรุงและขยายผล',hint:'ปรับมาตรฐาน ขยายผล และวางแผนรอบถัดไป',
+     subs:[
+      {label:'ปรับปรุงวิธีการให้เป็นมาตรฐานใหม่',tip:'อัปเดต SOP ทันทีที่พิสูจน์ว่าดีกว่า'},
+      {label:'ขยายผลการปรับปรุงไปยังหน่วยงานอื่น',tip:'Horizontal Deployment สู่ทีมอื่น'},
+      {label:'ถอดบทเรียนและแชร์ความสำเร็จให้องค์กร',tip:'Knowledge Sharing สร้างวัฒนธรรมการเรียนรู้'},
+      {label:'วางแผน PDCA รอบถัดไปจากสิ่งที่ยังปรับปรุงได้',tip:'Kaizen ไม่มีจุดสิ้นสุด ทุกรอบคือโอกาสใหม่'}
+    ]}
   ]
 };
-
-const COLORS = { s2:'#0F6E56', s3:'#185FA5', s4:'#854F0B', s6:'#534AB7' };
-const CLS    = { s2:'c2', s3:'c3', s4:'c4', s6:'c6' };
-const NAMES  = { s2:'5ส', s3:'5W1H', s4:'4M', s6:'PDCA' };
-
-function buildPrompt(strategy, sub, tip){
-  const sName = NAMES[strategy];
+ 
+const COLORS={s2:'#0F6E56',s3:'#185FA5',s4:'#854F0B',s6:'#534AB7'};
+const CLS={s2:'c2',s3:'c3',s4:'c4',s6:'c6'};
+const NAMES={s2:'5ส',s3:'5W1H',s4:'4M',s6:'PDCA'};
+ 
+function buildPrompt(strategy,sub,tip){
+  const sName=NAMES[strategy];
   return `สมมุติคุณคือผู้เชี่ยวชาญ Kaizen 20 ปี\n\nใช้กลยุทธ์ ${sName} วิเคราะห์หัวข้อ:\n"${sub}"\n\nกรุณาตอบในรูปแบบ Kaizen:\n\n🔍 สภาพปัจจุบัน:\nอธิบายสถานการณ์ที่พบในงานจริง\n\n🎯 สาเหตุที่แท้จริง:\nระบุต้นเหตุ (ใช้ Why 5 ครั้งถ้าจำเป็น)\n\n✅ แนวทางปรับปรุงแบบ Kaizen:\nเสนอ 2-3 วิธีที่ทำได้จริง ไม่ต้องใช้งบมาก\n\n💡 เคล็ดลับ: ${tip}\n\n📈 ผลลัพธ์ที่คาดหวัง:\nระบุตัวชี้วัดที่วัดได้หลังการปรับปรุง`;
 }
-
-function renderStrategy(strategy, containerId){
-  const items = DATA[strategy];
-  const color = COLORS[strategy];
-  const cls = CLS[strategy];
-  const container = document.getElementById(containerId);
-  let html = '';
-  items.forEach((item, i) => {
-    const chips = item.subs.map((s, j) =>
+ 
+function renderStrategy(strategy,containerId){
+  const items=DATA[strategy];
+  const cls=CLS[strategy];
+  const container=document.getElementById(containerId);
+  let html='';
+  items.forEach((item,i)=>{
+    const chips=item.subs.map((s,j)=>
       `<button class="chip ${cls}" onclick="pick('${strategy}',${i},${j},this)">${s.label}</button>`
     ).join('');
-    html += `<div class="sg-card" id="sg_${strategy}_${i}">
+    html+=`<div class="sg-card" id="sg_${strategy}_${i}">
       <div class="sg-hdr" onclick="toggleCard('${strategy}',${i})">
         <div class="sg-ico" style="background:${item.bg}">${item.ico}</div>
         <div class="sg-info"><div class="sg-title">${item.title}</div><div class="sg-hint">${item.hint}</div></div>
@@ -362,57 +524,52 @@ function renderStrategy(strategy, containerId){
       </div>
     </div>`;
   });
-  container.innerHTML = html;
+  container.innerHTML=html;
 }
-
-function toggleCard(st, i){
-  const card = document.getElementById(`sg_${st}_${i}`);
-  const isOpen = card.classList.contains('open');
-  document.querySelectorAll(`.sg-card`).forEach(c => c.classList.remove('open'));
-  if(!isOpen){ card.classList.add('open'); setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),50); }
+ 
+function toggleCard(st,i){
+  const card=document.getElementById(`sg_${st}_${i}`);
+  const isOpen=card.classList.contains('open');
+  document.querySelectorAll('.sg-card').forEach(c=>c.classList.remove('open'));
+  if(!isOpen){card.classList.add('open');setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),50);}
 }
-
-function pick(st, i, j, chip){
-  // Reset chips in this card
-  document.querySelectorAll(`#sg_${st}_${i} .chip`).forEach(c => {
-    c.classList.remove('active'); c.style.background=''; c.style.color=''; c.style.borderColor='';
-  });
+ 
+function pick(st,i,j,chip){
+  document.querySelectorAll(`#sg_${st}_${i} .chip`).forEach(c=>c.classList.remove('active'));
   chip.classList.add('active');
-  const sub = DATA[st][i].subs[j];
-  const pout = document.getElementById(`pout_${st}_${i}`);
-  const ptxt = document.getElementById(`ptxt_${st}_${i}`);
-  const ptip = document.getElementById(`ptip_${st}_${i}`);
-  const raw = buildPrompt(st, sub.label, sub.tip);
-  ptxt.innerHTML = raw.replace(/\n/g,'<br>');
-  ptxt.dataset.raw = raw;
-  ptip.innerHTML = `💡 <strong>เคล็ดลับ Kaizen:</strong> ${sub.tip}`;
-  ptip.style.display = 'block';
+  const sub=DATA[st][i].subs[j];
+  const pout=document.getElementById(`pout_${st}_${i}`);
+  const ptxt=document.getElementById(`ptxt_${st}_${i}`);
+  const ptip=document.getElementById(`ptip_${st}_${i}`);
+  const raw=buildPrompt(st,sub.label,sub.tip);
+  ptxt.innerHTML=raw.replace(/\n/g,'<br>');
+  ptxt.dataset.raw=raw;
+  ptip.innerHTML=`💡 <strong>เคล็ดลับ Kaizen:</strong> ${sub.tip}`;
+  ptip.style.display='block';
   pout.classList.add('show');
 }
-
-function doCopy(st, i, e){
+ 
+function doCopy(st,i,e){
   e.stopPropagation();
-  const raw = document.getElementById(`ptxt_${st}_${i}`).dataset.raw || document.getElementById(`ptxt_${st}_${i}`).innerText;
+  const raw=document.getElementById(`ptxt_${st}_${i}`).dataset.raw||document.getElementById(`ptxt_${st}_${i}`).innerText;
   navigator.clipboard.writeText(raw).then(()=>{
-    const btn = document.querySelector(`#pout_${st}_${i} .copy-p`);
-    btn.textContent = '✅ คัดลอกแล้ว!';
-    setTimeout(()=>btn.textContent='📋 คัดลอก', 2000);
+    const btn=document.querySelector(`#pout_${st}_${i} .copy-p`);
+    btn.textContent='✅ คัดลอกแล้ว!';
+    setTimeout(()=>btn.textContent='📋 คัดลอก',2000);
   });
 }
-
-function switchTab(id, btn){
+ 
+function switchTab(id,btn){
   document.querySelectorAll('.tp').forEach(t=>t.classList.remove('show'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.getElementById(id).classList.add('show');
   btn.classList.add('active');
 }
-
-// Init
+ 
 renderStrategy('s2','sg2');
 renderStrategy('s3','sg3');
 renderStrategy('s4','sg4');
 renderStrategy('s6','sg6');
 </script>
-
 </body>
 </html>
