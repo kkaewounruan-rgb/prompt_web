@@ -13,112 +13,154 @@
       theme: {
         extend: {
           colors: {
-            primary: 'var(--primary)',
-            'primary-container': 'var(--primary-container)',
-            'on-primary-container': 'var(--on-primary-container)',
-            secondary: 'var(--secondary)',
-            'secondary-container': 'var(--secondary-container)',
-            'on-secondary-container': 'var(--on-secondary-container)',
-            tertiary: 'var(--tertiary)',
-            'tertiary-container': 'var(--tertiary-container)',
-            'on-tertiary-container': 'var(--on-tertiary-container)',
-            background: 'var(--background)',
-            surface: 'var(--surface)',
-            'surface-container': 'var(--surface-container)',
-            'surface-container-low': 'var(--surface-container-low)',
-            'surface-container-high': 'var(--surface-container-high)',
-            'surface-container-lowest': 'var(--surface-container-lowest)',
-            'on-surface': 'var(--on-surface)',
-            'on-surface-variant': 'var(--on-surface-variant)',
-            'outline-variant': 'var(--outline-variant)',
-            'outline': 'var(--outline)',
-            "secondary-fixed-dim": "#68dbae",
-            "inverse-surface": "#303030",
-            "inverse-on-surface": "#f3f0ef",
-            "status-error": "#D32F2F",
-            "on-tertiary-fixed": "#0c006b",
-            "surface-dim": "#dcd9d9",
-            "on-background": "var(--on-surface)",
-            "on-primary-fixed-variant": "#004c6a",
-            "on-error": "#ffffff",
-            "primary-fixed-dim": "#8ccef8",
-            "background-clean": "var(--background)",
-            "on-tertiary-fixed-variant": "#332dbc",
-            "surface-tint": "#13658a",
-            "on-primary-fixed": "#001e2d",
-            "on-primary": "#ffffff",
-            "secondary-fixed": "#86f8c9",
-            "on-secondary-fixed": "#002115",
-            "primary-fixed": "#c5e7ff",
-            "surface-variant": "var(--surface-container)",
-            "tertiary-fixed-dim": "#c2c1ff",
-            "accent-purple": "#6366F1",
-            "surface-white": "var(--surface)",
-            "surface-bright": "var(--background)",
-            "surface-container-highest": "var(--surface-container-high)",
-            "error-container": "#ffdad6",
-            "on-error-container": "#93000a",
-            "error": "#ba1a1a",
-            "tertiary-fixed": "#e2dfff",
-            "on-secondary": "#ffffff"
+            primary: 'var(--primary)', 'primary-container': 'var(--primary-container)',
+            'on-primary-container': 'var(--on-primary-container)', secondary: 'var(--secondary)',
+            'secondary-container': 'var(--secondary-container)', 'on-secondary-container': 'var(--on-secondary-container)',
+            tertiary: 'var(--tertiary)', 'tertiary-container': 'var(--tertiary-container)',
+            'on-tertiary-container': 'var(--on-tertiary-container)', background: 'var(--background)',
+            surface: 'var(--surface)', 'surface-container': 'var(--surface-container)',
+            'surface-container-low': 'var(--surface-container-low)', 'surface-container-high': 'var(--surface-container-high)',
+            'surface-container-lowest': 'var(--surface-container-lowest)', 'on-surface': 'var(--on-surface)',
+            'on-surface-variant': 'var(--on-surface-variant)', 'outline-variant': 'var(--outline-variant)', 'outline': 'var(--outline)',
+            "secondary-fixed-dim":"#68dbae","inverse-surface":"#303030","inverse-on-surface":"#f3f0ef",
+            "status-error":"#D32F2F","on-tertiary-fixed":"#0c006b","surface-dim":"#dcd9d9",
+            "on-background":"var(--on-surface)","on-primary-fixed-variant":"#004c6a","on-error":"#ffffff",
+            "primary-fixed-dim":"#8ccef8","background-clean":"var(--background)","on-tertiary-fixed-variant":"#332dbc",
+            "surface-tint":"#13658a","on-primary-fixed":"#001e2d","on-primary":"#ffffff",
+            "secondary-fixed":"#86f8c9","on-secondary-fixed":"#002115","primary-fixed":"#c5e7ff",
+            "surface-variant":"var(--surface-container)","tertiary-fixed-dim":"#c2c1ff","accent-purple":"#6366F1",
+            "surface-white":"var(--surface)","surface-bright":"var(--background)","surface-container-highest":"var(--surface-container-high)",
+            "error-container":"#ffdad6","on-error-container":"#93000a","error":"#ba1a1a",
+            "tertiary-fixed":"#e2dfff","on-secondary":"#ffffff"
           },
-          borderRadius: {
-            "DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","2xl": "1rem","3xl": "1.5rem","full": "9999px"
-          },
-          spacing: {
-            "gutter": "16px","stack-lg": "48px","margin-mobile": "16px","stack-sm": "12px",
-            "margin-desktop": "32px","stack-md": "24px","base": "8px"
-          },
-          fontFamily: { sans: ["IBM Plex Sans", "sans-serif"] }
+          borderRadius: {"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","2xl":"1rem","3xl":"1.5rem","full":"9999px"},
+          spacing: {"gutter":"16px","stack-lg":"48px","margin-mobile":"16px","stack-sm":"12px","margin-desktop":"32px","stack-md":"24px","base":"8px"},
+          fontFamily: { sans: ["IBM Plex Sans","sans-serif"] }
         },
       },
     }
   </script>
   <style>
     :root {
-      --primary: #005576; --primary-container: #226e93; --on-primary-container: #cfebff;
-      --secondary: #006c4e; --secondary-container: #83f5c6; --on-secondary-container: #007151;
-      --tertiary: #3d38c5; --tertiary-container: #5654de; --on-tertiary-container: #e7e4ff;
-      --background: #fcf9f8; --surface: #ffffff; --surface-container: #f0eded;
-      --surface-container-low: #f6f3f2; --surface-container-high: #eae7e7;
-      --surface-container-lowest: #ffffff; --on-surface: #1b1c1c;
-      --on-surface-variant: #40484e; --outline-variant: #c0c7ce; --outline: #70787e;
+      --primary:#005576;--primary-container:#226e93;--on-primary-container:#cfebff;
+      --secondary:#006c4e;--secondary-container:#83f5c6;--on-secondary-container:#007151;
+      --tertiary:#3d38c5;--tertiary-container:#5654de;--on-tertiary-container:#e7e4ff;
+      --background:#fcf9f8;--surface:#ffffff;--surface-container:#f0eded;
+      --surface-container-low:#f6f3f2;--surface-container-high:#eae7e7;
+      --surface-container-lowest:#ffffff;--on-surface:#1b1c1c;
+      --on-surface-variant:#40484e;--outline-variant:#c0c7ce;--outline:#70787e;
     }
     .dark {
-      --primary: #7dd0ff; --primary-container: #349aca; --on-primary-container: #002d40;
-      --secondary: #8ccef8; --secondary-container: #005e82; --on-secondary-container: #93d5ff;
-      --tertiary: #ffb963; --tertiary-container: #c68226; --on-tertiary-container: #3e2400;
-      --background: #131313; --surface: #1c1b1b; --surface-container: #201f1f;
-      --surface-container-low: #1c1b1b; --surface-container-high: #2a2a2a;
-      --surface-container-lowest: #0e0e0e; --on-surface: #e5e2e1;
-      --on-surface-variant: #bec8d0; --outline-variant: #3f484e; --outline: #889299;
+      --primary:#7dd0ff;--primary-container:#349aca;--on-primary-container:#002d40;
+      --secondary:#8ccef8;--secondary-container:#005e82;--on-secondary-container:#93d5ff;
+      --tertiary:#ffb963;--tertiary-container:#c68226;--on-tertiary-container:#3e2400;
+      --background:#131313;--surface:#1c1b1b;--surface-container:#201f1f;
+      --surface-container-low:#1c1b1b;--surface-container-high:#2a2a2a;
+      --surface-container-lowest:#0e0e0e;--on-surface:#e5e2e1;
+      --on-surface-variant:#bec8d0;--outline-variant:#3f484e;--outline:#889299;
     }
-    body { font-family: 'IBM Plex Sans', sans-serif; -webkit-tap-highlight-color: transparent; background-color: var(--background); color: var(--on-surface); transition: background-color 0.2s ease, color 0.2s ease; }
-    .ambient-card { box-shadow: 0px 4px 20px rgba(0,0,0,0.03); transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease; }
-    .ambient-card:hover { transform: translateY(-4px); box-shadow: 0px 8px 30px rgba(0,0,0,0.08); }
-    .ambient-card:active { transform: scale(0.98); }
-    .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
-    .active-glow { box-shadow: 0 0 15px rgba(0, 85, 118, 0.15); }
-    .dark .active-glow { box-shadow: 0 0 15px rgba(125, 208, 255, 0.2); }
+    body{font-family:'IBM Plex Sans',sans-serif;-webkit-tap-highlight-color:transparent;background-color:var(--background);color:var(--on-surface);transition:background-color 0.2s ease,color 0.2s ease}
+    .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;display:inline-block;line-height:1}
+    .ambient-card{box-shadow:0px 4px 20px rgba(0,0,0,0.03);transition:transform 0.2s ease,box-shadow 0.2s ease,background-color 0.2s ease,border-color 0.2s ease}
+    .ambient-card:hover{transform:translateY(-4px);box-shadow:0px 8px 30px rgba(0,0,0,0.08)}
+    .ambient-card:active{transform:scale(0.98)}
+    .pb-safe{padding-bottom:env(safe-area-inset-bottom)}
+    .active-glow{box-shadow:0 0 15px rgba(0,85,118,0.15)}
+    .dark .active-glow{box-shadow:0 0 15px rgba(125,208,255,0.2)}
+
+    /* ── OVERLAY ── */
+    #drawer-overlay{display:none;position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.4);backdrop-filter:blur(2px)}
+    #drawer-overlay.show{display:block}
+
+    /* ── KAIZEN SMART DRAWER ── */
+    #kaizen-drawer{position:fixed;top:0;left:-280px;width:260px;height:100%;z-index:60;background:var(--surface);box-shadow:4px 0 24px rgba(0,0,0,.15);transition:left .25s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;border-right:1px solid var(--outline-variant)}
+    #kaizen-drawer.open{left:0}
+    .kd-header{height:64px;display:flex;align-items:center;padding:0 16px;gap:12px;border-bottom:1px solid var(--outline-variant)}
+    .kd-logo{font-size:17px;font-weight:700;color:var(--primary)}
+    .kd-nav{flex:1;padding:12px 8px;overflow-y:auto}
+    .kd-item{display:flex;align-items:center;gap:13px;padding:11px 14px;border-radius:14px;text-decoration:none;color:var(--on-surface);font-size:14.5px;font-weight:500;transition:background .15s;margin-bottom:3px}
+    .kd-item:hover{background:var(--surface-container)}
+    .kd-item.active{background:#E1F5EE;color:var(--primary)}
+    html.dark .kd-item.active{background:rgba(0,212,170,.12);color:#7dd0ff}
+    .kd-item.active .material-symbols-outlined{color:var(--primary)}
+    html.dark .kd-item.active .material-symbols-outlined{color:#7dd0ff}
+    .kd-icon-home,.kd-icon-kaizen,.kd-icon-prompt{color:var(--primary)}
+    .kd-icon-chatgpt{color:#6366F1}
+    .kd-icon-gemini{color:var(--secondary)}
+    .kd-icon-strategy{color:var(--tertiary)}
+    .kd-footer{padding:16px;border-top:1px solid var(--outline-variant);font-size:11px;color:var(--outline);text-align:center;line-height:1.6}
+
+    /* ── BACK LINK ── */
+    .back-link{display:inline-flex;align-items:center;gap:6px;color:var(--primary);font-size:13px;font-weight:500;text-decoration:none;padding:5px 12px;background:var(--surface-container-low);border-radius:20px;border:1px solid var(--outline-variant);transition:background .15s}
+    .back-link:hover{background:var(--surface-container)}
   </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
+  <!-- ── DRAWER OVERLAY ── -->
+  <div id="drawer-overlay" onclick="closeKaizenDrawer()"></div>
+
+  <!-- ── KAIZEN SMART SIDE DRAWER ── -->
+  <div id="kaizen-drawer">
+    <div class="kd-header">
+      <span class="material-symbols-outlined kd-icon-home">menu_book</span>
+      <span class="kd-logo">KAIZEN SMART</span>
+    </div>
+    <nav class="kd-nav">
+      <a class="kd-item" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+        <span class="material-symbols-outlined kd-icon-home">home</span>Home
+      </a>
+      <a class="kd-item" href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank">
+        <span class="material-symbols-outlined kd-icon-kaizen">trending_up</span>KAIZEN
+      </a>
+      <a class="kd-item" href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank">
+        <span class="material-symbols-outlined kd-icon-chatgpt">bolt</span>ChatGPT Step
+      </a>
+      <a class="kd-item" href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank">
+        <span class="material-symbols-outlined kd-icon-gemini">auto_awesome</span>Gemini Step
+      </a>
+      <a class="kd-item" href="https://kkaewounruan-rgb.github.io/prompt_web/Strategy01.html" target="_blank">
+        <span class="material-symbols-outlined kd-icon-strategy">architecture</span>Strategies
+      </a>
+      <a class="kd-item active" href="https://sites.google.com/view/teprompt-web/prompt" target="_blank">
+        <span class="material-symbols-outlined kd-icon-prompt">psychology</span>Prompts
+      </a>
+      <!-- เอกสาร -->
+      <div style="height:1px;background:var(--outline-variant);margin:10px 6px"></div>
+      <div style="padding:6px 14px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--outline);font-weight:700">เอกสารดาวน์โหลด</div>
+      <a class="kd-item" href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank">
+        <span class="material-symbols-outlined kd-icon-strategy">present_to_all</span>
+        <div><p style="font-size:13px">คู่มือ ChatGPT (.pptx)</p><p style="font-size:10px;opacity:.6">สไลด์ประกอบการเรียน</p></div>
+      </a>
+      <a class="kd-item" href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank">
+        <span class="material-symbols-outlined" style="color:var(--error)">picture_as_pdf</span>
+        <div><p style="font-size:13px">คู่มือ ChatGPT (.pdf)</p><p style="font-size:10px;opacity:.6">คู่มืออย่างละเอียด</p></div>
+      </a>
+      <a class="kd-item" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+        <span class="material-symbols-outlined kd-icon-home">description</span>
+        <div><p style="font-size:13px">E-Magazine Kaizen 2026</p><p style="font-size:10px;opacity:.6">บทความความรู้อัปเดต</p></div>
+      </a>
+    </nav>
+    <div class="kd-footer">KAIZEN SMART PLAYBOOK<br>© 2026 By Kachain_K</div>
+  </div>
+
+  <!-- ── TOP APP BAR ── -->
   <header class="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-6 h-16 bg-surface border-b border-outline-variant/20 shadow-sm transition-colors duration-200">
     <div class="flex items-center gap-4">
-      <button id="menu-toggle-btn" class="p-2 text-primary hover:bg-surface-container-high transition-colors rounded-full flex items-center justify-center">
+      <button id="menu-toggle-btn" onclick="openKaizenDrawer()" class="p-2 text-primary hover:bg-surface-container-high transition-colors rounded-full flex items-center justify-center">
         <span class="material-symbols-outlined">menu</span>
       </button>
-      <a href="index.html" class="font-bold text-lg md:text-xl tracking-tight text-primary flex items-center gap-2">
+      <a href="https://sites.google.com/view/teprompt-web/home" target="_blank"
+         class="font-bold text-lg md:text-xl tracking-tight text-primary flex items-center gap-2" style="text-decoration:none">
         <span class="material-symbols-outlined">psychology</span><span>KAIZEN SMART</span>
       </a>
     </div>
-    <nav class="hidden md:flex items-center gap-6">
-      <a href="index.html" class="nav-link font-medium text-sm text-on-surface-variant hover:text-primary transition-colors py-2">หน้าแรก</a>
-      <a href="kaizen.html" class="nav-link font-medium text-sm text-on-surface-variant hover:text-primary transition-colors py-2">Kaizen เบื้องต้น</a>
-      <a href="chatgpt.html" class="nav-link font-medium text-sm text-on-surface-variant hover:text-primary transition-colors py-2">การใช้งาน ChatGPT</a>
-      <a href="gemini.html" class="nav-link font-medium text-sm text-on-surface-variant hover:text-primary transition-colors py-2">การใช้งาน Gemini</a>
-      <a href="prompts.html" class="nav-link font-medium text-sm text-on-surface-variant hover:text-primary transition-colors py-2">คลัง Prompt</a>
+    <nav class="hidden md:flex items-center gap-5">
+      <a href="https://sites.google.com/view/teprompt-web/home" target="_blank" class="font-medium text-sm text-on-surface-variant hover:text-primary transition-colors py-2" style="text-decoration:none">หน้าแรก</a>
+      <a href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank" class="font-medium text-sm text-on-surface-variant hover:text-primary transition-colors py-2" style="text-decoration:none">Kaizen</a>
+      <a href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank" class="font-medium text-sm text-on-surface-variant hover:text-primary transition-colors py-2" style="text-decoration:none">ChatGPT</a>
+      <a href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank" class="font-medium text-sm text-on-surface-variant hover:text-primary transition-colors py-2" style="text-decoration:none">Gemini</a>
+      <a href="https://sites.google.com/view/teprompt-web/prompt" target="_blank" class="font-medium text-sm text-primary font-bold border-b-2 border-primary py-2" style="text-decoration:none">คลัง Prompt</a>
     </nav>
     <div class="flex items-center gap-2">
       <button id="theme-toggle-btn" class="p-2 text-primary hover:bg-surface-container-high transition-colors rounded-full flex items-center justify-center" title="Toggle Theme">
@@ -127,74 +169,18 @@
     </div>
   </header>
 
-  <div id="sidebar-drawer" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-300 opacity-0 bg-black/50">
-    <div id="drawer-panel" class="w-80 max-w-[85vw] h-full bg-surface text-on-surface flex flex-col shadow-2xl transition-transform duration-300 transform -translate-x-full pointer-events-auto">
-      <div class="p-6 border-b border-outline-variant/20 flex justify-between items-center bg-surface">
-        <div class="font-bold text-lg text-primary flex items-center gap-2">
-          <span class="material-symbols-outlined">psychology</span><span>KAIZEN SMART</span>
-        </div>
-        <button id="close-drawer-btn" class="p-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full flex items-center justify-center">
-          <span class="material-symbols-outlined">close</span>
-        </button>
-      </div>
-      <nav class="flex-grow p-4 space-y-2 overflow-y-auto bg-surface">
-        <a href="index.html" class="drawer-link flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-xl transition-all">
-          <span class="material-symbols-outlined">home</span><span class="font-medium text-sm">หน้าแรก (Home)</span>
-        </a>
-        <a href="kaizen.html" class="drawer-link flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-xl transition-all">
-          <span class="material-symbols-outlined">trending_up</span><span class="font-medium text-sm">Kaizen เบื้องต้น</span>
-        </a>
-        <a href="chatgpt.html" class="drawer-link flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-xl transition-all">
-          <span class="material-symbols-outlined">bolt</span><span class="font-medium text-sm">การใช้งาน ChatGPT</span>
-        </a>
-        <a href="gemini.html" class="drawer-link flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-xl transition-all">
-          <span class="material-symbols-outlined">auto_awesome</span><span class="font-medium text-sm">การใช้งาน Gemini เบื้องต้น</span>
-        </a>
-        <a href="prompts.html" class="drawer-link flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-xl transition-all">
-          <span class="material-symbols-outlined">psychology</span><span class="font-medium text-sm">ระบบเขียน Prompt / คลัง Prompt</span>
-        </a>
-        <div class="h-[1px] bg-outline-variant/20 my-4"></div>
-        <div class="px-4 py-2 text-xs uppercase tracking-wider text-on-surface-variant/60 font-bold">เอกสารดาวน์โหลด</div>
-        <a href="./คู่มือการใช้งาน Chat GPT สำหรับผู้เริ่มต้น.pptx" download class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-xl transition-all">
-          <span class="material-symbols-outlined text-tertiary">present_to_all</span>
-          <div class="min-w-0 flex-1"><p class="text-sm truncate">คู่มือ ChatGPT (.pptx)</p><p class="text-[10px] text-on-surface-variant/70">สไลด์ประกอบการเรียนการสอน</p></div>
-        </a>
-        <a href="./ChatGPT/Chat GPTAll.pdf" download class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-xl transition-all">
-          <span class="material-symbols-outlined text-error">picture_as_pdf</span>
-          <div class="min-w-0 flex-1"><p class="text-sm truncate">คู่มือ ChatGPT ฉบับเต็ม (.pdf)</p><p class="text-[10px] text-on-surface-variant/70">คู่มืออย่างละเอียดสำหรับเริ่มต้น</p></div>
-        </a>
-        <a href="./2026-Aril-E-Mag.pdf" download class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container rounded-xl transition-all">
-          <span class="material-symbols-outlined text-primary">description</span>
-          <div class="min-w-0 flex-1"><p class="text-sm truncate">E-Magazine Kaizen 2026</p><p class="text-[10px] text-on-surface-variant/70">บทความความรู้อัปเดตล่าสุด</p></div>
-        </a>
-      </nav>
-      <div class="p-6 border-t border-outline-variant/20 bg-surface-container-low text-center">
-        <p class="text-xs text-on-surface-variant">Kaizen Smart Playbook</p>
-        <p class="text-[10px] text-on-surface-variant/60 mt-1">© 2026 By Kachain_K</p>
-      </div>
-    </div>
-  </div>
-
-  <nav class="fixed bottom-0 left-0 w-full z-40 flex justify-around items-center h-20 px-2 pb-safe bg-surface border-t border-outline-variant/20 shadow-lg md:hidden transition-colors duration-200">
-    <a href="index.html" class="nav-tab flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container rounded-xl transition-colors">
-      <span class="material-symbols-outlined mb-1">home</span><span class="text-xs">หน้าแรก</span>
-    </a>
-    <a href="kaizen.html" class="nav-tab flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container rounded-xl transition-colors">
-      <span class="material-symbols-outlined mb-1">trending_up</span><span class="text-xs">Kaizen</span>
-    </a>
-    <a href="chatgpt.html" class="nav-tab flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container rounded-xl transition-colors">
-      <span class="material-symbols-outlined mb-1">bolt</span><span class="text-xs">ChatGPT</span>
-    </a>
-    <a href="gemini.html" class="nav-tab flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container rounded-xl transition-colors">
-      <span class="material-symbols-outlined mb-1">auto_awesome</span><span class="text-xs">Gemini</span>
-    </a>
-    <a href="prompts.html" class="nav-tab flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container rounded-xl transition-colors">
-      <span class="material-symbols-outlined mb-1">psychology</span><span class="text-xs">Prompts</span>
-    </a>
-  </nav>
-
+  <!-- ── MAIN ── -->
   <main class="flex-grow pt-20 mb-20 md:mb-6 max-w-[1200px] mx-auto px-4 md:px-margin-desktop w-full">
-    <section class="mt-4 mb-6">
+
+    <!-- Back link -->
+    <div class="mt-2 mb-4">
+      <a href="https://sites.google.com/view/teprompt-web/home" target="_blank" class="back-link">
+        <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span>
+        KAIZEN SMART PLAYBOOK
+      </a>
+    </div>
+
+    <section class="mb-6">
       <h1 class="text-2xl md:text-3xl font-bold text-primary flex items-center gap-2">
         <span class="material-symbols-outlined text-primary text-3xl">psychology</span>
         ออกแบบคำสั่ง AI (Kaizen Prompt Generator)
@@ -205,7 +191,10 @@
     </section>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <!-- ── LEFT PANEL ── -->
       <div class="lg:col-span-6 space-y-6">
+
+        <!-- Step 1: Template -->
         <div class="p-5 bg-surface rounded-xl border border-outline-variant/10 shadow-sm">
           <h3 class="font-bold text-sm md:text-base text-primary mb-3">1. เลือกแม่แบบการเขียน Prompt</h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="template-options">
@@ -228,6 +217,7 @@
           </div>
         </div>
 
+        <!-- Step 2: Details -->
         <div class="p-5 bg-surface rounded-xl border border-outline-variant/10 shadow-sm">
           <h3 class="font-bold text-sm md:text-base text-primary mb-4">2. ปรับแต่งรายละเอียดปัญหาของคุณ</h3>
           <div class="space-y-4 text-xs md:text-sm">
@@ -273,6 +263,7 @@
           </div>
         </div>
 
+        <!-- Step 3: Output -->
         <div class="p-5 bg-surface rounded-xl border border-outline-variant/10 shadow-sm relative overflow-hidden">
           <h3 class="font-bold text-sm md:text-base text-primary mb-3">3. ผลลัพธ์ชุดคำสั่ง AI Prompt</h3>
           <textarea id="prompt-output" rows="6" class="w-full bg-surface-container border border-outline-variant/30 rounded-lg p-3 focus:ring-1 focus:ring-primary text-xs md:text-sm font-mono leading-relaxed text-on-surface select-all" readonly></textarea>
@@ -281,16 +272,17 @@
               <span class="material-symbols-outlined text-sm" id="copy-icon">content_copy</span>
               <span id="copy-text">คัดลอกคำสั่ง</span>
             </button>
-            <button onclick="window.open('https://chatgpt.com', '_blank')" class="bg-surface hover:bg-surface-container border border-outline-variant text-on-surface py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-all">
+            <button onclick="window.open('https://chatgpt.com','_blank')" class="bg-surface hover:bg-surface-container border border-outline-variant text-on-surface py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-all">
               <span class="material-symbols-outlined text-sm">open_in_new</span><span>ChatGPT</span>
             </button>
-            <button onclick="window.open('https://gemini.google.com', '_blank')" class="bg-surface hover:bg-surface-container border border-outline-variant text-on-surface py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-all">
+            <button onclick="window.open('https://gemini.google.com','_blank')" class="bg-surface hover:bg-surface-container border border-outline-variant text-on-surface py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-all">
               <span class="material-symbols-outlined text-sm">open_in_new</span><span>Gemini</span>
             </button>
           </div>
         </div>
       </div>
 
+      <!-- ── RIGHT PANEL (Runner) ── -->
       <div class="lg:col-span-6 space-y-6">
         <div class="p-5 bg-inverse-surface text-inverse-on-surface rounded-xl shadow-md border border-outline-variant/15 flex flex-col h-full min-h-[500px]">
           <div class="flex justify-between items-center pb-3 border-b border-outline-variant/20 mb-4">
@@ -314,32 +306,28 @@
               <span class="material-symbols-outlined" id="run-play-icon">play_arrow</span>
               <span id="run-btn-text">รันคำสั่งด้วย AI (Run Prompt)</span>
             </button>
-            <p class="text-[10px] text-outline-variant/80 text-center">
-              *การรันในโหมดจำลองไม่มีค่าบริการและรวดเร็ว สำหรับผลการวิเคราะห์ระดับลึกและเรียลไทม์ เชื่อมต่อ API Key ของคุณ
-            </p>
+            <p class="text-[10px] text-outline-variant/80 text-center">*การรันในโหมดจำลองไม่มีค่าบริการและรวดเร็ว สำหรับผลการวิเคราะห์ระดับลึกและเรียลไทม์ เชื่อมต่อ API Key ของคุณ</p>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- API Modal -->
     <div id="api-modal" class="fixed inset-0 z-50 bg-black/60 opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
       <div class="bg-surface text-on-surface p-6 rounded-2xl max-w-md w-full border border-outline-variant/20 shadow-2xl transform scale-95 transition-transform duration-300" id="api-modal-panel">
         <h3 class="font-bold text-lg text-primary flex items-center gap-2 mb-3">
           <span class="material-symbols-outlined">key</span>ตั้งค่า Google Gemini API Key
         </h3>
-        <p class="text-xs text-on-surface-variant leading-relaxed mb-4">
-          คุณสามารถนำ Google Gemini API Key มาต่อเชื่อมเพื่อเรียกใช้บอทประมวลผลคำสั่งตรงถึง Google ได้ฟรี!
-          โดย API Key จะถูกเก็บบันทึกไว้อย่างปลอดภัยเฉพาะในบราวเซอร์เครื่องนี้ของคุณเท่านั้น (LocalStorage)
-        </p>
+        <p class="text-xs text-on-surface-variant leading-relaxed mb-4">คุณสามารถนำ Google Gemini API Key มาต่อเชื่อมเพื่อเรียกใช้บอทประมวลผลคำสั่งตรงถึง Google ได้ฟรี! โดย API Key จะถูกเก็บบันทึกไว้อย่างปลอดภัยเฉพาะในบราวเซอร์เครื่องนี้ของคุณเท่านั้น (LocalStorage)</p>
         <div class="space-y-4 text-xs md:text-sm">
           <div>
             <label class="block font-bold text-on-surface mb-1">ป้อน API Key ของคุณ:</label>
-            <input type="password" id="api-key-input" placeholder="AIzaSy..." class="w-full bg-surface border border-outline-variant rounded-lg p-2 focus:ring-1 focus:ring-primary text-xs md:text-sm font-mono" />
+            <input type="password" id="api-key-input" placeholder="AIzaSy..." class="w-full bg-surface border border-outline-variant rounded-lg p-2 focus:ring-1 focus:ring-primary text-xs md:text-sm font-mono"/>
           </div>
           <div class="bg-primary/5 p-3 rounded-lg border border-primary/20">
             <h4 class="font-bold text-primary mb-1">วิธีรับ API Key ฟรี:</h4>
             <ol class="list-decimal pl-5 space-y-1 text-[11px] text-on-surface-variant leading-normal">
-              <li>ไปที่ระบบพัฒนา <a href="https://aistudio.google.com/" target="_blank" class="text-primary underline font-bold">Google AI Studio</a></li>
+              <li>ไปที่ <a href="https://aistudio.google.com/" target="_blank" class="text-primary underline font-bold">Google AI Studio</a></li>
               <li>ล็อกอินด้วยบัญชี Google ทั่วไป</li>
               <li>กดปุ่ม <b>"Get API Key"</b></li>
               <li>คลิก <b>"Create API Key"</b> และคัดลอกมาวางในหน้าต่างนี้ได้เลย!</li>
@@ -357,355 +345,190 @@
     <footer class="py-6 mt-12 border-t border-outline-variant/20 text-center">
       <p class="text-xs text-on-surface-variant">Kaizen Smart Web Portal. All rights reserved.</p>
       <p class="text-[10px] text-outline mt-1">Designed by Kachain_K &amp; Antigravity AI 2026</p>
+      <a href="https://sites.google.com/view/teprompt-web/home" target="_blank"
+         class="text-primary text-sm font-semibold mt-2 inline-block hover:underline" style="text-decoration:none">
+        ← กลับหน้า KAIZEN SMART PLAYBOOK
+      </a>
     </footer>
   </main>
 
-  <script>
-    /* ── Theme & Drawer ── */
-    const themeToggleBtn = document.getElementById('theme-toggle-btn');
-    const themeIcon      = document.getElementById('theme-icon');
-    function applyTheme(t) {
-      document.documentElement.classList.toggle('dark', t === 'dark');
-      themeIcon.textContent = t === 'dark' ? 'light_mode' : 'dark_mode';
-      localStorage.setItem('theme', t);
+  <!-- ── BOTTOM NAV ── -->
+  <nav class="fixed bottom-0 left-0 w-full z-40 flex justify-around items-center h-20 px-2 pb-safe bg-surface border-t border-outline-variant/20 shadow-lg md:hidden transition-colors duration-200">
+    <a class="nav-tab flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container rounded-xl transition-colors"
+       href="https://sites.google.com/view/teprompt-web/home" target="_blank" style="text-decoration:none">
+      <span class="material-symbols-outlined mb-1">home</span><span class="text-xs">หน้าแรก</span>
+    </a>
+    <a class="nav-tab flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container rounded-xl transition-colors"
+       href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank" style="text-decoration:none">
+      <span class="material-symbols-outlined mb-1">trending_up</span><span class="text-xs">Kaizen</span>
+    </a>
+    <a class="nav-tab flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container rounded-xl transition-colors"
+       href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank" style="text-decoration:none">
+      <span class="material-symbols-outlined mb-1">bolt</span><span class="text-xs">ChatGPT</span>
+    </a>
+    <a class="nav-tab flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container rounded-xl transition-colors"
+       href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank" style="text-decoration:none">
+      <span class="material-symbols-outlined mb-1">auto_awesome</span><span class="text-xs">Gemini</span>
+    </a>
+    <a class="nav-tab flex flex-col items-center justify-center bg-primary-container/25 text-primary font-bold scale-105 rounded-xl px-3 py-1"
+       href="https://sites.google.com/view/teprompt-web/prompt" target="_blank" style="text-decoration:none">
+      <span class="material-symbols-outlined mb-1" style="font-variation-settings:'FILL' 1">psychology</span><span class="text-xs">Prompts</span>
+    </a>
+  </nav>
+
+<script>
+  /* ── Kaizen Drawer (new) ── */
+  function openKaizenDrawer(){
+    document.getElementById('kaizen-drawer').classList.add('open');
+    const ov=document.getElementById('drawer-overlay');
+    ov.style.display='block';
+    document.body.style.overflow='hidden';
+  }
+  function closeKaizenDrawer(){
+    document.getElementById('kaizen-drawer').classList.remove('open');
+    const ov=document.getElementById('drawer-overlay');
+    ov.style.display='none';
+    document.body.style.overflow='';
+  }
+  document.addEventListener('keydown',(e)=>{if(e.key==='Escape')closeKaizenDrawer();});
+
+  /* ── Theme ── */
+  const themeToggleBtn=document.getElementById('theme-toggle-btn');
+  const themeIcon=document.getElementById('theme-icon');
+  function applyTheme(t){document.documentElement.classList.toggle('dark',t==='dark');themeIcon.textContent=t==='dark'?'light_mode':'dark_mode';localStorage.setItem('theme',t);}
+  applyTheme(localStorage.getItem('theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
+  themeToggleBtn.addEventListener('click',()=>applyTheme(document.documentElement.classList.contains('dark')?'light':'dark'));
+
+  /* ── Template definitions ── */
+  const templates={
+    '3mu':{
+      persona:'สมมุติคุณคือผู้เชี่ยวชาญ Kaizen ที่มีประสบการณ์ 20 ปีในอุตสาหกรรมการผลิต',
+      problemLabel:'ระบุปัญหางานซ้ำซ้อนหรือปัญหาหน้างานที่เกิดขึ้น:',
+      defaultProblem:'งานซ้ำซ้อนที่พนักงานทำโดยไม่จำเป็น',
+      format:`กรุณาตอบในรูปแบบ Kaizen ดังต่อไปนี้:\n🔍 สภาพปัจจุบัน:\nอธิบายปัญหาที่เกิดจากความสูญเปล่า (Muda/Mura/Muri) ในด้านนี้\n🎯 สาเหตุที่แท้จริง:\nระบุต้นเหตุหลักที่ส่งผลทำให้เกิดปัญหาดังกล่าว\n✅ แนวทางปรับปรุงแบบ Kaizen:\nเสนอ 2-3 วิธีแก้ปัญหาที่เน้นการทำได้จริง งบประมาณน้อย เห็นผลลัพธ์รวดเร็ว\n📈 ผลลัพธ์ที่คาดหวัง:\nระบุตัวชี้วัดความคุ้มค่าหรือประสิทธิภาพหลังจากการปรับปรุงที่สามารถวัดผลได้`,
+      builder(){const p=document.getElementById('persona-input').value.trim()||this.persona;const pr=document.getElementById('problem-input').value.trim()||this.defaultProblem;const a=document.getElementById('mu-aspect').value;const w=document.getElementById('mu-waste').value;return `${p}\nกรุณาใช้หลักการ 3-Mu's วิเคราะห์หาแนวทางการปรับปรุงปัญหาเรื่อง "${pr}"\nโดยเน้นวิเคราะห์ด้าน "${a}" ในมุมมองของ "${w}"\n\n${this.format}`;}
+    },
+    '5s':{
+      persona:'สมมุติคุณคือผู้เชี่ยวชาญด้านระบบ 5ส (สะสาง สะดวก สะอาด สุขลักษณะ สร้างนิสัย) ประสบการณ์ 15 ปี',
+      problemLabel:'ระบุพื้นที่หน้างานที่ต้องการทำกิจกรรม 5ส:',
+      defaultProblem:'คลังเก็บอะไหล่และอุปกรณ์ซ่อมบำรุง',
+      format:`กรุณาตอบในรูปแบบ:\n🔍 สภาพปัจจุบันและประเด็นความไม่สะดวก:\nวิเคราะห์สภาพแวดล้อมที่ไร้ระเบียบในปัจจุบัน\n🎯 ขั้นตอนปฏิบัติการ 5ส (รายสัปดาห์):\nระบุแผนปฏิบัติ 5ส ตั้งแต่การสะสางจนถึงการสร้างนิสัยในพื้นที่นั้น\n✅ แผนงานปรับปรุงด่วน (เห็นผลเร็ว):\nเสนอ 2 ไอเดียปรับแต่งชั้นวางหรือป้ายเครื่องหมายที่ทำได้ทันทีโดยแทบไม่ใช้เงิน\n📈 ผลการตรวจประเมินที่คาดหวัง:\nมาตรฐานในการเปรียบเทียบ Before & After`,
+      builder(){const p=document.getElementById('persona-input').value.trim()||this.persona;const pr=document.getElementById('problem-input').value.trim()||this.defaultProblem;const t=document.getElementById('s5-target').value;return `${p}\nช่วยออกแบบแผนกิจกรรมและตรวจสอบ 5ส สำหรับพื้นที่ "${pr}"\nโดยมีเป้าหมายหลักคือ "${t}"\n\n${this.format}`;}
+    },
+    'ecrs':{
+      persona:'สมมุติคุณคือผู้เชี่ยวชาญการปรับปรุงวิศวกรรมวิธีการทำงานและการลดขั้นตอน (ECRS Expert)',
+      problemLabel:'ระบุขั้นตอนกระบวนงานที่ยาวเกินไปหรือล่าช้า:',
+      defaultProblem:'ขั้นตอนการคัดกรองเอกสารและจัดพิมพ์ใบเสร็จจัดส่งสินค้า',
+      format:`กรุณาตอบในรูปแบบ:\n🔍 สภาพปัจจุบันและคอขวด:\nจุดที่งานติดขัดและเสียเวลามากที่สุดในกระบวนการทำงานนี้\n🎯 การวิเคราะห์โครงสร้าง ECRS:\n- E (Eliminate): ขั้นตอนใดที่สามารถตัดออกได้ทันที\n- C (Combine): ขั้นตอนใดสามารถรวมกันเพื่อประหยัดเวลา\n- R (Rearrange): การเรียงลำดับลำเลียงงานใหม่เพื่อความรวดเร็ว\n- S (Simplify): การนำเทคโนโลยีหรือวิธีแบบง่ายเข้ามาปรับความซับซ้อน\n✅ แนวทางสตรีมไลน์งานที่ลดระยะเวลาได้ทันที:\nแนวทางลดเวลาทำรอบ (Cycle Time) ที่เห็นผลเร็วที่สุด`,
+      builder(){const p=document.getElementById('persona-input').value.trim()||this.persona;const pr=document.getElementById('problem-input').value.trim()||this.defaultProblem;return `${p}\nช่วยวิเคราะห์กระบวนการทำงานเรื่อง "${pr}"\nโดยการใช้ทฤษฎีการปรับปรุง ECRS เพื่อลดขั้นตอนซ้ำซ้อนที่ไม่จำเป็นทั้งหมด\n\n${this.format}`;}
+    },
+    '5whys':{
+      persona:'สมมุติคุณคือผู้เชี่ยวชาญการวิเคราะห์ความล้มเหลวและรากปัญหาสนับสนุนระบบผลิต',
+      problemLabel:'ระบุปัญหาหลักหรือความผิดพลาดที่เกิดขึ้นเฉียบพลัน:',
+      defaultProblem:'เครื่องจักรหยุดชะงักระหว่างทำงานเนื่องจากความร้อนสูงเกินไป',
+      format:`กรุณาตอบในรูปแบบ:\n🔍 เหตุการณ์ปัจจุบัน:\nสรุปปัญหาความเสียหายและระดับผลกระทบที่เกิดชะงักงัน\n🎯 แผนภูมิตอบคำถาม 5 Whys (ทำไม 5 ครั้ง):\n- ทำไม 1: ...\n- ทำไม 2: ...\n- ทำไม 3: ...\n- ทำไม 4: ...\n- ทำไม 5 (รากสาเหตุที่แท้จริง): ...\n✅ แผนงานแก้ไขเฉพาะหน้าและระยะยาว:\n- มาตรการแก้ไขด่วนหน้างาน: ...\n- ระบบป้องกันการเกิดซ้ำ (Systemic Action): ...`,
+      builder(){const p=document.getElementById('persona-input').value.trim()||this.persona;const pr=document.getElementById('problem-input').value.trim()||this.defaultProblem;return `${p}\nใช้เครื่องมือวิเคราะห์รากสาเหตุปัญหา (Root Cause Analysis) ด้วยแนวคิด 5 Whys (ถามทำไม 5 ครั้ง)\nวิเคราะห์ปัญหา: "${pr}"\n\n${this.format}`;}
     }
-    applyTheme(localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'));
-    themeToggleBtn.addEventListener('click', () => applyTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark'));
+  };
 
-    const sidebarDrawer = document.getElementById('sidebar-drawer');
-    const drawerPanel   = document.getElementById('drawer-panel');
-    function openDrawer()  { sidebarDrawer.classList.remove('pointer-events-none'); sidebarDrawer.classList.add('opacity-100'); drawerPanel.classList.remove('-translate-x-full'); }
-    function closeDrawer() { sidebarDrawer.classList.add('pointer-events-none'); sidebarDrawer.classList.remove('opacity-100'); drawerPanel.classList.add('-translate-x-full'); }
-    document.getElementById('menu-toggle-btn').addEventListener('click', openDrawer);
-    document.getElementById('close-drawer-btn').addEventListener('click', closeDrawer);
-    sidebarDrawer.addEventListener('click', e => { if (e.target === sidebarDrawer) closeDrawer(); });
+  let activeTemplate='3mu';
+  const templateButtons=document.querySelectorAll('#template-options button');
+  const personaInput=document.getElementById('persona-input');
+  const problemInput=document.getElementById('problem-input');
+  const problemLabel=document.getElementById('problem-label');
+  const formatInput=document.getElementById('format-input');
+  const promptOutput=document.getElementById('prompt-output');
+  const muFields=document.getElementById('mu-fields');
+  const muAspect=document.getElementById('mu-aspect');
+  const muWaste=document.getElementById('mu-waste');
+  const s5Fields=document.getElementById('s5-fields');
+  const s5Target=document.getElementById('s5-target');
 
-    /* ── Active nav highlight ── */
-    const cur = window.location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('nav.hidden a').forEach(a => { if (a.getAttribute('href') === cur) a.classList.add('text-primary','font-bold','border-b-2','border-primary'); });
-    document.querySelectorAll('#drawer-panel a.drawer-link').forEach(a => { if (a.getAttribute('href') === cur) a.classList.add('bg-primary-container/20','text-primary','font-bold'); });
-    document.querySelectorAll('nav.fixed.bottom-0 a.nav-tab').forEach(a => {
-      if (a.getAttribute('href') === cur) {
-        a.classList.add('bg-primary-container/25','text-primary','font-bold','scale-105');
-        const ic = a.querySelector('.material-symbols-outlined'); if (ic) ic.style.fontVariationSettings = "'FILL' 1";
-      }
+  function setTemplate(tid){
+    const prevDefault=templates[activeTemplate]?.defaultProblem||'';
+    activeTemplate=tid;
+    const cfg=templates[tid];
+    templateButtons.forEach(btn=>{
+      const a=btn.getAttribute('data-template')===tid;
+      btn.classList.toggle('border-primary',a);btn.classList.toggle('bg-primary/5',a);btn.classList.toggle('active-glow',a);
+      btn.classList.toggle('border-outline-variant',!a);btn.classList.toggle('bg-surface-container',!a);
     });
-  </script>
+    personaInput.value=cfg.persona;
+    problemLabel.textContent=cfg.problemLabel;
+    problemInput.placeholder=`ตัวอย่าง: ${cfg.defaultProblem}`;
+    const cur=problemInput.value.trim();
+    if(cur===''||cur===prevDefault)problemInput.value=cfg.defaultProblem;
+    formatInput.value=cfg.format;
+    muFields.classList.toggle('hidden',tid!=='3mu');
+    s5Fields.classList.toggle('hidden',tid!=='5s');
+    updatePrompt();
+  }
+  function updatePrompt(){const cfg=templates[activeTemplate];if(cfg)promptOutput.value=cfg.builder();}
+  templateButtons.forEach(btn=>btn.addEventListener('click',()=>setTemplate(btn.getAttribute('data-template'))));
+  personaInput.addEventListener('input',updatePrompt);problemInput.addEventListener('input',updatePrompt);
+  muAspect.addEventListener('change',updatePrompt);muWaste.addEventListener('change',updatePrompt);s5Target.addEventListener('change',updatePrompt);
+  setTemplate('3mu');
 
-  <script>
-    /* ══════════════════════════════════════════════════════════
-       PROMPT BUILDER  —  all 5 bugs fixed
-       ══════════════════════════════════════════════════════════ */
+  /* Copy */
+  const copyBtn=document.getElementById('copy-prompt-btn');
+  const copyIcon=document.getElementById('copy-icon');
+  const copyText=document.getElementById('copy-text');
+  copyBtn.addEventListener('click',()=>{promptOutput.select();navigator.clipboard.writeText(promptOutput.value).then(()=>{copyIcon.textContent='check';copyText.textContent='คัดลอกสำเร็จ!';copyBtn.classList.add('bg-green-600');setTimeout(()=>{copyIcon.textContent='content_copy';copyText.textContent='คัดลอกคำสั่ง';copyBtn.classList.remove('bg-green-600');},2000);});});
 
-    /* ── Template definitions ── */
-    const templates = {
-      '3mu': {
-        persona:      'สมมุติคุณคือผู้เชี่ยวชาญ Kaizen ที่มีประสบการณ์ 20 ปีในอุตสาหกรรมการผลิต',
-        problemLabel: 'ระบุปัญหางานซ้ำซ้อนหรือปัญหาหน้างานที่เกิดขึ้น:',
-        defaultProblem:'งานซ้ำซ้อนที่พนักงานทำโดยไม่จำเป็น',
-        format: `กรุณาตอบในรูปแบบ Kaizen ดังต่อไปนี้:
-🔍 สภาพปัจจุบัน:
-อธิบายปัญหาที่เกิดจากความสูญเปล่า (Muda/Mura/Muri) ในด้านนี้
-🎯 สาเหตุที่แท้จริง:
-ระบุต้นเหตุหลักที่ส่งผลทำให้เกิดปัญหาดังกล่าว
-✅ แนวทางปรับปรุงแบบ Kaizen:
-เสนอ 2-3 วิธีแก้ปัญหาที่เน้นการทำได้จริง งบประมาณน้อย เห็นผลลัพธ์รวดเร็ว
-📈 ผลลัพธ์ที่คาดหวัง:
-ระบุตัวชี้วัดความคุ้มค่าหรือประสิทธิภาพหลังจากการปรับปรุงที่สามารถวัดผลได้`,
-        /* ✅ FIX Bug 1 — อ่าน persona จาก input field แทน this.persona */
-        builder() {
-          const persona = document.getElementById('persona-input').value.trim() || this.persona;
-          const problem = document.getElementById('problem-input').value.trim() || this.defaultProblem;
-          const aspect  = document.getElementById('mu-aspect').value;
-          const waste   = document.getElementById('mu-waste').value;
-          return `${persona}\nกรุณาใช้หลักการ 3-Mu's วิเคราะห์หาแนวทางการปรับปรุงปัญหาเรื่อง "${problem}"\nโดยเน้นวิเคราะห์ด้าน "${aspect}" ในมุมมองของ "${waste}"\n\n${this.format}`;
-        }
-      },
-      '5s': {
-        persona:      'สมมุติคุณคือผู้เชี่ยวชาญด้านระบบ 5ส (สะสาง สะดวก สะอาด สุขลักษณะ สร้างนิสัย) ประสบการณ์ 15 ปี',
-        problemLabel: 'ระบุพื้นที่หน้างานที่ต้องการทำกิจกรรม 5ส:',
-        defaultProblem:'คลังเก็บอะไหล่และอุปกรณ์ซ่อมบำรุง',
-        format: `กรุณาตอบในรูปแบบ:
-🔍 สภาพปัจจุบันและประเด็นความไม่สะดวก:
-วิเคราะห์สภาพแวดล้อมที่ไร้ระเบียบในปัจจุบัน
-🎯 ขั้นตอนปฏิบัติการ 5ส (รายสัปดาห์):
-ระบุแผนปฏิบัติ 5ส ตั้งแต่การสะสางจนถึงการสร้างนิสัยในพื้นที่นั้น
-✅ แผนงานปรับปรุงด่วน (เห็นผลเร็ว):
-เสนอ 2 ไอเดียปรับแต่งชั้นวางหรือป้ายเครื่องหมายที่ทำได้ทันทีโดยแทบไม่ใช้เงิน
-📈 ผลการตรวจประเมินที่คาดหวัง:
-มาตรฐานในการเปรียบเทียบ Before &amp; After`,
-        /* ✅ FIX Bug 1 */
-        builder() {
-          const persona = document.getElementById('persona-input').value.trim() || this.persona;
-          const problem = document.getElementById('problem-input').value.trim() || this.defaultProblem;
-          const target  = document.getElementById('s5-target').value;
-          return `${persona}\nช่วยออกแบบแผนกิจกรรมและตรวจสอบ 5ส สำหรับพื้นที่ "${problem}"\nโดยมีเป้าหมายหลักคือ "${target}"\n\n${this.format}`;
-        }
-      },
-      'ecrs': {
-        persona:      'สมมุติคุณคือผู้เชี่ยวชาญการปรับปรุงวิศวกรรมวิธีการทำงานและการลดขั้นตอน (ECRS Expert)',
-        problemLabel: 'ระบุขั้นตอนกระบวนงานที่ยาวเกินไปหรือล่าช้า:',
-        defaultProblem:'ขั้นตอนการคัดกรองเอกสารและจัดพิมพ์ใบเสร็จจัดส่งสินค้า',
-        format: `กรุณาตอบในรูปแบบ:
-🔍 สภาพปัจจุบันและคอขวด:
-จุดที่งานติดขัดและเสียเวลามากที่สุดในกระบวนการทำงานนี้
-🎯 การวิเคราะห์โครงสร้าง ECRS:
-- E (Eliminate): ขั้นตอนใดที่สามารถตัดออกได้ทันที
-- C (Combine): ขั้นตอนใดสามารถรวมกันเพื่อประหยัดเวลา
-- R (Rearrange): การเรียงลำดับลำเลียงงานใหม่เพื่อความรวดเร็ว
-- S (Simplify): การนำเทคโนโลยีหรือวิธีแบบง่ายเข้ามาปรับความซับซ้อน
-✅ แนวทางสตรีมไลน์งานที่ลดระยะเวลาได้ทันที:
-แนวทางลดเวลาทำรอบ (Cycle Time) ที่เห็นผลเร็วที่สุด`,
-        /* ✅ FIX Bug 1 */
-        builder() {
-          const persona = document.getElementById('persona-input').value.trim() || this.persona;
-          const problem = document.getElementById('problem-input').value.trim() || this.defaultProblem;
-          return `${persona}\nช่วยวิเคราะห์กระบวนการทำงานเรื่อง "${problem}"\nโดยการใช้ทฤษฎีการปรับปรุง ECRS เพื่อลดขั้นตอนซ้ำซ้อนที่ไม่จำเป็นทั้งหมด\n\n${this.format}`;
-        }
-      },
-      '5whys': {
-        persona:      'สมมุติคุณคือผู้เชี่ยวชาญการวิเคราะห์ความล้มเหลวและรากปัญหาสนับสนุนระบบผลิต',
-        problemLabel: 'ระบุปัญหาหลักหรือความผิดพลาดที่เกิดขึ้นเฉียบพลัน:',
-        defaultProblem:'เครื่องจักรหยุดชะงักระหว่างทำงานเนื่องจากความร้อนสูงเกินไป',
-        format: `กรุณาตอบในรูปแบบ:
-🔍 เหตุการณ์ปัจจุบัน:
-สรุปปัญหาความเสียหายและระดับผลกระทบที่เกิดชะงักงัน
-🎯 แผนภูมิตอบคำถาม 5 Whys (ทำไม 5 ครั้ง):
-- ทำไม 1: ...
-- ทำไม 2: ...
-- ทำไม 3: ...
-- ทำไม 4: ...
-- ทำไม 5 (รากสาเหตุที่แท้จริง): ...
-✅ แผนงานแก้ไขเฉพาะหน้าและระยะยาว:
-- มาตรการแก้ไขด่วนหน้างาน: ...
-- ระบบป้องกันการเกิดซ้ำ (Systemic Action): ...`,
-        /* ✅ FIX Bug 1 */
-        builder() {
-          const persona = document.getElementById('persona-input').value.trim() || this.persona;
-          const problem = document.getElementById('problem-input').value.trim() || this.defaultProblem;
-          return `${persona}\nใช้เครื่องมือวิเคราะห์รากสาเหตุปัญหา (Root Cause Analysis) ด้วยแนวคิด 5 Whys (ถามทำไม 5 ครั้ง)\nวิเคราะห์ปัญหา: "${problem}"\n\n${this.format}`;
-        }
-      }
-    };
+  /* API Modal */
+  const apiModal=document.getElementById('api-modal');const apiModalPanel=document.getElementById('api-modal-panel');
+  const apiSettingBtn=document.getElementById('api-setting-btn');const apiKeyInput=document.getElementById('api-key-input');
+  const runnerModeLbl=document.getElementById('runner-mode-lbl');
+  function checkApiKey(){const k=localStorage.getItem('gemini_api_key');if(k){runnerModeLbl.textContent='โหมดใช้งานจริง (API Connected)';runnerModeLbl.classList.replace('text-outline-variant','text-green-400');apiKeyInput.value='';apiKeyInput.placeholder='●●●●●●●●●●●● (บันทึกแล้ว — กรอกใหม่เพื่อเปลี่ยน)';}else{runnerModeLbl.textContent='โหมดจำลอง (Simulated Mode)';runnerModeLbl.classList.replace('text-green-400','text-outline-variant');apiKeyInput.value='';apiKeyInput.placeholder='AIzaSy...';}}
+  function openApiModal(){apiModal.classList.remove('pointer-events-none','opacity-0');apiModalPanel.classList.replace('scale-95','scale-100');}
+  function closeApiModal(){apiModal.classList.add('pointer-events-none','opacity-0');apiModalPanel.classList.replace('scale-100','scale-95');}
+  apiSettingBtn.addEventListener('click',openApiModal);
+  document.getElementById('api-close-btn').addEventListener('click',closeApiModal);
+  apiModal.addEventListener('click',e=>{if(e.target===apiModal)closeApiModal();});
+  document.getElementById('api-save-btn').addEventListener('click',()=>{const v=apiKeyInput.value.trim();if(v)localStorage.setItem('gemini_api_key',v);checkApiKey();closeApiModal();});
+  document.getElementById('api-clear-btn').addEventListener('click',()=>{localStorage.removeItem('gemini_api_key');checkApiKey();closeApiModal();});
+  checkApiKey();
 
-    let activeTemplate = '3mu';
+  /* Simulation */
+  function getSimulationText(tid,inp){
+    const prob=inp.problem||'(ไม่ระบุ)';
+    if(tid==='3mu')return `🔍 สภาพปัจจุบัน:\nเกิดปัญหา "${inp.waste}" ในส่วนงานด้าน "${inp.aspect}" โดยเฉพาะประเด็นความล่าช้า/ทับซ้อนในกรณี "${prob}" กิจกรรมเหล่านี้ลดปริมาณผลผลิตหน้างานลง เกิดการเคลื่อนไหว (Motion) และการขนย้าย (Transportation) ที่ไม่เพิ่มมูลค่าแก่ขั้นตอนงาน\n\n🎯 สาเหตุที่แท้จริง:\n1. การออกแบบมาตรฐานและสายธารการลำเลียงข้อมูล/วัตถุดิบ (SOP) ยังไม่มีการแบ่งขอบเขตหน้างานอย่างมีเอกภาพ\n2. อุปกรณ์เครื่องช่วยงานขาดสัญลักษณ์กำกับที่ชัดเจนในการสั่งการ\n\n✅ แนวทางปรับปรุงแบบ Kaizen:\n1. ยุบรวมเอกสารหรือขั้นตอนการคีย์ข้อมูลซ้ำๆ ให้อยู่บนระบบคลาวด์ฟอร์มชุดเดียว (งบประมาณ: 0 บาท)\n2. ปรับโครงสร้างระยะห่างการทำกิจกรรม โดยย้ายจุดจัดวางใหม่ลดระยะเดินพนักงาน\n3. นำ Visual Board ประจำแผนกเพื่ออัปเดตงานแบบ Real-time แทนรายงานกระดาษ\n\n📈 ผลลัพธ์ที่คาดหวัง:\n1. ประหยัดระยะเวลาทำงานที่ทับซ้อนลงได้มากกว่า 75%\n2. ระยะทางการเดินสะสมของพนักงานลดลงเฉลี่ย 1.2 กิโลเมตรต่อคนต่อวัน\n3. ลดความเครียดและหลีกเลี่ยงข้อผิดพลาด (Muda/Muri) ได้อย่างถาวร`;
+    if(tid==='5s')return `🔍 สภาพปัจจุบันและประเด็นความไม่สะดวก:\nในพื้นที่ "${prob}" ตรวจพบสภาพความไม่คล่องตัวในจัดวางเครื่องช่วยซ่อมบำรุงหรือชิ้นส่วน มีอุปกรณ์บางรายการวางกองทับบนตู้เก็บโดยไม่มีระบบสัญลักษณ์กำกับ\n\n🎯 ขั้นตอนปฏิบัติการ 5ส (รายสัปดาห์):\n- สัปดาห์ที่ 1 (สะสาง): แยกเครื่องมือที่ชำรุดหรือนานๆ ใช้ทีออกจากหน้างานหลัก\n- สัปดาห์ที่ 2 (สะดวก): จัดแบ่งชั้นจัดเก็บ แบ่งกลุ่มหมวดหมู่ สี สัญลักษณ์ตามชนิดการใช้งาน\n- สัปดาห์ที่ 3 (สะอาด): กำหนดพื้นที่ป้ายทำความสะอาดประจำจุดและเช็ดล้างน้ำมัน\n- สัปดาห์ที่ 4 (สุขลักษณะ): จัดทำเช็คลิสต์ตรวจ 5ส ประจำเวรงาน\n- สัปดาห์ที่ 5 (สร้างนิสัย): สุ่มประเมินมอบรางวัลจูงใจแก่ทีมที่ทำได้มาตรฐานสม่ำเสมอ\n\n✅ แผนงานปรับปรุงด่วน (เห็นผลเร็ว):\n1. นำกระดาษกาวสีเทปมาตีกรอบตำแหน่งวางสิ่งของแบบ "Shadow Board" (งบประมาณ: 150 บาท)\n2. ติดตั้งป้าย Visual Tag หรือดัชนีแบ่งสีเครื่องมือแยกตามตู้เก็บ (Color-coding)\n\n📈 ผลการตรวจประเมินที่คาดหวัง:\n1. ความเร็วในการหยิบใช้เครื่องมือดีขึ้น จากเดิม 8 นาที เหลือไม่เกิน 30 วินาที\n2. คะแนนประเมินมาตรฐานความปลอดภัยพื้นที่งานแตะ 95% ภายในสิ้นเดือนนี้`;
+    if(tid==='ecrs')return `🔍 สภาพปัจจุบันและคอขวด:\nกระบวนงาน "${prob}" มีขั้นตอนซ้ำซ้อนหลายลำดับ เวลาทำรอบชิ้นงาน (Cycle Time) ล่าช้าเกินกว่ามาตรฐานถึง 35%\n\n🎯 การวิเคราะห์โครงสร้าง ECRS:\n- E (Eliminate): กำจัดขั้นตอนการคีย์ซ้ำลงในสองโปรแกรมที่ทับซ้อน ปรับระบบแชร์ชีตร่วมกัน\n- C (Combine): ควบรวมการพิมพ์บาร์โค้ดใบตรวจเข้ากับกระบวนการบรรจุหีบห่อ\n- R (Rearrange): ปรับเส้นทางลำเลียงกล่องสินค้าให้เคลื่อนที่จากซ้ายไปขวาตรงสู่เครื่องซีล\n- S (Simplify): ออกแบบกล่องบรรจุให้มีคลิปรัดทดแทนการใช้เทปกาวพันทับแบบเดิม\n\n✅ แนวทางสตรีมไลน์งานที่ลดระยะเวลาได้ทันที:\nจัดวางโต๊ะจัดเรียงให้อยู่ติดกับปากสายพาน และทำคู่มือ Visual Standard ใน 1 แผ่นงาน\n\n📈 ผลการตรวจประเมินที่คาดหวัง:\n1. ลดเวลาของกระบวนงานจากเฉลี่ย 12 นาทีต่อชิ้นงาน เหลือเพียง 5 นาทีต่อชิ้นงาน\n2. เพิ่มกำลังการผลิตโดยพนักงานคนเดิมได้อีก 40% ในแต่ละรอบกะ`;
+    if(tid==='5whys')return `🔍 เหตุการณ์ปัจจุบัน:\nเกิดปัญหา "${prob}" ส่งผลให้สายงานผลิตสะดุดชะงักชั่วคราว\n\n🎯 แผนภูมิตอบคำถาม 5 Whys (ทำไม 5 ครั้ง):\n- ทำไม 1: ทำไมเกิดปัญหาขึ้น? → อุปกรณ์มีความร้อนสะสมสูงเกินพิกัดการทำงาน\n- ทำไม 2: ทำไมจึงมีความร้อนสะสมสูง? → พัดลมระบายแกนไม่ทำงานตามเซนเซอร์จับรอบ\n- ทำไม 3: ทำไมพัดลมไม่ทำงาน? → ฟิวส์แหล่งจ่ายไฟพัดลมระบบชำรุดขาด\n- ทำไม 4: ทำไมฟิวส์ชำรุดขาด? → กระแสไฟกระชากจากการสวิตช์รีเลย์กำลังสูงพร้อมกัน\n- ทำไม 5 (รากสาเหตุที่แท้จริง): ทำไมกระแสกระชากแล้วไม่มีระบบหน่วง? → ขาดตัวหน่วงเวลา (Time Delay Relay) ซึ่งระบุในมาตรฐานออกแบบแต่ยังไม่ได้ติดตั้ง\n\n✅ แผนงานแก้ไขเฉพาะหน้าและระยะยาว:\n- มาตรการแก้ไขด่วน: เปลี่ยนฟิวส์ตัวสำรองและรีเซ็ตเซนเซอร์อุณหภูมิก่อนเดินระบบใหม่\n- ระบบป้องกันการเกิดซ้ำ: ติดตั้ง Time Delay Relay และเพิ่มเกณฑ์ตรวจอุณหภูมิในสมุดตรวจสอบประจำสัปดาห์`;
+    return 'ไม่มีข้อมูล';
+  }
 
-    /* ── DOM refs ── */
-    const templateButtons = document.querySelectorAll('#template-options button');
-    const personaInput    = document.getElementById('persona-input');
-    const problemInput    = document.getElementById('problem-input');
-    const problemLabel    = document.getElementById('problem-label');
-    const formatInput     = document.getElementById('format-input');
-    const promptOutput    = document.getElementById('prompt-output');
-    const muFields        = document.getElementById('mu-fields');
-    const muAspect        = document.getElementById('mu-aspect');
-    const muWaste         = document.getElementById('mu-waste');
-    const s5Fields        = document.getElementById('s5-fields');
-    const s5Target        = document.getElementById('s5-target');
+  function typewriteText(el,text){el.innerHTML='';const chars=Array.from(text);let i=0;function tick(){if(i<chars.length){el.textContent+=chars[i++];setTimeout(tick,15);}}tick();}
 
-    /* ── Template switcher ── */
-    function setTemplate(templateId) {
-      /* ✅ FIX Bug 4 — เก็บ default ของ template ก่อนหน้า ก่อนเปลี่ยน activeTemplate */
-      const prevDefault  = templates[activeTemplate]?.defaultProblem || '';
-      activeTemplate     = templateId;
-      const config       = templates[templateId];
+  const runBtn=document.getElementById('run-prompt-btn');
+  const runSpinner=document.getElementById('run-spinner');
+  const runPlayIcon=document.getElementById('run-play-icon');
+  const runBtnText=document.getElementById('run-btn-text');
+  const runnerScreen=document.getElementById('runner-screen');
 
-      templateButtons.forEach(btn => {
-        const isActive = btn.getAttribute('data-template') === templateId;
-        btn.classList.toggle('border-primary',       isActive);
-        btn.classList.toggle('bg-primary/5',         isActive);
-        btn.classList.toggle('active-glow',          isActive);
-        btn.classList.toggle('border-outline-variant', !isActive);
-        btn.classList.toggle('bg-surface-container',   !isActive);
-      });
-
-      personaInput.value    = config.persona;
-      problemLabel.textContent = config.problemLabel;
-      problemInput.placeholder = `ตัวอย่าง: ${config.defaultProblem}`;
-
-      /* ✅ FIX Bug 4 — reset เฉพาะถ้า value เป็น default ของ template เดิม หรือว่างเปล่า */
-      const cur = problemInput.value.trim();
-      if (cur === '' || cur === prevDefault) {
-        problemInput.value = config.defaultProblem;
-      }
-
-      formatInput.value = config.format;
-
-      muFields.classList.toggle('hidden', templateId !== '3mu');
-      s5Fields.classList.toggle('hidden', templateId !== '5s');
-
-      updatePrompt();
+  runBtn.addEventListener('click',async()=>{
+    const promptText=promptOutput.value;const apiKey=localStorage.getItem('gemini_api_key');
+    runBtn.disabled=true;runPlayIcon.classList.add('hidden');runSpinner.classList.remove('hidden');runBtnText.textContent='กำลังประมวลผลคำสั่ง AI...';
+    runnerScreen.innerHTML=`<div class="flex items-center justify-center py-12 gap-3 text-on-surface-variant italic"><span class="material-symbols-outlined animate-spin text-primary text-3xl">sync</span><span>ระบบ AI กำลังวิเคราะห์ข้อมูล Kaizen โปรดรอสักครู่...</span></div>`;
+    const resetBtn=()=>{runBtn.disabled=false;runPlayIcon.classList.remove('hidden');runSpinner.classList.add('hidden');runBtnText.textContent='รันคำสั่งด้วย AI (Run Prompt)';};
+    try{
+      if(apiKey){const txt=await runGeminiAPI(promptText,apiKey);resetBtn();typewriteText(runnerScreen,txt);}
+      else{setTimeout(()=>{const inp={problem:problemInput.value.trim()||problemInput.placeholder,aspect:muAspect.value,waste:muWaste.value,target:s5Target.value};resetBtn();typewriteText(runnerScreen,getSimulationText(activeTemplate,inp));},1200);}
+    }catch(err){
+      console.error(err);resetBtn();
+      runnerScreen.innerHTML=`<div class="p-4 bg-error-container text-on-error-container border border-error/20 rounded-lg flex flex-col gap-2"><h4 class="font-bold flex items-center gap-2 text-error"><span class="material-symbols-outlined">warning</span>เกิดข้อผิดพลาดในการเชื่อมต่อ API</h4><p class="text-xs">ไม่สามารถเรียกใช้งาน Google Gemini API ได้สำเร็จ โปรดตรวจสอบ API Key ของคุณ หรือสัญญาณอินเทอร์เน็ต</p><button id="modal-retry-btn" class="bg-primary text-on-primary py-1.5 px-3 rounded text-xs font-bold w-max mt-2">แก้ไข API Key</button></div>`;
+      document.getElementById('modal-retry-btn').addEventListener('click',()=>apiSettingBtn.click());
     }
+  });
 
-    function updatePrompt() {
-      const config = templates[activeTemplate];
-      if (config) promptOutput.value = config.builder();
-    }
-
-    templateButtons.forEach(btn => btn.addEventListener('click', () => setTemplate(btn.getAttribute('data-template'))));
-    personaInput.addEventListener('input', updatePrompt);
-    problemInput.addEventListener('input', updatePrompt);
-    muAspect.addEventListener('change', updatePrompt);
-    muWaste.addEventListener('change',  updatePrompt);
-    s5Target.addEventListener('change', updatePrompt);
-
-    setTemplate('3mu');
-
-    /* ── Copy button ── */
-    const copyBtn  = document.getElementById('copy-prompt-btn');
-    const copyIcon = document.getElementById('copy-icon');
-    const copyText = document.getElementById('copy-text');
-    copyBtn.addEventListener('click', () => {
-      promptOutput.select();
-      navigator.clipboard.writeText(promptOutput.value).then(() => {
-        copyIcon.textContent = 'check';
-        copyText.textContent = 'คัดลอกสำเร็จ!';
-        copyBtn.classList.add('bg-green-600');
-        setTimeout(() => {
-          copyIcon.textContent = 'content_copy';
-          copyText.textContent = 'คัดลอกคำสั่ง';
-          copyBtn.classList.remove('bg-green-600');
-        }, 2000);
-      });
-    });
-
-    /* ── API Key modal ── */
-    const apiModal      = document.getElementById('api-modal');
-    const apiModalPanel = document.getElementById('api-modal-panel');
-    const apiSettingBtn = document.getElementById('api-setting-btn');
-    const apiKeyInput   = document.getElementById('api-key-input');
-    const runnerModeLbl = document.getElementById('runner-mode-lbl');
-
-    function checkApiKey() {
-      const key = localStorage.getItem('gemini_api_key');
-      if (key) {
-        runnerModeLbl.textContent = 'โหมดใช้งานจริง (API Connected)';
-        runnerModeLbl.classList.replace('text-outline-variant', 'text-green-400');
-        /* ✅ FIX Bug 5 — ไม่นำ key กลับใส่ input; ใช้ masked placeholder แทน */
-        apiKeyInput.value       = '';
-        apiKeyInput.placeholder = '●●●●●●●●●●●● (บันทึกแล้ว — กรอกใหม่เพื่อเปลี่ยน)';
-      } else {
-        runnerModeLbl.textContent = 'โหมดจำลอง (Simulated Mode)';
-        runnerModeLbl.classList.replace('text-green-400', 'text-outline-variant');
-        apiKeyInput.value       = '';
-        apiKeyInput.placeholder = 'AIzaSy...';
-      }
-    }
-
-    function openApiModal() {
-      apiModal.classList.remove('pointer-events-none','opacity-0');
-      apiModalPanel.classList.replace('scale-95','scale-100');
-    }
-    function closeApiModal() {
-      apiModal.classList.add('pointer-events-none','opacity-0');
-      apiModalPanel.classList.replace('scale-100','scale-95');
-    }
-
-    apiSettingBtn.addEventListener('click', openApiModal);
-    document.getElementById('api-close-btn').addEventListener('click', closeApiModal);
-    apiModal.addEventListener('click', e => { if (e.target === apiModal) closeApiModal(); });
-
-    document.getElementById('api-save-btn').addEventListener('click', () => {
-      const val = apiKeyInput.value.trim();
-      if (val) localStorage.setItem('gemini_api_key', val);
-      checkApiKey(); closeApiModal();
-    });
-    document.getElementById('api-clear-btn').addEventListener('click', () => {
-      localStorage.removeItem('gemini_api_key');
-      checkApiKey(); closeApiModal();
-    });
-
-    checkApiKey();
-
-    /* ── Simulation text responses ── */
-    function getSimulationText(tid, inp) {
-      const prob = inp.problem || '(ไม่ระบุ)';
-      if (tid === '3mu') return `🔍 สภาพปัจจุบัน:\nเกิดปัญหา "${inp.waste}" ในส่วนงานด้าน "${inp.aspect}" โดยเฉพาะประเด็นความล่าช้า/ทับซ้อนในกรณี "${prob}" กิจกรรมเหล่านี้ลดปริมาณผลผลิตหน้างานลง เกิดการเคลื่อนไหว (Motion) และการขนย้าย (Transportation) ที่ไม่เพิ่มมูลค่าแก่ขั้นตอนงาน\n\n🎯 สาเหตุที่แท้จริง:\n1. การออกแบบมาตรฐานและสายธารการลำเลียงข้อมูล/วัตถุดิบ (SOP) ยังไม่มีการแบ่งขอบเขตหน้างานอย่างมีเอกภาพ\n2. อุปกรณ์เครื่องช่วยงานขาดสัญลักษณ์กำกับที่ชัดเจนในการสั่งการ\n\n✅ แนวทางปรับปรุงแบบ Kaizen:\n1. ยุบรวมเอกสารหรือขั้นตอนการคีย์ข้อมูลซ้ำๆ ให้อยู่บนระบบคลาวด์ฟอร์มชุดเดียว (งบประมาณ: 0 บาท)\n2. ปรับโครงสร้างระยะห่างการทำกิจกรรม โดยย้ายจุดจัดวางใหม่ลดระยะเดินพนักงาน\n3. นำ Visual Board ประจำแผนกเพื่ออัปเดตงานแบบ Real-time แทนรายงานกระดาษ\n\n📈 ผลลัพธ์ที่คาดหวัง:\n1. ประหยัดระยะเวลาทำงานที่ทับซ้อนลงได้มากกว่า 75%\n2. ระยะทางการเดินสะสมของพนักงานลดลงเฉลี่ย 1.2 กิโลเมตรต่อคนต่อวัน\n3. ลดความเครียดและหลีกเลี่ยงข้อผิดพลาด (Muda/Muri) ได้อย่างถาวร`;
-      if (tid === '5s')  return `🔍 สภาพปัจจุบันและประเด็นความไม่สะดวก:\nในพื้นที่ "${prob}" ตรวจพบสภาพความไม่คล่องตัวในจัดวางเครื่องช่วยซ่อมบำรุงหรือชิ้นส่วน มีอุปกรณ์บางรายการวางกองทับบนตู้เก็บโดยไม่มีระบบสัญลักษณ์กำกับ\n\n🎯 ขั้นตอนปฏิบัติการ 5ส (รายสัปดาห์):\n- สัปดาห์ที่ 1 (สะสาง): แยกเครื่องมือที่ชำรุดหรือนานๆ ใช้ทีออกจากหน้างานหลัก\n- สัปดาห์ที่ 2 (สะดวก): จัดแบ่งชั้นจัดเก็บ แบ่งกลุ่มหมวดหมู่ สี สัญลักษณ์ตามชนิดการใช้งาน\n- สัปดาห์ที่ 3 (สะอาด): กำหนดพื้นที่ป้ายทำความสะอาดประจำจุดและเช็ดล้างน้ำมัน\n- สัปดาห์ที่ 4 (สุขลักษณะ): จัดทำเช็คลิสต์ตรวจ 5ส ประจำเวรงาน\n- สัปดาห์ที่ 5 (สร้างนิสัย): สุ่มประเมินมอบรางวัลจูงใจแก่ทีมที่ทำได้มาตรฐานสม่ำเสมอ\n\n✅ แผนงานปรับปรุงด่วน (เห็นผลเร็ว):\n1. นำกระดาษกาวสีเทปมาตีกรอบตำแหน่งวางสิ่งของแบบ "Shadow Board" (งบประมาณ: 150 บาท)\n2. ติดตั้งป้าย Visual Tag หรือดัชนีแบ่งสีเครื่องมือแยกตามตู้เก็บ (Color-coding)\n\n📈 ผลการตรวจประเมินที่คาดหวัง:\n1. ความเร็วในการหยิบใช้เครื่องมือดีขึ้น จากเดิม 8 นาที เหลือไม่เกิน 30 วินาที\n2. คะแนนประเมินมาตรฐานความปลอดภัยพื้นที่งานแตะ 95% ภายในสิ้นเดือนนี้`;
-      if (tid === 'ecrs') return `🔍 สภาพปัจจุบันและคอขวด:\nกระบวนงาน "${prob}" มีขั้นตอนซ้ำซ้อนหลายลำดับ เวลาทำรอบชิ้นงาน (Cycle Time) ล่าช้าเกินกว่ามาตรฐานถึง 35%\n\n🎯 การวิเคราะห์โครงสร้าง ECRS:\n- E (Eliminate): กำจัดขั้นตอนการคีย์ซ้ำลงในสองโปรแกรมที่ทับซ้อน ปรับระบบแชร์ชีตร่วมกัน\n- C (Combine): ควบรวมการพิมพ์บาร์โค้ดใบตรวจเข้ากับกระบวนการบรรจุหีบห่อ\n- R (Rearrange): ปรับเส้นทางลำเลียงกล่องสินค้าให้เคลื่อนที่จากซ้ายไปขวาตรงสู่เครื่องซีล\n- S (Simplify): ออกแบบกล่องบรรจุให้มีคลิปรัดทดแทนการใช้เทปกาวพันทับแบบเดิม\n\n✅ แนวทางสตรีมไลน์งานที่ลดระยะเวลาได้ทันที:\nจัดวางโต๊ะจัดเรียงให้อยู่ติดกับปากสายพาน และทำคู่มือ Visual Standard ใน 1 แผ่นงาน\n\n📈 ผลการตรวจประเมินที่คาดหวัง:\n1. ลดเวลาของกระบวนงานจากเฉลี่ย 12 นาทีต่อชิ้นงาน เหลือเพียง 5 นาทีต่อชิ้นงาน\n2. เพิ่มกำลังการผลิตโดยพนักงานคนเดิมได้อีก 40% ในแต่ละรอบกะ`;
-      if (tid === '5whys') return `🔍 เหตุการณ์ปัจจุบัน:\nเกิดปัญหา "${prob}" ส่งผลให้สายงานผลิตสะดุดชะงักชั่วคราว\n\n🎯 แผนภูมิตอบคำถาม 5 Whys (ทำไม 5 ครั้ง):\n- ทำไม 1: ทำไมเกิดปัญหาขึ้น? → อุปกรณ์มีความร้อนสะสมสูงเกินพิกัดการทำงาน\n- ทำไม 2: ทำไมจึงมีความร้อนสะสมสูง? → พัดลมระบายแกนไม่ทำงานตามเซนเซอร์จับรอบ\n- ทำไม 3: ทำไมพัดลมไม่ทำงาน? → ฟิวส์แหล่งจ่ายไฟพัดลมระบบชำรุดขาด\n- ทำไม 4: ทำไมฟิวส์ชำรุดขาด? → กระแสไฟกระชากจากการสวิตช์รีเลย์กำลังสูงพร้อมกัน\n- ทำไม 5 (รากสาเหตุที่แท้จริง): ทำไมกระแสกระชากแล้วไม่มีระบบหน่วง? → ขาดตัวหน่วงเวลา (Time Delay Relay) ซึ่งระบุในมาตรฐานออกแบบแต่ยังไม่ได้ติดตั้ง\n\n✅ แผนงานแก้ไขเฉพาะหน้าและระยะยาว:\n- มาตรการแก้ไขด่วน: เปลี่ยนฟิวส์ตัวสำรองและรีเซ็ตเซนเซอร์อุณหภูมิก่อนเดินระบบใหม่\n- ระบบป้องกันการเกิดซ้ำ: ติดตั้ง Time Delay Relay และเพิ่มเกณฑ์ตรวจอุณหภูมิในสมุดตรวจสอบประจำสัปดาห์`;
-      return 'ไม่มีข้อมูล';
-    }
-
-    /* ── ✅ FIX Bug 2 — Typewriter ใช้ Array.from() รองรับ Emoji (surrogate pair) ── */
-    function typewriteText(el, text) {
-      el.innerHTML = '';
-      const chars = Array.from(text); /* Array.from แตก string ตาม Unicode codepoint ไม่ตัด emoji */
-      let i = 0;
-      function tick() {
-        if (i < chars.length) {
-          el.textContent += chars[i++];
-          setTimeout(tick, 15);
-        }
-      }
-      tick();
-    }
-
-    /* ── Run button ── */
-    const runBtn      = document.getElementById('run-prompt-btn');
-    const runSpinner  = document.getElementById('run-spinner');
-    const runPlayIcon = document.getElementById('run-play-icon');
-    const runBtnText  = document.getElementById('run-btn-text');
-    const runnerScreen= document.getElementById('runner-screen');
-
-    runBtn.addEventListener('click', async () => {
-      const promptText = promptOutput.value;
-      const apiKey     = localStorage.getItem('gemini_api_key');
-
-      runBtn.disabled = true;
-      runPlayIcon.classList.add('hidden');
-      runSpinner.classList.remove('hidden');
-      runBtnText.textContent = 'กำลังประมวลผลคำสั่ง AI...';
-      runnerScreen.innerHTML = `<div class="flex items-center justify-center py-12 gap-3 text-on-surface-variant italic">
-        <span class="material-symbols-outlined animate-spin text-primary text-3xl">sync</span>
-        <span>ระบบ AI กำลังวิเคราะห์ข้อมูล Kaizen โปรดรอสักครู่...</span>
-      </div>`;
-
-      const resetBtn = () => {
-        runBtn.disabled = false;
-        runPlayIcon.classList.remove('hidden');
-        runSpinner.classList.add('hidden');
-        runBtnText.textContent = 'รันคำสั่งด้วย AI (Run Prompt)';
-      };
-
-      try {
-        if (apiKey) {
-          const txt = await runGeminiAPI(promptText, apiKey);
-          resetBtn(); typewriteText(runnerScreen, txt);
-        } else {
-          setTimeout(() => {
-            const inp = {
-              problem: problemInput.value.trim() || problemInput.placeholder,
-              aspect:  muAspect.value, waste: muWaste.value, target: s5Target.value
-            };
-            resetBtn(); typewriteText(runnerScreen, getSimulationText(activeTemplate, inp));
-          }, 1200);
-        }
-      } catch (err) {
-        console.error(err); resetBtn();
-        runnerScreen.innerHTML = `<div class="p-4 bg-error-container text-on-error-container border border-error/20 rounded-lg flex flex-col gap-2">
-          <h4 class="font-bold flex items-center gap-2 text-error"><span class="material-symbols-outlined">warning</span>เกิดข้อผิดพลาดในการเชื่อมต่อ API</h4>
-          <p class="text-xs">ไม่สามารถเรียกใช้งาน Google Gemini API ได้สำเร็จ โปรดตรวจสอบ API Key ของคุณ หรือสัญญาณอินเทอร์เน็ต</p>
-          <button id="modal-retry-btn" class="bg-primary text-on-primary py-1.5 px-3 rounded text-xs font-bold w-max mt-2">แก้ไข API Key</button>
-        </div>`;
-        document.getElementById('modal-retry-btn').addEventListener('click', () => apiSettingBtn.click());
-      }
-    });
-
-    /* ── ✅ FIX Bug 3 — อัปเดตจาก gemini-1.5-flash → gemini-2.0-flash ── */
-    async function runGeminiAPI(promptText, apiKey) {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      const txt = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (!txt) throw new Error('Invalid API response format');
-      return txt;
-    }
-  </script>
+  async function runGeminiAPI(promptText,apiKey){
+    const url=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+    const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:promptText}]}]})});
+    if(!res.ok)throw new Error(`HTTP ${res.status}`);
+    const data=await res.json();const txt=data.candidates?.[0]?.content?.parts?.[0]?.text;
+    if(!txt)throw new Error('Invalid API response format');return txt;
+  }
+</script>
 </body>
 </html>
