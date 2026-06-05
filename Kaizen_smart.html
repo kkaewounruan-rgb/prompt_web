@@ -59,40 +59,75 @@
       --surface-container-lowest:#0e0e0e;--on-surface:#e5e2e1;
       --on-surface-variant:#bec8d0;--outline-variant:#3f484e;--outline:#889299;
     }
-    body{font-family:'IBM Plex Sans',sans-serif;-webkit-tap-highlight-color:transparent;background-color:var(--background);color:var(--on-surface);transition:background-color 0.2s ease,color 0.2s ease}
-    .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;display:inline-block;line-height:1}
-    .ambient-card{box-shadow:0px 4px 20px rgba(0,0,0,0.03);transition:transform 0.2s ease,box-shadow 0.2s ease,background-color 0.2s ease,border-color 0.2s ease}
-    .ambient-card:hover{transform:translateY(-4px);box-shadow:0px 8px 30px rgba(0,0,0,0.08)}
-    .ambient-card:active{transform:scale(0.98)}
-    .pb-safe{padding-bottom:env(safe-area-inset-bottom)}
-    .active-glow{box-shadow:0 0 15px rgba(0,85,118,0.15)}
-    .dark .active-glow{box-shadow:0 0 15px rgba(125,208,255,0.2)}
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      background-color: var(--background);
+      color: var(--on-surface);
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      line-height: 1;
+    }
+    .ambient-card {
+      box-shadow: 0px 4px 20px rgba(0,0,0,0.03);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .ambient-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0px 8px 30px rgba(0,0,0,0.08);
+    }
+    .ambient-card:active { transform: scale(0.98); }
+    .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+    .active-glow { box-shadow: 0 0 15px rgba(0,85,118,0.15); }
+    .dark .active-glow { box-shadow: 0 0 15px rgba(125,208,255,0.2); }
 
     /* ── OVERLAY ── */
-    #drawer-overlay{display:none;position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.4);backdrop-filter:blur(2px)}
-    #drawer-overlay.show{display:block}
+    #drawer-overlay {
+      display: none; position: fixed; inset: 0; z-index: 55;
+      background: rgba(0,0,0,.4); backdrop-filter: blur(2px);
+    }
+    #drawer-overlay.show { display: block; }
 
     /* ── KAIZEN SMART DRAWER ── */
-    #kaizen-drawer{position:fixed;top:0;left:-280px;width:260px;height:100%;z-index:60;background:var(--surface);box-shadow:4px 0 24px rgba(0,0,0,.15);transition:left .25s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;border-right:1px solid var(--outline-variant)}
-    #kaizen-drawer.open{left:0}
-    .kd-header{height:64px;display:flex;align-items:center;padding:0 16px;gap:12px;border-bottom:1px solid var(--outline-variant)}
-    .kd-logo{font-size:17px;font-weight:700;color:var(--primary)}
-    .kd-nav{flex:1;padding:12px 8px;overflow-y:auto}
-    .kd-item{display:flex;align-items:center;gap:13px;padding:11px 14px;border-radius:14px;text-decoration:none;color:var(--on-surface);font-size:14.5px;font-weight:500;transition:background .15s;margin-bottom:3px}
-    .kd-item:hover{background:var(--surface-container)}
-    .kd-item.active{background:#E1F5EE;color:var(--primary)}
-    html.dark .kd-item.active{background:rgba(0,212,170,.12);color:#7dd0ff}
-    .kd-item.active .material-symbols-outlined{color:var(--primary)}
-    html.dark .kd-item.active .material-symbols-outlined{color:#7dd0ff}
-    .kd-icon-home,.kd-icon-kaizen,.kd-icon-prompt{color:var(--primary)}
-    .kd-icon-chatgpt{color:#6366F1}
-    .kd-icon-gemini{color:var(--secondary)}
-    .kd-icon-strategy{color:var(--tertiary)}
-    .kd-footer{padding:16px;border-top:1px solid var(--outline-variant);font-size:11px;color:var(--outline);text-align:center;line-height:1.6}
+    #kaizen-drawer {
+      position: fixed; top: 0; left: -280px; width: 260px; height: 100%; z-index: 60;
+      background: var(--surface); box-shadow: 4px 0 24px rgba(0,0,0,.15);
+      transition: left .25s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column;
+      border-right: 1px solid var(--outline-variant);
+    }
+    #kaizen-drawer.open { left: 0; }
+    .kd-header { height: 64px; display: flex; align-items: center; padding: 0 16px; gap: 12px; border-bottom: 1px solid var(--outline-variant); }
+    .kd-logo { font-size: 17px; font-weight: 700; color: var(--primary); }
+    .kd-nav { flex: 1; padding: 12px 8px; overflow-y: auto; }
+    .kd-item {
+      display: flex; align-items: center; gap: 13px; padding: 11px 14px;
+      border-radius: 14px; text-decoration: none; color: var(--on-surface);
+      font-size: 14.5px; font-weight: 500; transition: background .15s; margin-bottom: 3px;
+    }
+    .kd-item:hover { background: var(--surface-container); }
+    .kd-item.active { background: #E1F5EE; color: var(--primary); }
+    html.dark .kd-item.active { background: rgba(0,212,170,.12); color: #7dd0ff; }
+    .kd-item.active .material-symbols-outlined { color: var(--primary); }
+    html.dark .kd-item.active .material-symbols-outlined { color: #7dd0ff; }
+    
+    .kd-icon-home, .kd-icon-kaizen, .kd-icon-prompt { color: var(--primary); }
+    .kd-icon-chatgpt { color: #6366F1; }
+    .kd-icon-gemini { color: var(--secondary); }
+    .kd-icon-strategy { color: var(--tertiary); }
+    
+    .kd-footer { padding: 16px; border-top: 1px solid var(--outline-variant); font-size: 11px; color: var(--outline); text-align: center; line-height: 1.6; }
 
     /* ── BACK LINK ── */
-    .back-link{display:inline-flex;align-items:center;gap:6px;color:var(--primary);font-size:13px;font-weight:500;text-decoration:none;padding:5px 12px;background:var(--surface-container-low);border-radius:20px;border:1px solid var(--outline-variant);transition:background .15s}
-    .back-link:hover{background:var(--surface-container)}
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px; color: var(--primary);
+      font-size: 13px; font-weight: 500; text-decoration: none; padding: 5px 12px;
+      background: var(--surface-container-low); border-radius: 20px;
+      border: 1px solid var(--outline-variant); transition: background .15s;
+    }
+    .back-link:hover { background: var(--surface-container); }
   </style>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -107,7 +142,7 @@
       <span class="kd-logo">KAIZEN SMART</span>
     </div>
     <nav class="kd-nav">
-      <a class="kd-item" href="https://sites.google.com/view/teprompt-web/home" target="_blank">
+      <a class="kd-item" href="https://sites.google.com/view/teprompt-web/home2?authuser=0" target="_blank">
         <span class="material-symbols-outlined kd-icon-home">home</span>Home
       </a>
       <a class="kd-item" href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank">
@@ -120,11 +155,12 @@
         <span class="material-symbols-outlined kd-icon-gemini">auto_awesome</span>Gemini Step
       </a>
       <a class="kd-item" href="https://kkaewounruan-rgb.github.io/prompt_web/Strategy01.html" target="_blank">
-        <span class="material-symbols-outlined kd-icon-strategy">architecture</span>Strategies
+        <span class="material-symbols-outlined kd-icon-strategy">architecture</span>Strategies1
       </a>
-      <a class="kd-item active" href="https://sites.google.com/view/teprompt-web/prompt" target="_blank">
-        <span class="material-symbols-outlined kd-icon-prompt">psychology</span>Prompts
+      <a class="kd-item active" href="https://kkaewounruan-rgb.github.io/prompt_web/Strategy02.html" target="_blank">
+        <span class="material-symbols-outlined kd-icon-prompt">psychology</span>Strategies2
       </a>
+      
       <!-- เอกสาร -->
       <div style="height:1px;background:var(--outline-variant);margin:10px 6px"></div>
       <div style="padding:6px 14px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--outline);font-weight:700">เอกสารดาวน์โหลด</div>
@@ -146,17 +182,18 @@
       <button id="menu-toggle-btn" onclick="openKaizenDrawer()" class="p-2 text-primary hover:bg-surface-container-high transition-colors rounded-full flex items-center justify-center">
         <span class="material-symbols-outlined">menu</span>
       </button>
-      <a href="https://sites.google.com/view/teprompt-web/home" target="_blank"
+      <a href="https://sites.google.com/view/teprompt-web/home2?authuser=0" target="_blank"
          class="font-bold text-lg md:text-xl tracking-tight text-primary flex items-center gap-2" style="text-decoration:none">
         <span class="material-symbols-outlined">psychology</span><span>KAIZEN SMART</span>
       </a>
     </div>
     <nav class="hidden md:flex items-center gap-5">
-      <a href="https://sites.google.com/view/teprompt-web/home" target="_blank" class="font-medium text-sm text-on-surface-variant hover:text-primary transition-colors py-2" style="text-decoration:none">หน้าแรก</a>
+      <a href="https://sites.google.com/view/teprompt-web/home2?authuser=0" target="_blank" class="font-medium text-sm text-on-surface-variant hover:text-primary transition-colors py-2" style="text-decoration:none">หน้าแรก</a>
       <a href="https://sites.google.com/view/teprompt-web/kaizen" target="_blank" class="font-medium text-sm text-on-surface-variant hover:text-primary transition-colors py-2" style="text-decoration:none">Kaizen</a>
       <a href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank" class="font-medium text-sm text-on-surface-variant hover:text-primary transition-colors py-2" style="text-decoration:none">ChatGPT</a>
       <a href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank" class="font-medium text-sm text-on-surface-variant hover:text-primary transition-colors py-2" style="text-decoration:none">Gemini</a>
-      <a href="https://sites.google.com/view/teprompt-web/prompt" target="_blank" class="font-medium text-sm text-primary font-bold border-b-2 border-primary py-2" style="text-decoration:none">คลัง Prompt</a>
+      <a href="https://kkaewounruan-rgb.github.io/prompt_web/Strategy01.html" target="_blank" class="font-medium text-sm text-on-surface-variant hover:text-primary transition-colors py-2" style="text-decoration:none">Strategies1</a>
+      <a href="https://kkaewounruan-rgb.github.io/prompt_web/Strategy02.html" target="_blank" class="font-medium text-sm text-primary font-bold border-b-2 border-primary py-2" style="text-decoration:none">Strategies2</a>
     </nav>
     <div class="flex items-center gap-2">
       <button id="theme-toggle-btn" class="p-2 text-primary hover:bg-surface-container-high transition-colors rounded-full flex items-center justify-center" title="Toggle Theme">
@@ -170,7 +207,7 @@
 
     <!-- Back link -->
     <div class="mt-2 mb-4">
-      <a href="https://sites.google.com/view/teprompt-web/home" target="_blank" class="back-link">
+      <a href="https://sites.google.com/view/teprompt-web/home2?authuser=0" target="_blank" class="back-link">
         <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span>
         KAIZEN SMART PLAYBOOK
       </a>
@@ -191,7 +228,7 @@
       <div class="lg:col-span-6 space-y-6">
 
         <!-- Step 1: Template -->
-        <div class="p-5 bg-surface rounded-xl border border-outline-variant/10 shadow-sm">
+        <div class="p-5 bg-surface rounded-xl border border-outline-variant/10 shadow-sm ambient-card">
           <h3 class="font-bold text-sm md:text-base text-primary mb-3">1. เลือกแม่แบบการเขียน Prompt</h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="template-options">
             <button class="t-btn text-left p-3 rounded-lg border border-outline-variant hover:border-primary transition-all bg-surface-container flex gap-3 items-start select-none" data-template="3mu">
@@ -214,7 +251,7 @@
         </div>
 
         <!-- Step 2: Details -->
-        <div class="p-5 bg-surface rounded-xl border border-outline-variant/10 shadow-sm">
+        <div class="p-5 bg-surface rounded-xl border border-outline-variant/10 shadow-sm ambient-card">
           <h3 class="font-bold text-sm md:text-base text-primary mb-4">2. ปรับแต่งรายละเอียดปัญหาของคุณ</h3>
           <div class="space-y-4 text-xs md:text-sm">
             <div>
@@ -260,7 +297,7 @@
         </div>
 
         <!-- Step 3: Output -->
-        <div class="p-5 bg-surface rounded-xl border border-outline-variant/10 shadow-sm relative overflow-hidden">
+        <div class="p-5 bg-surface rounded-xl border border-outline-variant/10 shadow-sm relative overflow-hidden ambient-card">
           <h3 class="font-bold text-sm md:text-base text-primary mb-3">3. ผลลัพธ์ชุดคำสั่ง AI Prompt</h3>
           <textarea id="prompt-output" rows="6" class="w-full bg-surface-container border border-outline-variant/30 rounded-lg p-3 focus:ring-1 focus:ring-primary text-xs md:text-sm font-mono leading-relaxed text-on-surface select-all" readonly></textarea>
           <div class="mt-3 flex flex-wrap gap-2 text-xs font-semibold">
@@ -290,12 +327,14 @@
               <span class="material-symbols-outlined text-sm">settings</span><span>ตั้งค่า API Key</span>
             </button>
           </div>
+          
           <div class="flex-grow bg-surface-container-lowest text-on-surface p-4 rounded-lg border border-outline-variant/30 overflow-y-auto max-h-[400px] min-h-[300px] font-mono text-xs md:text-sm select-text whitespace-pre-line leading-relaxed shadow-inner" id="runner-screen">
             <div class="text-on-surface-variant italic text-center py-12">
               <span class="material-symbols-outlined text-4xl block mb-2 opacity-50">smart_toy</span>
               ปรับแต่งคำสั่ง Prompt ทางด้านซ้าย จากนั้นกดปุ่ม "รันคำสั่งด้วย AI" ด้านล่างเพื่อดูแนวทางการวิเคราะห์ Kaizen ได้ทันที!
             </div>
           </div>
+          
           <div class="mt-4 flex flex-col gap-2">
             <button id="run-prompt-btn" class="w-full bg-primary text-on-primary py-3 rounded-lg font-bold text-sm hover:opacity-95 transition-opacity active:scale-[0.98] flex items-center justify-center gap-2">
               <span class="material-symbols-outlined animate-spin hidden" id="run-spinner">sync</span>
@@ -341,7 +380,7 @@
     <footer class="py-6 mt-12 border-t border-outline-variant/20 text-center">
       <p class="text-xs text-on-surface-variant">Kaizen Smart Web Portal. All rights reserved.</p>
       <p class="text-[10px] text-outline mt-1">Designed by Kachain_K &amp; Antigravity AI 2026</p>
-      <a href="https://sites.google.com/view/teprompt-web/home" target="_blank"
+      <a href="https://sites.google.com/view/teprompt-web/home2?authuser=0" target="_blank"
          class="text-primary text-sm font-semibold mt-2 inline-block hover:underline" style="text-decoration:none">
         ← กลับหน้า KAIZEN SMART PLAYBOOK
       </a>
@@ -351,7 +390,7 @@
   <!-- ── BOTTOM NAV ── -->
   <nav class="fixed bottom-0 left-0 w-full z-40 flex justify-around items-center h-20 px-2 pb-safe bg-surface border-t border-outline-variant/20 shadow-lg md:hidden transition-colors duration-200">
     <a class="nav-tab flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container rounded-xl transition-colors"
-       href="https://sites.google.com/view/teprompt-web/home" target="_blank" style="text-decoration:none">
+       href="https://sites.google.com/view/teprompt-web/home2?authuser=0" target="_blank" style="text-decoration:none">
       <span class="material-symbols-outlined mb-1">home</span><span class="text-xs">หน้าแรก</span>
     </a>
     <a class="nav-tab flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container rounded-xl transition-colors"
@@ -359,16 +398,12 @@
       <span class="material-symbols-outlined mb-1">trending_up</span><span class="text-xs">Kaizen</span>
     </a>
     <a class="nav-tab flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container rounded-xl transition-colors"
-       href="https://sites.google.com/view/teprompt-web/chatgpt-step" target="_blank" style="text-decoration:none">
-      <span class="material-symbols-outlined mb-1">bolt</span><span class="text-xs">ChatGPT</span>
-    </a>
-    <a class="nav-tab flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container rounded-xl transition-colors"
-       href="https://sites.google.com/view/teprompt-web/gemini-step" target="_blank" style="text-decoration:none">
-      <span class="material-symbols-outlined mb-1">auto_awesome</span><span class="text-xs">Gemini</span>
+       href="https://kkaewounruan-rgb.github.io/prompt_web/Strategy01.html" target="_blank" style="text-decoration:none">
+      <span class="material-symbols-outlined mb-1">architecture</span><span class="text-xs">Strat 1</span>
     </a>
     <a class="nav-tab flex flex-col items-center justify-center bg-primary-container/25 text-primary font-bold scale-105 rounded-xl px-3 py-1"
-       href="https://sites.google.com/view/teprompt-web/prompt" target="_blank" style="text-decoration:none">
-      <span class="material-symbols-outlined mb-1" style="font-variation-settings:'FILL' 1">psychology</span><span class="text-xs">Prompts</span>
+       href="https://kkaewounruan-rgb.github.io/prompt_web/Strategy02.html" target="_blank" style="text-decoration:none">
+      <span class="material-symbols-outlined mb-1" style="font-variation-settings:'FILL' 1">psychology</span><span class="text-xs">Strat 2</span>
     </a>
   </nav>
 
