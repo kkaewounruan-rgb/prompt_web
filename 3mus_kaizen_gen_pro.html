@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-Mu's × Kaizen Prompt Generator — Pro</title>
+<style>
+:root {
+  --green:#1D9E75;
+  --green-l:#E1F5EE;
+  --green-m:#9FE1CB;
+  --green-d:#0F6E56;
+  --border:#e2e8f0;
+  --bg:#f8fafc;
+  --bg2:#fff;
+  --text:#1a202c;
+  --text2:#64748b;
+  --text3:#94a3b8;
+  --r:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.wrap{max-width:880px;margin:0 auto;padding:28px 18px 48px}
+
+/* Header */
+.hdr{text-align:center;margin-bottom:24px}
+.hdr-badge{display:inline-block;background:var(--green-l);color:var(--green-d);font-size:12px;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:12px}
+.hdr h1{font-size:24px;font-weight:700;margin-bottom:6px}
+.hdr p{font-size:13px;color:var(--text2);line-height:1.6;max-width:560px;margin:0 auto}
+
+/* 3Mu strip */
+.mu-row{display:flex;gap:8px;margin-bottom:20px}
+.mu-box{flex:1;border-radius:var(--r);padding:12px 14px;text-align:center}
+.mu-box .jp{font-size:20px;font-weight:700;margin-bottom:2px}
+.mu-box .th{font-size:12px;font-weight:600;margin-bottom:1px}
+.mu-box .en{font-size:10px;opacity:.75}
+.muda-box{background:#FCEBEB;color:#A32D2D}
+.muri-box{background:#FAEEDA;color:#854F0B}
+.mura-box{background:#E6F1FB;color:#185FA5}
+
+/* Mode Tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:6px}
+.tab{flex:1;min-width:120px;text-align:center;padding:9px 8px;border-radius:8px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;border:1px solid transparent;transition:all .15s;font-family:inherit;background:none}
+.tab:hover{background:var(--bg)}
+.tab.active{background:var(--green);color:#fff;box-shadow:0 2px 8px rgba(29,158,117,.3)}
+
+/* Panels */
+.panel{display:none}
+.panel.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* Step badge */
+.step-label{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--green-d);margin:18px 0 10px}
+.step-num{width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+
+/* Section label */
+.sec{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin:18px 0 10px}
+
+/* Element accordion */
+.el-list{display:flex;flex-direction:column;gap:7px}
+.el-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
+.el-card.open{border-color:var(--green-m)}
+.el-hdr{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;user-select:none}
+.el-hdr:hover{background:var(--bg)}
+.el-ico{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.el-info{flex:1}
+.el-title{font-size:13.5px;font-weight:600;color:var(--text)}
+.el-hint{font-size:11px;color:var(--text2)}
+.el-arr{font-size:11px;color:var(--text3);transition:transform .22s}
+.el-card.open .el-arr{transform:rotate(180deg);color:var(--green)}
+.el-body{display:none;padding:0 14px 14px;border-top:1px solid var(--border)}
+.el-card.open .el-body{display:block}
+
+/* Mu group */
+.mu-group{margin-top:12px}
+.mu-group-label{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;padding:3px 0}
+.chip-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:4px}
+.chip{padding:5px 11px;border-radius:14px;font-size:11.5px;font-weight:500;cursor:pointer;border:1px solid;transition:all .15s;font-family:inherit}
+.chip:hover{opacity:.85;transform:translateY(-1px)}
+.chip.active{color:#fff!important;border-color:transparent!important;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.c-muda{background:#FCEBEB;color:#A32D2D;border-color:#F5C6C6}
+.c-muda.active{background:#A32D2D}
+.c-muri{background:#FAEEDA;color:#854F0B;border-color:#F5D6A8}
+.c-muri.active{background:#854F0B}
+.c-mura{background:#E6F1FB;color:#185FA5;border-color:#BCDBF7}
+.c-mura.active{background:#185FA5}
+
+/* Goal checkboxes */
+.goal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.goal-item{display:flex;align-items:center;gap:7px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:9px 10px;cursor:pointer;font-size:12px;transition:all .15s;user-select:none}
+.goal-item:hover{border-color:var(--green-m);background:var(--green-l)}
+.goal-item.on{border-color:var(--green);background:var(--green-l);color:var(--green-d);font-weight:600}
+.goal-check{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--text3);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.goal-item.on .goal-check{background:var(--green);border-color:var(--green)}
+.goal-item.on .goal-check::after{content:'✓';color:#fff;font-size:11px}
+
+/* Output type radio */
+.out-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.out-item{display:flex;align-items:flex-start;gap:9px;background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:11px 12px;cursor:pointer;transition:all .15s}
+.out-item:hover{border-color:var(--green-m)}
+.out-item.on{border-color:var(--green);background:var(--green-l);box-shadow:0 0 0 1px var(--green)}
+.out-radio{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--text3);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.out-item.on .out-radio{border-color:var(--green)}
+.out-item.on .out-radio::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--green)}
+.out-info .ot{font-size:12.5px;font-weight:600;color:var(--text)}
+.out-info .od{font-size:10.5px;color:var(--text2);margin-top:1px;line-height:1.4}
+
+/* Text input */
+.txt-in{width:100%;padding:11px 13px;border:1px solid var(--border);border-radius:9px;font-size:13px;font-family:inherit;color:var(--text);background:var(--bg2);transition:border-color .15s}
+.txt-in:focus{outline:none;border-color:var(--green)}
+.txt-in::placeholder{color:var(--text3)}
+
+/* Generate button */
+.gen-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--green);color:#fff;border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;margin-top:16px;font-family:inherit;transition:all .15s;box-shadow:0 3px 10px rgba(29,158,117,.25)}
+.gen-btn:hover{background:var(--green-d);transform:translateY(-1px)}
+.gen-btn:active{transform:translateY(0)}
+
+/* Prompt output */
+.pout{display:none;margin-top:16px;background:#0d1117;border:1px solid #1f2733;border-radius:11px;padding:16px 18px;font-size:12.5px;line-height:1.75;color:#cdd9e5;position:relative;font-family:'Consolas','Monaco',monospace;white-space:pre-wrap;word-break:break-word}
+.pout.show{display:block;animation:fade .25s ease}
+.pout-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #1f2733}
+.pout-tag{font-size:10px;font-weight:700;color:var(--green-m);letter-spacing:.8px;text-transform:uppercase}
+.copy-p{background:#1f2733;border:1px solid #2d3744;border-radius:7px;padding:5px 13px;font-size:11px;cursor:pointer;color:#cdd9e5;font-family:inherit;white-space:nowrap;transition:all .15s}
+.copy-p:hover{background:var(--green);border-color:var(--green);color:#fff}
+.pout-body strong{color:#fff}
+
+/* Info card for modes */
+.mode-intro{background:var(--green-l);border:1px solid var(--green-m);border-radius:11px;padding:16px 18px;margin-bottom:16px}
+.mode-intro h3{font-size:15px;color:var(--green-d);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.mode-intro p{font-size:12.5px;color:var(--text2);line-height:1.7}
+.mode-feat{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.mode-feat span{background:var(--bg2);border:1px solid var(--green-m);color:var(--green-d);font-size:11px;padding:3px 10px;border-radius:12px;font-weight:600}
+
+/* selection summary */
+.sel-summary{background:var(--bg2);border:1px dashed var(--green-m);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:12px;color:var(--text2);line-height:1.7;display:none}
+.sel-summary.show{display:block}
+.sel-summary b{color:var(--green-d)}
+
+/* footer */
+.footer{text-align:center;margin-top:36px;font-size:12px;color:var(--text3);line-height:1.7}
+@media(max-width:640px){
+  .goal-grid{grid-template-columns:repeat(2,1fr)}
+  .out-grid{grid-template-columns:1fr}
+  .tab{min-width:calc(50% - 3px)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===== HEADER (เหมือนเดิม) ===== -->
+  <div class="hdr">
+    <div class="hdr-badge">🔍 กลยุทธ์หลัก Kaizen ที่ 1</div>
+    <h1>รายการตรวจสอบ 3-Mu's × Prompt Generator</h1>
+    <p>แยกองค์ประกอบการทำงาน 9 ด้าน × Muda / Muri / Mura<br>เลือกหัวข้อ → กำหนดเงื่อนไข → สร้าง Prompt → Generate HTML Dashboard</p>
+  </div>
+
+  <div class="mu-row">
+    <div class="mu-box muda-box"><div class="jp">Muda</div><div class="th">ความสูญเปล่า</div><div class="en">Waste — ไม่เพิ่มคุณค่า</div></div>
+    <div class="mu-box muri-box"><div class="jp">Muri</div><div class="th">ความตึง</div><div class="en">Overburden — เกินกำลัง</div></div>
+    <div class="mu-box mura-box"><div class="jp">Mura</div><div class="th">ความแตกต่าง</div><div class="en">Unevenness — ไม่สม่ำเสมอ</div></div>
+  </div>
+
+  <!-- ===== MODE TABS ===== -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('discovery',this)">🔍 AI Discovery</button>
+    <button class="tab" onclick="switchTab('explorer',this)">🧭 Kaizen Explorer</button>
+    <button class="tab" onclick="switchTab('architecture',this)">🏗 Architecture</button>
+    <button class="tab" onclick="switchTab('mockup',this)">🖥 UI Mockup</button>
+    <button class="tab" onclick="switchTab('comparison',this)">⚖️ Multi-Option</button>
+    <button class="tab" onclick="switchTab('priority',this)">📌 Priority Board</button>
+  </div>
+
+  <!-- ============ PANEL 1: AI DISCOVERY ============ -->
+  <div class="panel active" id="p-discovery">
+
+    <!-- STEP 1 -->
+    <div class="step-label"><span class="step-num">1</span> เลือกหัวข้อปัญหา (9 องค์ประกอบ × 3-Mu's)</div>
+    <div class="el-list" id="elList"></div>
+
+    <!-- STEP 2 -->
+    <div class="step-label"><span class="step-num">2</span> 🎯 กำหนดเป้าหมายการปรับปรุง <span style="font-weight:400;color:var(--text3);font-size:11px">(เลือกได้หลายข้อ)</span></div>
+    <div class="goal-grid" id="goalGrid"></div>
+
+    <!-- STEP 3 -->
+    <div class="step-label"><span class="step-num">3</span> 📤 รูปแบบผลลัพธ์ที่ต้องการ</div>
+    <div class="out-grid" id="outGrid"></div>
+
+    <!-- selection summary -->
+    <div class="sel-summary" id="selSum"></div>
+
+    <!-- STEP 4 -->
+    <button class="gen-btn" onclick="genDiscovery()">⚡ สร้าง Prompt + Generate HTML Dashboard</button>
+
+    <div class="pout" id="poutDisc">
+      <div class="pout-bar">
+        <span class="pout-tag">🤖 Kaizen Consultant Prompt</span>
+        <button class="copy-p" onclick="copyOut('poutDisc-body','poutDisc')">📋 คัดลอก</button>
+      </div>
+      <div class="pout-body" id="poutDisc-body"></div>
+    </div>
+  </div>
+
+  <!-- ============ PANEL 2: KAIZEN EXPLORER ============ -->
+  <div class="panel" id="p-explorer">
+    <div class="mode-intro">
+      <h3>🧭 Kaizen Explorer Mode</h3>
+      <p>สร้าง HTML Explorer แบบ Interactive ที่ผู้ใช้คลิกดูแต่ละปัญหา กรองตาม Muda / Muri / Mura ดู Pareto และ Root Cause ได้ในไฟล์เดียว</p>
+      <div class="mode-feat"><span>คลิกดูแต่ละปัญหา</span><span>กรอง 3-Mu's</span><span>Pareto Chart</span><span>Root Cause</span><span>SVG Graphics</span></div>
+    </div>
+    <div class="sec">📝 หัวข้อ/พื้นที่ที่ต้องการสำรวจ</div>
+    <input class="txt-in" id="expTopic" placeholder="เช่น สายการผลิต A, แผนกคลังสินค้า, กระบวนการจัดส่งเอกสาร...">
+    <button class="gen-btn" onclick="genExplorer()">🧭 สร้าง Prompt — Kaizen Explorer (HTML Single File)</button>
+    <div class="pout" id="poutExp">
+      <div class="pout-bar"><span class="pout-tag">🧭 Explorer Prompt</span>
+        <button class="copy-p" onclick="copyOut('poutExp-body','poutExp')">📋 คัดลอก</button></div>
+      <div class="pout-body" id="poutExp-body"></div>
+    </div>
+  </div>
+
+  <!-- ============ PANEL 3: ARCHITECTURE ============ -->
+  <div class="panel" id="p-architecture">
+    <div class="mode-intro">
+      <h3>🏗 Project Architecture Generator</h3>
+      <p>สร้าง SVG Diagram แบบ Swimlane / Interactive Flow แสดงเส้นทาง: Current State → Problem → Root Cause → Kaizen → Future State</p>
+      <div class="mode-feat"><span>Current State</span><span>Problem</span><span>Root Cause</span><span>Kaizen</span><span>Future State</span><span>Swimlane SVG</span></div>
+    </div>
+    <div class="sec">📝 ชื่อกระบวนการ/โครงการ</div>
+    <input class="txt-in" id="archTopic" placeholder="เช่น กระบวนการอนุมัติเอกสาร, ระบบเบิกจ่ายวัสดุ, สายการประกอบ...">
+    <button class="gen-btn" onclick="genArch()">🏗 สร้าง Prompt — Architecture Flow (SVG Single File)</button>
+    <div class="pout" id="poutArch">
+      <div class="pout-bar"><span class="pout-tag">🏗 Architecture Prompt</span>
+        <button class="copy-p" onclick="copyOut('poutArch-body','poutArch')">📋 คัดลอก</button></div>
+      <div class="pout-body" id="poutArch-body"></div>
+    </div>
+  </div>
+
+  <!-- ============ PANEL 4: UI MOCKUP ============ -->
+  <div class="panel" id="p-mockup">
+    <div class="mode-intro">
+      <h3>🖥 UI Mockup Generator</h3>
+      <p>สร้าง UI Mockup แบบ Responsive (HTML) สำหรับระบบงาน Kaizen ที่ใช้บ่อยในองค์กร</p>
+      <div class="mode-feat"><span>Kaizen Suggestion</span><span>Safety Observation</span><span>OJT Tracking</span><span>Training Dashboard</span></div>
+    </div>
+    <div class="sec">📱 เลือกระบบที่ต้องการ Mockup</div>
+    <div class="out-grid" id="mockGrid"></div>
+    <button class="gen-btn" onclick="genMock()">🖥 สร้าง Prompt — UI Mockup (Responsive HTML)</button>
+    <div class="pout" id="poutMock">
+      <div class="pout-bar"><span class="pout-tag">🖥 UI Mockup Prompt</span>
+        <button class="copy-p" onclick="copyOut('poutMock-body','poutMock')">📋 คัดลอก</button></div>
+      <div class="pout-body" id="poutMock-body"></div>
+    </div>
+  </div>
+
+  <!-- ============ PANEL 5: MULTI-OPTION ============ -->
+  <div class="panel" id="p-comparison">
+    <div class="mode-intro">
+      <h3>⚖️ Multi-Option Comparison</h3>
+      <p>สร้าง Prompt ให้ AI เสนอแนวทาง Kaizen 10 วิธี แล้วเปรียบเทียบ Cost / Impact / Difficulty / ROI / Lead Time แสดงเป็น Grid Layout HTML</p>
+      <div class="mode-feat"><span>10 แนวทาง</span><span>Cost</span><span>Impact</span><span>Difficulty</span><span>ROI</span><span>Lead Time</span></div>
+    </div>
+    <div class="sec">📝 หัวข้อปัญหาที่ต้องการเปรียบเทียบแนวทาง</div>
+    <input class="txt-in" id="compTopic" placeholder="เช่น ลดเวลารอคอยในสายการผลิต, ลดของเสียในกระบวนการ QC...">
+    <button class="gen-btn" onclick="genComp()">⚖️ สร้าง Prompt — เปรียบเทียบ 10 แนวทาง (Grid HTML)</button>
+    <div class="pout" id="poutComp">
+      <div class="pout-bar"><span class="pout-tag">⚖️ Comparison Prompt</span>
+        <button class="copy-p" onclick="copyOut('poutComp-body','poutComp')">📋 คัดลอก</button></div>
+      <div class="pout-body" id="poutComp-body"></div>
+    </div>
+  </div>
+
+  <!-- ============ PANEL 6: PRIORITY BOARD ============ -->
+  <div class="panel" id="p-priority">
+    <div class="mode-intro">
+      <h3>📌 Priority Board</h3>
+      <p>สร้าง Tool แบบ Drag &amp; Drop ให้ผู้ใช้จัดอันดับ Impact / Cost / Difficulty และคำนวณ Priority Score อัตโนมัติ (HTML Single File)</p>
+      <div class="mode-feat"><span>Drag &amp; Drop</span><span>Impact</span><span>Cost</span><span>Difficulty</span><span>Auto Priority Score</span></div>
+    </div>
+    <div class="sec">📝 หัวข้อ/ชุดงานที่ต้องการจัดลำดับความสำคัญ</div>
+    <input class="txt-in" id="prioTopic" placeholder="เช่น รายการ Kaizen ที่เสนอในไตรมาสนี้, Feature ที่ต้องพัฒนา...">
+    <button class="gen-btn" onclick="genPrio()">📌 สร้าง Prompt — Drag &amp; Drop Priority Tool</button>
+    <div class="pout" id="poutPrio">
+      <div class="pout-bar"><span class="pout-tag">📌 Priority Tool Prompt</span>
+        <button class="copy-p" onclick="copyOut('poutPrio-body','poutPrio')">📋 คัดลอก</button></div>
+      <div class="pout-body" id="poutPrio-body"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    จัดทำโดย คเชนท์ แก้วอุ่นเรือน · แผนกฝึกอบรม 2026<br>
+    3-Mu's Kaizen Prompt Generator Pro — ทุกคน ทุกที่ ทุกเวลา 🌱
+  </div>
+</div>
+
+<script>
+/* ════════════════ DATA ════════════════ */
+const ELS=[
+  {ico:'👥',bg:'#E1F5EE',t:'กำลังคน',h:'Man / Manpower',
+   muda:['งานซ้ำซ้อนที่พนักงานทำโดยไม่จำเป็น','การรอคอยจากการมอบหมายงานไม่ชัดเจน','ทักษะที่มีแต่ไม่ได้ใช้ประโยชน์'],
+   muri:['ภาระงานเกินกำลังของพนักงาน','การทำงานล่วงเวลาบ่อยครั้ง','งานที่ต้องใช้ทักษะเกินระดับที่มี'],
+   mura:['ปริมาณงานไม่เท่ากันในแต่ละช่วงเวลา','มาตรฐานการทำงานต่างกันในแต่ละคน','การมอบหมายงานไม่สม่ำเสมอ']},
+  {ico:'⚙️',bg:'#E6F1FB',t:'เทคนิค/วิธีการ',h:'Technique / Method',
+   muda:['ขั้นตอนที่ไม่จำเป็นและไม่เพิ่มคุณค่า','การตรวจสอบซ้ำโดยไม่มีเหตุผลชัดเจน','รูปแบบเอกสารที่ยุ่งยากเกินจำเป็น'],
+   muri:['วิธีการที่ยากเกินไปสำหรับผู้ปฏิบัติ','ขั้นตอนที่ต้องใช้แรงหรือความพยายามสูงมาก','กระบวนการที่ฝืนทำโดยไม่มีทางเลือก'],
+   mura:['วิธีการทำงานต่างกันในแต่ละคน','ไม่มีมาตรฐานที่ชัดเจนร่วมกัน','ผลลัพธ์ไม่สม่ำเสมอแม้ทำแบบเดียวกัน']},
+  {ico:'⏰',bg:'#FAEEDA',t:'เวลา',h:'Time',
+   muda:['เวลารอคอยระหว่างขั้นตอนงาน','เวลาที่ใช้กับงานที่ไม่มีคุณค่า','การประชุมที่ยาวเกินความจำเป็น'],
+   muri:['กำหนดเวลาที่แน่นเกินไปจนกดดัน','งานด่วนที่ทำให้สูญเสียสมดุลชีวิต','เวลาไม่เพียงพอสำหรับงานที่มอบหมาย'],
+   mura:['เวลาทำงานไม่สม่ำเสมอในแต่ละวัน','บางช่วงว่างมาก บางช่วงงานล้นมือ','การกระจายเวลาในทีมไม่สมดุล']},
+  {ico:'🔧',bg:'#EEEDFE',t:'สิ่งอำนวยความสะดวก/เครื่องมือ',h:'Facilities / Tools',
+   muda:['เครื่องมือที่มีแต่ไม่ได้ใช้ประโยชน์','พื้นที่จัดเก็บที่ไม่จำเป็น','อุปกรณ์ที่ทำงานซ้ำซ้อนกัน'],
+   muri:['อุปกรณ์ที่ใช้งานหนักเกินพิกัด','เครื่องมือที่ไม่เหมาะสมกับลักษณะงาน','การจัดวางที่ทำให้ใช้งานลำบาก'],
+   mura:['ประสิทธิภาพเครื่องมือไม่สม่ำเสมอ','บางชิ้นใช้หนัก บางชิ้นไม่ได้ใช้เลย','การบำรุงรักษาไม่เป็นระบบ']},
+  {ico:'📦',bg:'#FCEBEB',t:'วัสดุที่ใช้',h:'Materials',
+   muda:['วัสดุที่สั่งมากเกินและไม่ได้ใช้','ของเสียที่เกิดจากกระบวนการทำงาน','การจัดเก็บวัสดุที่ไม่มีประสิทธิภาพ'],
+   muri:['วัสดุที่ต้องใช้แรงมากในการจัดการ','คุณภาพวัสดุต่ำทำให้ต้องแก้งานซ้ำ','วัสดุที่ไม่เหมาะสมกับงานที่ทำ'],
+   mura:['คุณภาพวัสดุไม่สม่ำเสมอในแต่ละชุด','ปริมาณวัสดุที่ส่งมาไม่ตรงเวลา','มาตรฐานวัสดุต่างกันในแต่ละครั้ง']},
+  {ico:'📊',bg:'#EAF3DE',t:'ปริมาณการผลิต/งาน',h:'Production Volume',
+   muda:['ผลิต/ทำงานมากเกินความต้องการจริง','งานที่ทำแล้วไม่ได้นำไปใช้','รายงานที่ไม่มีใครอ่านหรือใช้ประโยชน์'],
+   muri:['ปริมาณงานเกินกำลังที่ทีมรับได้','เป้าหมายที่ตั้งสูงเกินความเป็นจริง','กดดันให้รีบทำจนเสียคุณภาพ'],
+   mura:['ปริมาณงานขึ้นๆ ลงๆ ไม่แน่นอน','บางวันน้อยมาก บางวันล้นมือ','การวางแผนงานไม่สม่ำเสมอ']},
+  {ico:'🗄️',bg:'#E1F5EE',t:'สินค้าคงคลัง/เอกสาร',h:'Inventory / Documents',
+   muda:['เอกสารหรือสินค้าที่เก็บไว้นานเกินจำเป็น','การจัดเก็บที่กินพื้นที่มากเกินควร','ข้อมูลซ้ำซ้อนที่บันทึกไว้หลายที่'],
+   muri:['ระบบจัดการคงคลังที่ซับซ้อนเกินไป','ต้องตรวจสอบและอัปเดตบ่อยครั้งมาก','ภาระในการดูแลเอกสารจำนวนมาก'],
+   mura:['ปริมาณคงคลังไม่สม่ำเสมอ บางช่วงขาด บางช่วงล้น','มาตรฐานการจัดเก็บต่างกันในแต่ละหน่วยงาน','การเบิกจ่ายวัสดุไม่เป็นระบบ']},
+  {ico:'🏢',bg:'#FAEEDA',t:'สถานที่ทำงาน',h:'Workplace / Environment',
+   muda:['พื้นที่ที่ไม่ได้ใช้ประโยชน์','การเดินทางภายในออฟฟิศที่ไม่จำเป็น','แสงสว่างหรืออุปกรณ์ที่เปิดทิ้งไว้เปล่า'],
+   muri:['โต๊ะทำงานที่แน่นหรือไม่รองรับการใช้งาน','เสียงรบกวนที่ทำให้สมาธิและประสิทธิภาพลดลง','สภาพแวดล้อมที่ทำให้เหนื่อยและหมดแรงง่าย'],
+   mura:['อุณหภูมิห้องไม่สม่ำเสมอตลอดวัน','แสงสว่างไม่เพียงพอในบางพื้นที่','ความสะอาดและความเป็นระเบียบไม่สม่ำเสมอ']},
+  {ico:'💡',bg:'#EEEDFE',t:'แนวความคิดในการทำงาน',h:'Work Mindset / Concept',
+   muda:['ความคิด "เดี๋ยวค่อยทำ" ทำให้งานค้างสะสม','การประชุมบ่อยโดยไม่มีผลลัพธ์ชัดเจน','ยึดติดกับวิธีเดิมที่ไม่มีประสิทธิภาพแล้ว'],
+   muri:['ความคิดที่ว่าต้องทำทุกอย่างด้วยตัวเองคนเดียว','กดดันตัวเองมากเกินจนเกิดความเหนื่อยหน่าย','ไม่กล้าปฏิเสธหรือขอความช่วยเหลือ'],
+   mura:['ทัศนคติต่องานไม่สม่ำเสมอในแต่ละวัน','แรงจูงใจขึ้นๆ ลงๆ ตามอารมณ์','ทีมมีความเข้าใจเป้าหมายแตกต่างกัน']}
+];
+
+const MU_LABEL={muda:'🔴 Muda — ความสูญเปล่า',muri:'🟡 Muri — ความตึง/เกินกำลัง',mura:'🔵 Mura — ความแตกต่าง/ไม่สม่ำเสมอ'};
+const MU_FULL={muda:'ความสูญเปล่า (Muda)',muri:'ความตึง/เกินกำลัง (Muri)',mura:'ความแตกต่าง/ไม่สม่ำเสมอ (Mura)'};
+
+const GOALS=[
+  {id:'cost',ico:'💰',label:'ลดต้นทุน'},
+  {id:'prod',ico:'📈',label:'เพิ่มผลผลิต'},
+  {id:'safety',ico:'🛡️',label:'เพิ่มความปลอดภัย'},
+  {id:'waste',ico:'♻️',label:'ลดของเสีย'},
+  {id:'wait',ico:'⏱️',label:'ลดเวลารอ'},
+  {id:'quality',ico:'✨',label:'เพิ่มคุณภาพ'},
+  {id:'auto',ico:'🤖',label:'Automation'},
+  {id:'digital',ico:'🌐',label:'Digital Transformation'}
+];
+
+const OUTPUTS=[
+  {id:'exec',label:'Executive Report',desc:'รายงานสรุปผู้บริหาร พร้อมตัวชี้วัดสำคัญ'},
+  {id:'dash',label:'Kaizen Dashboard',desc:'แดชบอร์ดติดตามผล Interactive'},
+  {id:'explorer',label:'Interactive HTML Explorer',desc:'คลิกสำรวจ กรองข้อมูล ดูเชิงลึก'},
+  {id:'arch',label:'Architecture Diagram',desc:'แผนภาพสถาปัตยกรรม SVG'},
+  {id:'flow',label:'Process Flow Diagram',desc:'ผังกระบวนการ/Flowchart'},
+  {id:'action',label:'Action Plan',desc:'แผนปฏิบัติการ Who/What/When'},
+  {id:'compare',label:'Multi-Option Comparison',desc:'ตารางเปรียบเทียบหลายทางเลือก'},
+  {id:'priority',label:'Drag & Drop Prioritization Tool',desc:'เครื่องมือจัดลำดับแบบลากวาง'}
+];
+
+const MOCKS=[
+  {id:'suggest',label:'Kaizen Suggestion System',desc:'ระบบรับข้อเสนอ Kaizen จากพนักงาน'},
+  {id:'safety',label:'Safety Observation',desc:'ระบบบันทึกการสังเกตด้านความปลอดภัย'},
+  {id:'ojt',label:'OJT Tracking',desc:'ระบบติดตามการฝึกอบรมหน้างาน'},
+  {id:'training',label:'Training Dashboard',desc:'แดชบอร์ดภาพรวมการฝึกอบรม'}
+];
+
+/* ════════════════ HTML SINGLE FILE ENFORCEMENT (#9) ════════════════ */
+const HSF=
+`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚙️ ข้อกำหนดสำคัญ (HTML Single File)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• แสดงผลเป็น HTML Single File รวม HTML + CSS + JavaScript ในไฟล์เดียว
+• ห้ามใช้ CDN และห้ามใช้ External Library ใดๆ
+• รองรับ Desktop / Tablet / Mobile (Responsive)
+• พร้อมใช้งานทันที — เปิดไฟล์แล้วทำงานได้เลย`;
+
+/* ════════════════ STATE ════════════════ */
+let sel={el:null,mu:null,sub:null};
+let selGoals=new Set();
+let selOut='dash';
+let selMock='suggest';
+
+/* ════════════════ RENDER STEP 1 (accordion) ════════════════ */
+function buildHTML(el,i){
+  let muGroups='';
+  ['muda','muri','mura'].forEach(mu=>{
+    const cls={muda:'c-muda',muri:'c-muri',mura:'c-mura'}[mu];
+    const labelColor={muda:'#A32D2D',muri:'#854F0B',mura:'#185FA5'}[mu];
+    const chips=el[mu].map(s=>`<button class="chip ${cls}" onclick="pick(${i},'${mu}',this,'${s.replace(/'/g,"\\'")}')"> ${s}</button>`).join('');
+    muGroups+=`<div class="mu-group"><div class="mu-group-label" style="color:${labelColor}">${MU_LABEL[mu]}</div><div class="chip-row">${chips}</div></div>`;
+  });
+  return `<div class="el-card" id="ec${i}">
+    <div class="el-hdr" onclick="tog(${i})">
+      <div class="el-ico" style="background:${el.bg}">${el.ico}</div>
+      <div class="el-info"><div class="el-title">${i+1}. ${el.t}</div><div class="el-hint">${el.h}</div></div>
+      <span class="el-arr">▼</span>
+    </div>
+    <div class="el-body">${muGroups}</div>
+  </div>`;
+}
+document.getElementById('elList').innerHTML=ELS.map((el,i)=>buildHTML(el,i)).join('');
+
+function tog(i){
+  const c=document.getElementById(`ec${i}`);
+  const open=c.classList.contains('open');
+  document.querySelectorAll('.el-card').forEach(x=>x.classList.remove('open'));
+  if(!open){c.classList.add('open');setTimeout(()=>c.scrollIntoView({behavior:'smooth',block:'nearest'}),50);}
+}
+function pick(i,mu,chip,sub){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  chip.classList.add('active');
+  sel={el:ELS[i],mu,sub};
+  updateSummary();
+}
+
+/* ════════════════ RENDER STEP 2 (goals) ════════════════ */
+document.getElementById('goalGrid').innerHTML=GOALS.map(g=>
+  `<div class="goal-item" id="g-${g.id}" onclick="toggleGoal('${g.id}')">
+    <div class="goal-check"></div><span>${g.ico} ${g.label}</span>
+  </div>`).join('');
+function toggleGoal(id){
+  const el=document.getElementById(`g-${id}`);
+  if(selGoals.has(id)){selGoals.delete(id);el.classList.remove('on');}
+  else{selGoals.add(id);el.classList.add('on');}
+  updateSummary();
+}
+
+/* ════════════════ RENDER STEP 3 (output type) ════════════════ */
+document.getElementById('outGrid').innerHTML=OUTPUTS.map((o,i)=>
+  `<div class="out-item ${o.id==='dash'?'on':''}" id="o-${o.id}" onclick="pickOut('${o.id}')">
+    <div class="out-radio"></div>
+    <div class="out-info"><div class="ot">${o.label}</div><div class="od">${o.desc}</div></div>
+  </div>`).join('');
+function pickOut(id){
+  selOut=id;
+  document.querySelectorAll('#outGrid .out-item').forEach(x=>x.classList.remove('on'));
+  document.getElementById(`o-${id}`).classList.add('on');
+  updateSummary();
+}
+
+/* ════════════════ RENDER MOCKUP options ════════════════ */
+document.getElementById('mockGrid').innerHTML=MOCKS.map((o,i)=>
+  `<div class="out-item ${o.id==='suggest'?'on':''}" id="m-${o.id}" onclick="pickMock('${o.id}')">
+    <div class="out-radio"></div>
+    <div class="out-info"><div class="ot">${o.label}</div><div class="od">${o.desc}</div></div>
+  </div>`).join('');
+function pickMock(id){
+  selMock=id;
+  document.querySelectorAll('#mockGrid .out-item').forEach(x=>x.classList.remove('on'));
+  document.getElementById(`m-${id}`).classList.add('on');
+}
+
+/* ════════════════ SUMMARY ════════════════ */
+function updateSummary(){
+  const s=document.getElementById('selSum');
+  if(!sel.el){s.classList.remove('show');return;}
+  const goalTxt=selGoals.size? [...selGoals].map(id=>GOALS.find(g=>g.id===id).label).join(', '):'ทั่วไป (ครอบคลุมทุกด้าน)';
+  const outTxt=OUTPUTS.find(o=>o.id===selOut).label;
+  s.innerHTML=`<b>📌 หัวข้อ:</b> ${sel.sub}<br><b>🧩 องค์ประกอบ:</b> ${sel.el.t} · <b>มุมมอง:</b> ${MU_FULL[sel.mu]}<br><b>🎯 เป้าหมาย:</b> ${goalTxt}<br><b>📤 ผลลัพธ์:</b> ${outTxt}`;
+  s.classList.add('show');
+}
+
+/* ════════════════ OUTPUT-TYPE specific blocks ════════════════ */
+function outputBlocks(id){
+  const common=`✓ Executive Summary — สรุปสำหรับผู้บริหาร
+✓ Opportunity Matrix (3-Mu's) — เมทริกซ์โอกาสปรับปรุง
+✓ Pareto Analysis (80/20) — จัดลำดับปัญหาตามผลกระทบ
+✓ Action Plan — แผนปฏิบัติการ Who / What / When
+✓ Cost Saving Estimation — ประมาณการต้นทุนที่ประหยัดได้
+✓ Interactive Dashboard — แดชบอร์ดโต้ตอบได้`;
+  const extra={
+    exec:`\n✓ KPI Cards + กราฟแนวโน้ม\n✓ Recommendation สำหรับผู้บริหาร`,
+    dash:`\n✓ Filter ตาม Muda/Muri/Mura\n✓ Progress Tracking แบบ Real-time`,
+    explorer:`\n✓ คลิกดูรายละเอียดแต่ละปัญหา\n✓ ปุ่มกรอง Muda/Muri/Mura\n✓ SVG Graphics ลื่นไหล`,
+    arch:`\n✓ SVG Architecture Diagram\n✓ เส้นทาง Current → Future State`,
+    flow:`\n✓ Process Flow / Swimlane Diagram\n✓ จุด Bottleneck ทำสีเด่น`,
+    action:`\n✓ ตาราง Action Plan ติ๊ก checkbox ได้\n✓ Timeline / Gantt อย่างย่อ`,
+    compare:`\n✓ Grid เปรียบเทียบหลายทางเลือก\n✓ คะแนน Trade-off + Best Badge`,
+    priority:`\n✓ Drag & Drop จัดลำดับ\n✓ คำนวณ Priority Score อัตโนมัติ`
+  };
+  return common+(extra[id]||'');
+}
+
+/* ════════════════ #3 UPGRADED PROMPT ENGINE — DISCOVERY ════════════════ */
+function genDiscovery(){
+  if(!sel.el){alert('กรุณาเลือกหัวข้อปัญหาในขั้นตอนที่ 1 ก่อนครับ 🙂');return;}
+  const goalTxt=selGoals.size? [...selGoals].map(id=>{const g=GOALS.find(x=>x.id===id);return `${g.ico} ${g.label}`;}).join('\n   • ') :'ครอบคลุมทุกด้าน (ลดต้นทุน เพิ่มผลผลิต ความปลอดภัย คุณภาพ)';
+  const outObj=OUTPUTS.find(o=>o.id===selOut);
+
+  const p=
+`🧠 บทบาท:
+คุณคือ Kaizen Consultant และ Kaizen Expert ที่มีประสบการณ์มากกว่า 20 ปี
+เชี่ยวชาญระบบ Toyota Production System และการปรับปรุงงานแบบ Lean
+
+📌 ปัญหาที่ต้องวิเคราะห์:
+"${sel.sub}"
+   • องค์ประกอบ: ${sel.el.t} (${sel.el.h})
+   • มุมมองหลัก 3-Mu's: ${MU_FULL[sel.mu]}
+
+🎯 เป้าหมายการปรับปรุง:
+   • ${goalTxt}
+
+🔍 ขอบเขตการวิเคราะห์ (ใช้หลัก 3-Mu's):
+วิเคราะห์ปัญหาผ่านมุมมอง Muda (ความสูญเปล่า) / Muri (ความตึง-เกินกำลัง) / Mura (ความไม่สม่ำเสมอ)
+แล้วค้นหาและระบุให้ครบ:
+   1. Root Cause — สาเหตุที่แท้จริง (วิเคราะห์ด้วย 5-Why)
+   2. Cost Impact — ผลกระทบด้านต้นทุน
+   3. Safety Impact — ผลกระทบด้านความปลอดภัย
+   4. Productivity Impact — ผลกระทบด้านผลผลิต
+
+💡 ข้อเสนอแนะ:
+เสนอแนวทาง Kaizen อย่างน้อย 3 แนวทาง — เน้น "งบน้อย เห็นผลเร็ว ทำได้จริง"
+ระบุระดับความยาก ผลกระทบ และตัวชี้วัดที่วัดผลได้
+
+📤 รูปแบบผลลัพธ์: ${outObj.label}
+สร้างผลลัพธ์เป็น HTML Single File ที่ประกอบด้วย:
+${outputBlocks(selOut)}
+
+${HSF}`;
+  showOut('poutDisc','poutDisc-body',p);
+}
+
+/* ════════════════ #4 KAIZEN EXPLORER ════════════════ */
+function genExplorer(){
+  const topic=(document.getElementById('expTopic').value||'พื้นที่/กระบวนการที่ระบุ').trim();
+  const p=
+`🧠 บทบาท: คุณคือ Kaizen Consultant และนักพัฒนา Front-end ที่เชี่ยวชาญ Data Visualization
+
+🎯 ภารกิจ:
+สร้าง "Kaizen Explorer" แบบ Interactive HTML สำหรับสำรวจปัญหาในพื้นที่:
+"${topic}"
+
+📋 ขั้นตอน:
+1. รวบรวมปัญหาที่พบ จัดหมวดด้วย 3-Mu's (Muda / Muri / Mura)
+2. วิเคราะห์ Root Cause ของแต่ละปัญหา (5-Why)
+3. จัดลำดับด้วย Pareto (80/20)
+4. เสนอแนวทาง Kaizen ของแต่ละปัญหา
+
+🖥 ความสามารถที่ Explorer ต้องมี:
+   • คลิกดูรายละเอียดแต่ละปัญหา (Root Cause + Kaizen)
+   • ปุ่มกรองตาม Muda
+   • ปุ่มกรองตาม Muri
+   • ปุ่มกรองตาม Mura
+   • Pareto Chart (วาดด้วย SVG)
+   • มุมมอง Root Cause (Fishbone หรือ 5-Why)
+   • ใช้ SVG Graphics ที่ลื่นไหล + Animation เบาๆ
+
+${HSF}`;
+  showOut('poutExp','poutExp-body',p);
+}
+
+/* ════════════════ #5 ARCHITECTURE ════════════════ */
+function genArch(){
+  const topic=(document.getElementById('archTopic').value||'กระบวนการที่ระบุ').trim();
+  const p=
+`🧠 บทบาท: คุณคือ Kaizen Consultant และ Solution Architect
+
+🎯 ภารกิจ:
+สร้าง Project Architecture / Process Flow แบบ Interactive สำหรับ:
+"${topic}"
+
+🏗 โครงสร้างที่ต้องแสดง (เรียงตามลำดับ):
+   Current State (สภาพปัจจุบัน)
+        ↓
+   Problem (ปัญหาที่พบ — แท็กด้วย 3-Mu's)
+        ↓
+   Root Cause (สาเหตุที่แท้จริง)
+        ↓
+   Kaizen (แนวทางปรับปรุง)
+        ↓
+   Future State (สภาพหลังปรับปรุง)
+
+🎨 รูปแบบการแสดงผล:
+   • SVG Diagram ที่คมชัด ลื่นไหล
+   • Swimlane แยกตามผู้รับผิดชอบ/แผนก
+   • Interactive Flow — คลิกแต่ละ Node เพื่อดูรายละเอียด
+   • ทำสีเน้นจุด Bottleneck และจุดที่ปรับปรุง
+
+${HSF}`;
+  showOut('poutArch','poutArch-body',p);
+}
+
+/* ════════════════ #6 UI MOCKUP ════════════════ */
+function genMock(){
+  const m=MOCKS.find(x=>x.id===selMock);
+  const p=
+`🧠 บทบาท: คุณคือ UX/UI Designer และนักพัฒนา Front-end
+
+🎯 ภารกิจ:
+สร้าง UI Mockup แบบ Responsive HTML สำหรับระบบ:
+"${m.label}" — ${m.desc}
+
+🖥 องค์ประกอบที่ควรมีในหน้าจอ:
+   • Header + เมนูนำทาง
+   • ฟอร์ม/รายการหลักของระบบ "${m.label}"
+   • ส่วนแสดงสถานะ / สถิติสรุป (Cards)
+   • ตาราง/รายการข้อมูลพร้อม Filter
+   • ปุ่ม Action หลัก (เพิ่ม / บันทึก / ส่ง)
+
+🎨 แนวทางออกแบบ:
+   • Layout สะอาด ใช้งานง่าย เหมาะกับการใช้ในโรงงาน/ออฟฟิศ
+   • Responsive: Desktop / Tablet / Mobile
+   • มี Interaction พื้นฐาน (กดปุ่ม เปลี่ยน Tab กรอกฟอร์ม)
+
+${HSF}`;
+  showOut('poutMock','poutMock-body',p);
+}
+
+/* ════════════════ #7 MULTI-OPTION COMPARISON ════════════════ */
+function genComp(){
+  const topic=(document.getElementById('compTopic').value||'ปัญหาที่ระบุ').trim();
+  const p=
+`🧠 บทบาท: คุณคือ Kaizen Consultant และ Kaizen Expert ประสบการณ์ 20 ปี
+
+🎯 ภารกิจ:
+สำหรับปัญหา: "${topic}"
+เสนอแนวทาง Kaizen ทั้งหมด 10 แนวทาง แล้วเปรียบเทียบในตารางเดียว
+
+📊 เกณฑ์เปรียบเทียบแต่ละแนวทาง:
+   • Cost — ต้นทุนการดำเนินการ
+   • Impact — ผลกระทบ/ประโยชน์ที่ได้
+   • Difficulty — ความยากในการทำ
+   • ROI — ความคุ้มค่าการลงทุน
+   • Lead Time — ระยะเวลาเห็นผล
+
+🖥 รูปแบบผลลัพธ์:
+   • Grid Layout HTML เปรียบเทียบ 10 แนวทางพร้อมกัน
+   • ให้คะแนนแต่ละเกณฑ์ (เช่น ดาว 1-5 หรือ สี เขียว/เหลือง/แดง)
+   • ไฮไลต์ "แนวทางที่แนะนำ" (Best Overall) อย่างชัดเจน
+   • เรียงลำดับตาม ROI ได้ + มีสรุปคำแนะนำตอนท้าย
+
+${HSF}`;
+  showOut('poutComp','poutComp-body',p);
+}
+
+/* ════════════════ #8 PRIORITY BOARD ════════════════ */
+function genPrio(){
+  const topic=(document.getElementById('prioTopic').value||'รายการงานที่ระบุ').trim();
+  const p=
+`🧠 บทบาท: คุณคือ Kaizen Consultant และนักพัฒนา Front-end
+
+🎯 ภารกิจ:
+สร้างเครื่องมือ Drag & Drop Prioritization Tool สำหรับจัดลำดับความสำคัญของ:
+"${topic}"
+
+📌 ความสามารถที่ต้องมี:
+   • รายการ Card ลากวาง (Drag & Drop) เพื่อจัดอันดับใหม่ได้
+   • แต่ละรายการให้คะแนน 3 มิติ:
+        - Impact (ผลกระทบ)
+        - Cost (ต้นทุน)
+        - Difficulty (ความยาก)
+   • คำนวณ Priority Score อัตโนมัติ
+        (สูตรแนะนำ: Priority = Impact ÷ (Cost × Difficulty) — ปรับน้ำหนักได้)
+   • จัดเรียงรายการใหม่ตาม Score แบบ Real-time
+   • แสดงผลด้วยสี/แถบ บอกระดับความสำคัญ (High / Medium / Low)
+
+${HSF}`;
+  showOut('poutPrio','poutPrio-body',p);
+}
+
+/* ════════════════ HELPERS ════════════════ */
+function showOut(panelId,bodyId,text){
+  const body=document.getElementById(bodyId);
+  body.textContent=text;
+  const po=document.getElementById(panelId);
+  po.classList.add('show');
+  setTimeout(()=>po.scrollIntoView({behavior:'smooth',block:'nearest'}),60);
+}
+function copyOut(bodyId,panelId){
+  const txt=document.getElementById(bodyId).textContent;
+  navigator.clipboard.writeText(txt).then(()=>{
+    const b=document.querySelector(`#${panelId} .copy-p`);
+    const old=b.textContent;
+    b.textContent='✅ คัดลอกแล้ว!';
+    setTimeout(()=>b.textContent=old,2000);
+  });
+}
+
+/* ════════════════ TABS ════════════════ */
+function switchTab(name,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(`p-${name}`).classList.add('active');
+}
+</script>
+</body>
+</html>
