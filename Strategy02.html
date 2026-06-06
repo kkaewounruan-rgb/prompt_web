@@ -1,132 +1,217 @@
-<!DOCTYPE html>
-<html lang="th">
+
+<html lang="th" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>กลยุทธ์หลัก Kaizen 2,3,4,5 — Prompt Generator</title>
+<title>กลยุทธ์หลัก Kaizen 1,2,3,4,5 — Prompt Generator</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <style>
-:root{
-  --primary:#005576;--secondary:#006c4e;--accent:#6366F1;
-  --green:#1D9E75;--gl:#E1F5EE;--gm:#9FE1CB;--gd:#0F6E56;
-  --bd:#e2e8f0;--bg:#f8fafc;--bg2:#fff;--tx:#1a202c;--tx2:#64748b;--tx3:#94a3b8;
-  --r:10px;
+/* ── THEME VARIABLES ── */
+:root, [data-theme="light"] {
+  --primary: #005576; --secondary: #006c4e; --accent: #6366F1;
+  --green: #1D9E75; --gl: #E1F5EE; --gm: #9FE1CB; --gd: #0F6E56;
+  --bd: #e2e8f0; --bg: #f8fafc; --bg2: #fff; --tx: #1a202c; --tx2: #64748b; --tx3: #94a3b8;
+  --r: 12px;
+  --topbar-bg: #fff; --topbar-shadow: 0 1px 4px rgba(0,0,0,.08);
+  --drawer-bg: #fff; --drawer-border: #f0eded;
+  --bottom-nav-bg: #fff; --bottom-nav-border: #e5e2e1;
+  --tab-active-bg: #fff; --tab-active-border: #e2e8f0;
+  --st-hdr-bg: #fff;
+  --pout-bg: #E1F5EE; --pout-border: #9FE1CB; --pout-copy-bg: #fff;
+  --tip-bg: #fffbeb; --tip-border: #fde68a; --tip-color: #92400e;
+  
+  /* card overrides */
+  --s1-bg: #FEE2E2; --s1-c: #991B1B; --s1-bd: #FCA5A5;
+  --s2-bg: #E1F5EE; --s2-c: #0F6E56; --s2-bd: #9FE1CB;
+  --s3-bg: #E6F1FB; --s3-c: #185FA5; --s3-bd: #BCDBF7;
+  --s4-bg: #FAEEDA; --s4-c: #854F0B; --s4-bd: #F5D6A8;
+  --s5-bg: #EEEDFE; --s5-c: #534AB7; --s5-bd: #C9C6F9;
+  --toggle-bg: #e2e8f0; --toggle-thumb: #005576;
 }
+[data-theme="dark"] {
+  --primary: #38bdf8; --secondary: #34d399; --accent: #818cf8;
+  --green: #34d399; --gl: #0f2a38; --gm: #1e4d66; --gd: #7dd3fc;
+  --bd: #2d3748; --bg: #0f172a; --bg2: #1e293b; --tx: #e2e8f0; --tx2: #94a3b8; --tx3: #64748b;
+  --topbar-bg: #1e293b; --topbar-shadow: 0 1px 4px rgba(0,0,0,.4);
+  --drawer-bg: #1e293b; --drawer-border: #2d3748;
+  --bottom-nav-bg: #1e293b; --bottom-nav-border: #2d3748;
+  --tab-active-bg: #1e293b; --tab-active-border: #2d3748;
+  --st-hdr-bg: #1e293b;
+  --pout-bg: #0f2a38; --pout-border: #1e4d66; --pout-copy-bg: #1e293b;
+  --tip-bg: #2d2300; --tip-border: #78450a; --tip-color: #fcd34d;
+  
+  --s1-bg: #451a1a; --s1-c: #fca5a5; --s1-bd: #7f1d1d;
+  --s2-bg: #0d2e1f; --s2-c: #6ee7b7; --s2-bd: #065f46;
+  --s3-bg: #0f2342; --s3-c: #93c5fd; --s3-bd: #1e3a8a;
+  --s4-bg: #2d1a05; --s4-c: #fcd34d; --s4-bd: #78350f;
+  --s5-bg: #1e1a42; --s5-c: #c4b5fd; --s5-bd: #4c1d95;
+  --toggle-bg: #38bdf8; --toggle-thumb: #0f172a;
+}
+
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
- 
+body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;transition:background .3s,color .3s}
+
 /* ── MATERIAL SYMBOLS ── */
 .material-symbols-outlined{
   font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
   display:inline-block;line-height:1;font-size:22px;
 }
- 
+
 /* ── TOP APP BAR ── */
 .topbar{
   position:fixed;top:0;left:0;width:100%;height:64px;z-index:100;
-  background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08);
+  background:var(--topbar-bg);box-shadow:var(--topbar-shadow);
   display:flex;align-items:center;justify-content:space-between;padding:0 16px;
+  transition:background .3s,box-shadow .3s;
 }
 .topbar-btn{
   width:40px;height:40px;border-radius:50%;border:none;background:transparent;
   cursor:pointer;display:flex;align-items:center;justify-content:center;
   color:var(--primary);transition:background .15s;
 }
-.topbar-btn:hover{background:#f0eded}
-.topbar-title{font-size:20px;font-weight:700;color:var(--primary);letter-spacing:-.3px;text-decoration:none}
- 
+.topbar-btn:hover{background:var(--gl)}
+.topbar-title{font-size:20px;font-weight:700;color:var(--primary);letter-spacing:-.3px;text-decoration:none;transition:color .3s}
+.topbar-right{display:flex;align-items:center;gap:6px}
+
+/* ── THEME TOGGLE BUTTON ── */
+.theme-toggle{
+  display:flex;align-items:center;gap:6px;
+  background:var(--toggle-bg);border:none;border-radius:20px;
+  padding:5px 10px 5px 6px;cursor:pointer;
+  font-family:inherit;font-size:12px;font-weight:600;
+  color:var(--tx2);transition:all .3s;
+  white-space:nowrap;
+}
+.theme-toggle:hover{opacity:.85;transform:scale(1.03)}
+.theme-toggle .toggle-icon{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--toggle-thumb);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .3s;flex-shrink:0;
+}
+.theme-toggle .toggle-icon .material-symbols-outlined{
+  font-size:14px;color:#fff;
+  font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20;
+}
+[data-theme="dark"] .theme-toggle .toggle-icon{background:#0f172a}
+[data-theme="dark"] .theme-toggle .toggle-icon .material-symbols-outlined{color:#38bdf8}
+
 /* ── OVERLAY ── */
 .overlay{
   display:none;position:fixed;inset:0;z-index:200;
   background:rgba(0,0,0,.35);backdrop-filter:blur(2px);
 }
 .overlay.show{display:block}
- 
+
 /* ── SIDE DRAWER ── */
 .drawer{
   position:fixed;top:0;left:-280px;width:260px;height:100%;z-index:300;
-  background:#fff;box-shadow:4px 0 20px rgba(0,0,0,.12);
-  transition:left .25s cubic-bezier(.4,0,.2,1);
+  background:var(--drawer-bg);box-shadow:4px 0 20px rgba(0,0,0,.18);
+  transition:left .25s cubic-bezier(.4,0,.2,1),background .3s;
   display:flex;flex-direction:column;
 }
 .drawer.open{left:0}
 .drawer-header{
   height:64px;display:flex;align-items:center;padding:0 16px;gap:12px;
-  border-bottom:1px solid #f0eded;
+  border-bottom:1px solid var(--drawer-border);
 }
 .drawer-logo{font-size:18px;font-weight:700;color:var(--primary)}
 .drawer-nav{flex:1;padding:12px 8px;overflow-y:auto}
 .drawer-item{
   display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:14px;
-  text-decoration:none;color:#1b1c1c;font-size:15px;font-weight:500;
+  text-decoration:none;color:var(--tx);font-size:15px;font-weight:500;
   transition:background .15s;margin-bottom:2px;
 }
-.drawer-item:hover{background:#f0eded}
-.drawer-item.active{background:#E1F5EE;color:var(--primary)}
+.drawer-item:hover{background:var(--gl)}
+.drawer-item.active{background:var(--gl);color:var(--primary)}
 .drawer-item.active .material-symbols-outlined{color:var(--primary)}
 .di-home,.di-kaizen,.di-prompt{color:var(--primary)}
 .di-chatgpt{color:var(--accent)}
 .di-gemini{color:var(--secondary)}
 .di-strategy{color:#3d38c5}
-.drawer-footer{padding:16px;border-top:1px solid #f0eded;font-size:11px;color:#94a3b8;text-align:center;line-height:1.6}
- 
+
+/* drawer dark mode toggle */
+.drawer-theme-row{
+  padding:12px 14px;display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--drawer-border);margin:4px 0;
+}
+.drawer-theme-label{font-size:13px;font-weight:500;color:var(--tx2);display:flex;align-items:center;gap:8px}
+.toggle-pill{
+  width:46px;height:26px;border-radius:13px;border:none;cursor:pointer;
+  background:var(--toggle-bg);position:relative;transition:background .3s;padding:0;
+}
+.toggle-pill::after{
+  content:'';position:absolute;top:3px;left:3px;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--toggle-thumb);
+  transition:transform .3s,background .3s;
+}
+[data-theme="dark"] .toggle-pill::after{transform:translateX(20px)}
+
+.drawer-footer{padding:16px;border-top:1px solid var(--drawer-border);font-size:11px;color:var(--tx3);text-align:center;line-height:1.6}
+
 /* ── MAIN ── */
-.wrap{max-width:900px;margin:0 auto;padding:80px 18px 96px}
- 
+.wrap{max-width:960px;margin:0 auto;padding:80px 18px 96px}
+
 /* Header */
-.hdr{text-align:center;margin-bottom:22px}
+.hdr{text-align:center;margin-bottom:24px}
 .back-link{
   display:inline-flex;align-items:center;gap:6px;
   color:var(--primary);font-size:13px;font-weight:500;text-decoration:none;
-  margin-bottom:14px;padding:6px 12px;background:#f0f9ff;border-radius:20px;
-  border:1px solid #c5e7ff;transition:background .15s;
+  margin-bottom:14px;padding:6px 12px;background:var(--gl);border-radius:20px;
+  border:1px solid var(--gm);transition:background .15s;
 }
-.back-link:hover{background:#c5e7ff}
+.back-link:hover{background:var(--gm)}
 .hdr-badge{
   display:inline-flex;align-items:center;gap:6px;
   background:var(--gl);color:var(--gd);font-size:12px;font-weight:700;
   padding:5px 16px;border-radius:20px;margin-bottom:10px;
+  transition:background .3s,color .3s;
 }
-.hdr h1{font-size:22px;font-weight:700;margin-bottom:6px}
-.hdr p{font-size:13px;color:var(--tx2);line-height:1.6;max-width:600px;margin:0 auto}
- 
+.hdr h1{font-size:24px;font-weight:700;margin-bottom:8px;letter-spacing:-0.5px}
+.hdr p{font-size:13.5px;color:var(--tx2);line-height:1.6;max-width:640px;margin:0 auto}
+
 /* Strategy overview */
-.ov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:20px}
-.ov-card{border-radius:var(--r);padding:12px 14px;border:1px solid}
-.ov-card .ov-num{font-size:11px;font-weight:700;opacity:.7;margin-bottom:3px}
-.ov-card .ov-name{font-size:13px;font-weight:700;margin-bottom:2px}
-.ov-card .ov-en{font-size:10px;opacity:.75}
-.s2{background:#E1F5EE;color:#0F6E56;border-color:#9FE1CB}
-.s3{background:#E6F1FB;color:#185FA5;border-color:#BCDBF7}
-.s4{background:#FAEEDA;color:#854F0B;border-color:#F5D6A8}
-.s6{background:#EEEDFE;color:#534AB7;border-color:#C9C6F9}
- 
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:24px}
+.ov-card{border-radius:var(--r);padding:12px 14px;border:1px solid;transition:background .3s,color .3s,border-color .3s,transform .18s,box-shadow .18s;cursor:pointer;text-decoration:none;display:block}
+.ov-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.13)}
+.ov-card:active{transform:translateY(-1px)}
+.ov-card .ov-num{font-size:11px;font-weight:700;opacity:.8;margin-bottom:3px;text-transform:uppercase}
+.ov-card .ov-name{font-size:13.5px;font-weight:700;margin-bottom:2px}
+.ov-card .ov-en{font-size:10px;opacity:.8}
+.ov-card .ov-arrow{font-size:11px;margin-top:8px;opacity:.7;display:flex;align-items:center;gap:3px;font-weight:600}
+.s1{background:var(--s1-bg);color:var(--s1-c);border-color:var(--s1-bd)}
+.s2{background:var(--s2-bg);color:var(--s2-c);border-color:var(--s2-bd)}
+.s3{background:var(--s3-bg);color:var(--s3-c);border-color:var(--s3-bd)}
+.s4{background:var(--s4-bg);color:var(--s4-c);border-color:var(--s4-bd)}
+.s5{background:var(--s5-bg);color:var(--s5-c);border-color:var(--s5-bd)}
+
 /* Tabs */
 .tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:2px solid var(--bd);padding-bottom:0;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{
-  flex-shrink:0;padding:9px 18px;font-size:13px;font-weight:500;cursor:pointer;
+  flex-shrink:0;padding:10px 18px;font-size:13px;font-weight:500;cursor:pointer;
   border-radius:8px 8px 0 0;color:var(--tx2);border:1px solid transparent;
   border-bottom:none;background:none;font-family:inherit;transition:all .15s;
   position:relative;bottom:-2px;white-space:nowrap;
 }
 .tab:hover{color:var(--tx);background:var(--bg)}
-.tab.active{color:var(--tx);background:var(--bg2);border-color:var(--bd);border-bottom-color:var(--bg2);font-weight:600}
- 
+.tab.active{color:var(--tx);background:var(--tab-active-bg);border-color:var(--tab-active-border);border-bottom-color:var(--tab-active-bg);font-weight:600}
+
 /* Tab content */
 .tp{display:none}.tp.show{display:block}
- 
+
 /* Strategy header */
-.st-hdr{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:14px 18px;margin-bottom:14px}
-.st-title{font-size:15px;font-weight:700;color:var(--tx);margin-bottom:4px}
+.st-hdr{background:var(--st-hdr-bg);border:1px solid var(--bd);border-radius:var(--r);padding:14px 18px;margin-bottom:14px;transition:background .3s,border-color .3s}
+.st-title{font-size:16px;font-weight:700;color:var(--tx);margin-bottom:4px;display:flex;align-items:center;gap:8px}
 .st-desc{font-size:12.5px;color:var(--tx2);line-height:1.6}
- 
+
 /* Sub-group */
 .sg-list{display:flex;flex-direction:column;gap:8px}
-.sg-card{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
+.sg-card{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;transition:border-color .2s,background .3s}
 .sg-card.open{border-color:var(--gm)}
-.sg-hdr{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;user-select:none}
+.sg-hdr{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;user-select:none}
 .sg-hdr:hover{background:var(--bg)}
 .sg-ico{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
 .sg-info{flex:1}
@@ -136,49 +221,50 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
 .sg-card.open .sg-arr{transform:rotate(180deg);color:var(--green)}
 .sg-body{display:none;padding:0 14px 14px;border-top:1px solid var(--bd)}
 .sg-card.open .sg-body{display:block}
- 
+
 /* Chips */
-.chip-row{display:flex;flex-wrap:wrap;gap:5px;padding:10px 0 6px}
-.chip{padding:5px 12px;border-radius:14px;font-size:11.5px;font-weight:500;cursor:pointer;border:1px solid;transition:all .15s;font-family:inherit}
+.chip-row{display:flex;flex-wrap:wrap;gap:6px;padding:12px 0 8px}
+.chip{padding:6px 12px;border-radius:14px;font-size:11.5px;font-weight:500;cursor:pointer;border:1px solid;transition:all .15s;font-family:inherit}
 .chip:hover{opacity:.8;transform:translateY(-1px)}
 .chip.active{color:#fff!important;border-color:transparent!important;box-shadow:0 2px 6px rgba(0,0,0,.18)}
-.c2{background:#E1F5EE;color:#0F6E56;border-color:#9FE1CB}.c2.active{background:#0F6E56}
-.c3{background:#E6F1FB;color:#185FA5;border-color:#BCDBF7}.c3.active{background:#185FA5}
-.c4{background:#FAEEDA;color:#854F0B;border-color:#F5D6A8}.c4.active{background:#854F0B}
-.c6{background:#EEEDFE;color:#534AB7;border-color:#C9C6F9}.c6.active{background:#534AB7}
- 
+.c1{background:var(--s1-bg);color:var(--s1-c);border-color:var(--s1-bd)}.c1.active{background:#991B1B}
+.c2{background:var(--s2-bg);color:var(--s2-c);border-color:var(--s2-bd)}.c2.active{background:#0F6E56}
+.c3{background:var(--s3-bg);color:var(--s3-c);border-color:var(--s3-bd)}.c3.active{background:#185FA5}
+.c4{background:var(--s4-bg);color:var(--s4-c);border-color:var(--s4-bd)}.c4.active{background:#854F0B}
+.c5{background:var(--s5-bg);color:var(--s5-c);border-color:var(--s5-bd)}.c5.active{background:#534AB7}
+
 /* Prompt output */
-.pout{display:none;margin-top:10px;background:var(--gl);border:1px solid var(--gm);border-radius:9px;padding:14px 16px;font-size:13px;line-height:1.8;color:var(--tx);position:relative;padding-right:90px}
+.pout{display:none;margin-top:10px;background:var(--pout-bg);border:1px solid var(--pout-border);border-radius:9px;padding:14px 16px;font-size:13px;line-height:1.8;color:var(--tx);position:relative;padding-right:110px;transition:background .3s,border-color .3s}
 .pout.show{display:block}
-.copy-p{position:absolute;top:10px;right:12px;background:var(--bg2);border:1px solid var(--bd);border-radius:7px;padding:4px 10px;font-size:11px;cursor:pointer;color:var(--tx2);font-family:inherit;white-space:nowrap;transition:all .15s}
+.copy-p{position:absolute;top:10px;right:12px;background:var(--pout-copy-bg);border:1px solid var(--bd);border-radius:7px;padding:6px 12px;font-size:11px;cursor:pointer;color:var(--tx2);font-family:inherit;white-space:nowrap;transition:all .15s;font-weight:600}
 .copy-p:hover{background:var(--gl);color:var(--gd);border-color:var(--gm)}
-.tip{font-size:11.5px;color:#92400e;background:#fffbeb;border:1px solid #fde68a;border-radius:7px;padding:8px 11px;line-height:1.6;margin-top:6px}
- 
+.tip{font-size:11.5px;color:var(--tip-color);background:var(--tip-bg);border:1px solid var(--tip-border);border-radius:7px;padding:8px 11px;line-height:1.6;margin-top:8px;transition:background .3s,color .3s,border-color .3s}
+
 /* ── BOTTOM NAV ── */
 .bottom-nav{
   position:fixed;bottom:0;left:0;width:100%;height:72px;z-index:100;
-  background:#fff;box-shadow:0 -1px 8px rgba(0,0,0,.08);
-  border-top:1px solid #e5e2e1;
+  background:var(--bottom-nav-bg);box-shadow:0 -1px 8px rgba(0,0,0,.08);
+  border-top:1px solid var(--bottom-nav-border);
   display:flex;align-items:center;justify-content:space-around;
-  padding:0 4px 8px;
+  padding:0 4px 8px;transition:background .3s,border-color .3s;
 }
 .nav-item{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:2px;padding:8px 10px;border-radius:14px;text-decoration:none;
-  color:#40484e;font-size:11px;font-weight:600;transition:all .15s;min-width:52px;
+  color:var(--tx2);font-size:11px;font-weight:600;transition:all .15s;min-width:52px;
 }
-.nav-item:hover{background:#f0eded}
-.nav-item.active{background:#83f5c6;color:var(--secondary)}
+.nav-item:hover{background:var(--gl)}
+.nav-item.active{background:var(--gl);color:var(--secondary)}
 .nav-item .material-symbols-outlined{font-size:22px}
-.nav-item.home-btn{background:#E1F5EE;padding:6px 8px;border-radius:18px}
+.nav-item.home-btn{background:var(--gl);padding:6px 8px;border-radius:18px}
 .nav-item.home-btn .material-symbols-outlined{
   font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;
   color:var(--primary);font-size:26px;
 }
- 
+
 /* Footer */
 .footer{text-align:center;margin-top:32px;font-size:12px;color:var(--tx3);line-height:1.7}
- 
+
 @media(min-width:768px){
   .bottom-nav{display:none}
   .wrap{padding-bottom:52px}
@@ -186,10 +272,10 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
 </style>
 </head>
 <body>
- 
+
 <!-- ── OVERLAY ── -->
 <div class="overlay" id="overlay" onclick="closeDrawer()"></div>
- 
+
 <!-- ── SIDE DRAWER ── -->
 <div class="drawer" id="drawer">
   <div class="drawer-header">
@@ -216,23 +302,42 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
       <span class="material-symbols-outlined di-prompt">psychology</span>Strategies2
     </a>
   </nav>
+
+  <!-- Dark mode toggle inside drawer -->
+  <div class="drawer-theme-row">
+    <span class="drawer-theme-label">
+      <span class="material-symbols-outlined" style="font-size:18px;color:var(--primary)" id="drawerModeIcon">dark_mode</span>
+      <span id="drawerModeLabel">โหมดมืด</span>
+    </span>
+    <button class="toggle-pill" onclick="toggleTheme()" aria-label="toggle dark mode"></button>
+  </div>
+
   <div class="drawer-footer">KAIZEN SMART PLAYBOOK<br>By Kachain_K 2026</div>
 </div>
- 
+
 <!-- ── TOP APP BAR ── -->
 <header class="topbar">
   <button class="topbar-btn" onclick="openDrawer()">
     <span class="material-symbols-outlined">menu</span>
   </button>
   <a class="topbar-title" href="https://sites.google.com/view/teprompt-web/home2?authuser=0" target="_blank">KAIZEN SMART</a>
-  <button class="topbar-btn">
-    <span class="material-symbols-outlined">search</span>
-  </button>
+  <div class="topbar-right">
+    <!-- ── THEME TOGGLE BUTTON ── -->
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light mode">
+      <span class="toggle-icon">
+        <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+      </span>
+      <span id="themeLabelText">โหมดมืด</span>
+    </button>
+    <button class="topbar-btn">
+      <span class="material-symbols-outlined">search</span>
+    </button>
+  </div>
 </header>
- 
+
 <!-- ── MAIN ── -->
 <div class="wrap">
- 
+
   <div class="hdr">
     <a class="back-link" href="https://sites.google.com/view/teprompt-web/home2?authuser=0" target="_blank">
       <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span>
@@ -242,62 +347,98 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
       <span class="material-symbols-outlined" style="font-size:15px">architecture</span>
       กลยุทธ์หลัก Kaizen
     </a>
-    <h1>หัวข้อ 2, 3, 4, 5 — Prompt Generator</h1>
-    <p>แยกหัวข้อย่อยจาก 4 กลยุทธ์หลัก → คลิกเพื่อสร้าง Prompt ค้นหาแนวทางปรับปรุงแบบ Kaizen</p>
+    <h1>หัวข้อ 1, 2, 3, 4, 5 — Prompt Generator</h1>
+    <p>วิเคราะห์ผ่าน 5 กลยุทธ์ทองคำของระบบปฏิบัติการแบบลีนระดับสากล → คลิกเลือกปัญหาเพื่อสร้าง AI Prompt ชั้นยอด</p>
   </div>
- 
+
   <!-- Overview -->
   <div class="ov-grid">
-    <div class="ov-card s2"><div class="ov-num">กลยุทธ์ที่ 2</div><div class="ov-name">หลักการ 5ส</div><div class="ov-en">5S — Seiri · Seiton · Seiso · Seiketsu · Shitsuke</div></div>
-    <div class="ov-card s3"><div class="ov-num">กลยุทธ์ที่ 3</div><div class="ov-name">หลักการ 5W 1H</div><div class="ov-en">Who · What · Where · When · Why · How</div></div>
-    <div class="ov-card s4"><div class="ov-num">กลยุทธ์ที่ 4</div><div class="ov-name">รายการตรวจสอบ 4M</div><div class="ov-en">Man · Machine · Material · Method</div></div>
-    <div class="ov-card s6"><div class="ov-num">กลยุทธ์ที่ 5</div><div class="ov-name">วงจร PDCA</div><div class="ov-en">Plan · Do · Check · Act</div></div>
+    <a class="ov-card s1" href="#tabs" onclick="goTab('t1','tab-t1')">
+      <div class="ov-num">กลยุทธ์ที่ 1</div>
+      <div class="ov-name">หลักการ 3-Mu's</div>
+      <div class="ov-en">Muda · Mura · Muri</div>
+      <div class="ov-arrow">เปิดดู →</div>
+    </a>
+    <a class="ov-card s2" href="#tabs" onclick="goTab('t2','tab-t2')">
+      <div class="ov-num">กลยุทธ์ที่ 2</div>
+      <div class="ov-name">หลักการ 5ส</div>
+      <div class="ov-en">Seiri · Seiton · Seiso · Seiketsu · Shitsuke</div>
+      <div class="ov-arrow">เปิดดู →</div>
+    </a>
+    <a class="ov-card s3" href="#tabs" onclick="goTab('t3','tab-t3')">
+      <div class="ov-num">กลยุทธ์ที่ 3</div>
+      <div class="ov-name">หลักการ 5W 1H</div>
+      <div class="ov-en">Who · What · Where · When · Why · How</div>
+      <div class="ov-arrow">เปิดดู →</div>
+    </a>
+    <a class="ov-card s4" href="#tabs" onclick="goTab('t4','tab-t4')">
+      <div class="ov-num">วิเคราะห์ 4M1E</div>
+      <div class="ov-name">รายการตรวจสอบ 4M1E</div>
+      <div class="ov-en">Man · Machine · Material · Method · Env</div>
+      <div class="ov-arrow">เปิดดู →</div>
+    </a>
+    <a class="ov-card s5" href="#tabs" onclick="goTab('t5','tab-t5')">
+      <div class="ov-num">กลยุทธ์ที่ 5</div>
+      <div class="ov-name">วงจร PDCA</div>
+      <div class="ov-en">Plan · Do · Check · Act</div>
+      <div class="ov-arrow">เปิดดู →</div>
+    </a>
   </div>
- 
+
   <!-- Tabs -->
-  <div class="tabs">
-    <button class="tab active" onclick="switchTab('t2',this)"><span>🗂️</span> 2 — 5ส</button>
-    <button class="tab" onclick="switchTab('t3',this)"><span>🔎</span> 3 — 5W1H</button>
-    <button class="tab" onclick="switchTab('t4',this)"><span>🔩</span> 4 — 4M</button>
-    <button class="tab" onclick="switchTab('t6',this)"><span>🔄</span> 5 — PDCA</button>
+  <div class="tabs" id="tabs">
+    <button id="tab-t1" class="tab active" onclick="switchTab('t1',this)"><span>🔥</span> 1 — 3-Mu's</button>
+    <button id="tab-t2" class="tab" onclick="switchTab('t2',this)"><span>🗂️</span> 2 — 5ส</button>
+    <button id="tab-t3" class="tab" onclick="switchTab('t3',this)"><span>🔎</span> 3 — 5W1H</button>
+    <button id="tab-t4" class="tab" onclick="switchTab('t4',this)"><span>🔩</span> 4 — 4M1E</button>
+    <button id="tab-t5" class="tab" onclick="switchTab('t5',this)"><span>🔄</span> 5 — PDCA</button>
   </div>
- 
+
+  <!-- TAB 1: 3-Mu's -->
+  <div class="tp show" id="t1">
+    <div class="st-hdr">
+      <div class="st-title">🔥 กลยุทธ์ที่ 1 — หลักการ 3-Mu's (การกำจัดความสูญเสียขั้นสูง)</div>
+      <div class="st-desc">เครื่องมือประเมินเพื่อลด Muda (ความสูญเปล่า), Mura (ความไม่สม่ำเสมอ), และ Muri (การทำงานเกินกำลัง) เพื่อให้กระบวนการไหลลื่นที่สุด</div>
+    </div>
+    <div class="sg-list" id="sg1"></div>
+  </div>
+
   <!-- TAB 2: 5S -->
-  <div class="tp show" id="t2">
+  <div class="tp" id="t2">
     <div class="st-hdr">
       <div class="st-title">🗂️ กลยุทธ์ที่ 2 — หลักการ 5ส</div>
-      <div class="st-desc">ระบบจัดระเบียบสถานที่ทำงาน 5 ขั้นตอน เพื่อสร้างสภาพแวดล้อมที่ปลอดภัย สะอาด และมีประสิทธิภาพ</div>
+      <div class="st-desc">ระบบจัดระเบียบสถานที่ทำงาน 5 ขั้นตอน เพื่อสร้างสภาพแวดล้อมที่ปลอดภัย สะอาด และมีประสิทธิภาพสูง</div>
     </div>
     <div class="sg-list" id="sg2"></div>
   </div>
- 
+
   <!-- TAB 3: 5W1H -->
   <div class="tp" id="t3">
     <div class="st-hdr">
       <div class="st-title">🔎 กลยุทธ์ที่ 3 — หลักการ 5W 1H</div>
-      <div class="st-desc">เครื่องมือตั้งคำถามเพื่อวิเคราะห์ปัญหาและค้นหาแนวทางปรับปรุงงานอย่างครบถ้วนรอบด้าน</div>
+      <div class="st-desc">เครื่องมือตั้งคำถามเชิงลึกวิเคราะห์รากเหง้าปัญหา เพื่อป้องกันการเดาทางและแก้ปัญหาได้ตรงจุด</div>
     </div>
     <div class="sg-list" id="sg3"></div>
   </div>
- 
-  <!-- TAB 4: 4M -->
+
+  <!-- TAB 4: 4M1E -->
   <div class="tp" id="t4">
     <div class="st-hdr">
-      <div class="st-title">🔩 กลยุทธ์ที่ 4 — รายการตรวจสอบ 4M</div>
-      <div class="st-desc">ตรวจสอบ 4 ปัจจัยหลักในการทำงาน เพื่อค้นหาสาเหตุของปัญหาและแนวทางปรับปรุงอย่างเป็นระบบ</div>
+      <div class="st-title">🔩 กลยุทธ์ที่ 4 — รายการตรวจสอบ 4M1E</div>
+      <div class="st-desc">ตรวจสอบ 5 องค์ประกอบขับเคลื่อนการผลิตและการบริการ เพื่อแยกแยะข้อบกพร่องและปัจจัยแวดล้อมทางกายภาพ</div>
     </div>
     <div class="sg-list" id="sg4"></div>
   </div>
- 
-  <!-- TAB 6: PDCA -->
-  <div class="tp" id="t6">
+
+  <!-- TAB 5: PDCA -->
+  <div class="tp" id="t5">
     <div class="st-hdr">
       <div class="st-title">🔄 กลยุทธ์ที่ 5 — วงจร PDCA</div>
-      <div class="st-desc">วงจรการปรับปรุงงานอย่างต่อเนื่อง Plan→Do→Check→Act เป็นหัวใจของการทำ Kaizen</div>
+      <div class="st-desc">วงจรบริหารงานคุณภาพและพัฒนายกระดับมาตรฐานอย่างไม่หยุดยั้ง (Continuous Improvement)</div>
     </div>
-    <div class="sg-list" id="sg6"></div>
+    <div class="sg-list" id="sg5"></div>
   </div>
- 
+
   <div class="footer">
     จัดทำโดย คเชนท์ แก้วอุ่นเรือน · แผนกฝึกอบรม 2026<br>
     กลยุทธ์หลัก Kaizen × Prompt Generator — ทุกคน ทุกที่ ทุกเวลา 🌱<br>
@@ -307,7 +448,7 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
     </a>
   </div>
 </div>
- 
+
 <!-- ── BOTTOM NAV ── -->
 <nav class="bottom-nav">
   <a class="nav-item home-btn" href="https://sites.google.com/view/teprompt-web/home2?authuser=0" target="_blank">
@@ -335,7 +476,7 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
     <span>Strategy2</span>
   </a>
 </nav>
- 
+
 <script>
 /* ── Drawer ── */
 function openDrawer(){
@@ -348,161 +489,218 @@ function closeDrawer(){
   document.getElementById('overlay').classList.remove('show');
   document.body.style.overflow='';
 }
- 
-/* ── Data ── */
+
+/* ── Theme Toggle ── */
+function toggleTheme(){
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  html.setAttribute('data-theme', newTheme);
+  localStorage.setItem('kaizen-theme', newTheme);
+  updateThemeUI(newTheme);
+}
+
+function updateThemeUI(theme){
+  const isDark = theme === 'dark';
+  const elements = {
+    themeIcon: isDark ? 'light_mode' : 'dark_mode',
+    themeLabelText: isDark ? 'โหมดสว่าง' : 'โหมดมืด',
+    drawerModeIcon: isDark ? 'light_mode' : 'dark_mode',
+    drawerModeLabel: isDark ? 'โหมดสว่าง' : 'โหมดมืด'
+  };
+  for (const [id, val] of Object.entries(elements)) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+}
+
+// Check local storage immediately before paint (no visual flash)
+(function(){
+  const saved = localStorage.getItem('kaizen-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+})();
+
+/* ── Data (Kaizen 20 Year Expert Standard) ── */
 const DATA = {
+  s1:[
+    {ico:'🗑️', bg:'#FEE2E2', title:'Muda (ความสูญเปล่า)', hint:'ระบุกิจกรรมที่ไม่มีมูลค่าเพิ่ม (8 Wastes)',
+      subs:[
+        {label:'ความสูญเสียจากการรอคอยงานหรือข้อมูล (Waiting)', tip:'สร้าง Standard Work และปรับสมดุลความเร็วของงาน'},
+        {label:'การเคลื่อนย้ายข้อมูลหรือเอกสารซ้ำซ้อน (Transportation)', tip:'ออกแบบ Folder structure หรือทางเดินเอกสารแบบ Single Flow'},
+        {label:'การทำงานซ้ำเพราะข้อผิดพลาดและแก้งาน (Defects)', tip:'ติดตั้งระบบ Poka-Yoke (ป้องกันความผิดพลาดตั้งแต่แรก)'},
+        {label:'ขั้นตอนการอนุมัติหรือตรวจสอบที่มากเกินไป (Overprocessing)', tip:'ยุบยอดขั้นตอน คืนอำนาจการตัดสินใจให้หน้างาน (Empowerment)'}
+      ]},
+    {ico:'⚖️', bg:'#FEE2E2', title:'Mura (ความไม่สม่ำเสมอ)', hint:'ลดความแปรปรวนในกระบวนการทำงาน',
+      subs:[
+        {label:'ปริมาณงานไม่เท่ากันในแต่ละช่วงเวลา (Uneven Workload)', tip:'ใช้หลัก Heijunka (เกลี่ยภาระงานให้สม่ำเสมอเป็นรอบเฉลี่ย)'},
+        {label:'มาตรฐานความเร็วและคุณภาพแต่ละคนไม่เท่ากัน', tip:'กำหนดคู่มือ One-Point Lesson (OPL) และกระชับความกว้างของขอบเขตเวลา'},
+        {label:'ระบบส่งต่องานระหว่างแผนกไม่ต่อเนื่องเกิดคอขวด', tip:'ทำ Line Balancing และกำหนด Buffer กึ่งสำเร็จรูปที่จำเป็น'}
+      ]},
+    {ico:'🏋️', bg:'#FEE2E2', title:'Muri (การตึงเค้น/เกินกำลัง)', hint:'หลีกเลี่ยงงานหนักเกินไปสำหรับพนักงานและเครื่องจักร',
+      subs:[
+        {label:'พนักงานต้องโอเวอร์ไทม์บ่อยครั้งเพื่อปิดงาน', tip:'วิเคราะห์ขีดความสามารถการรองรับงาน และขจัดความยากในการทำงานออกก่อน'},
+        {label:'เครื่องมือและระบบคอมพิวเตอร์อืดค้างหนักเกินไป', tip:'ทำความสะอาดและจัดระเบียบข้อมูล เคลียร์ไฟล์ชั่วคราวอย่างสม่ำเสมอ'},
+        {label:'การเคลื่อนไหวที่ผิดหลักการศาสตร์ก่ออาการเมื่อยล้า', tip:'จัดวางสิ่งของให้อยู่ในพิสัยวงแขน 90 องศาโดยไม่ต้องเอี้ยวตัวบิดเอว'}
+      ]}
+  ],
   s2:[
     {ico:'🗃️',bg:'#E1F5EE',title:'สะสาง (Seiri)',hint:'แยกของจำเป็น vs ไม่จำเป็น',
-     subs:[
-      {label:'แยกของที่ใช้/ไม่ใช้บนโต๊ะทำงาน',tip:'ลองถามว่า "ของชิ้นนี้ใช้ครั้งสุดท้ายเมื่อไร?"'},
-      {label:'ลดเอกสารและไฟล์ที่ไม่จำเป็น',tip:'กำหนดเกณฑ์ว่าเก็บได้นานแค่ไหน'},
-      {label:'กำจัดอุปกรณ์ชำรุดหรือล้าสมัย',tip:'ตั้งกล่อง Red Tag สำหรับของที่สงสัย'},
-      {label:'ทบทวนซอฟต์แวร์/แอปที่ไม่ได้ใช้',tip:'ลดภาระ IT และค่าใช้จ่าย License'}
-    ]},
+      subs:[
+        {label:'แยกของที่ใช้/ไม่ใช้บนโต๊ะทำงาน',tip:'ลองถามว่า "ของชิ้นนี้ใช้ครั้งสุดท้ายเมื่อไร?"'},
+        {label:'ลดเอกสารและไฟล์ที่ไม่จำเป็น',tip:'กำหนดเกณฑ์ว่าเก็บได้นานแค่ไหน'},
+        {label:'กำจัดอุปกรณ์ชำรุดหรือล้าสมัย',tip:'ตั้งกล่อง Red Tag สำหรับของที่สงสัย'},
+        {label:'ทบทวนซอฟต์แวร์/แอปที่ไม่ได้ใช้',tip:'ลดภาระ IT และค่าใช้จ่าย License'}
+      ]},
     {ico:'📐',bg:'#D1FAE5',title:'สะดวก (Seiton)',hint:'จัดวางให้หาง่าย ใช้ง่าย เก็บง่าย',
-     subs:[
-      {label:'กำหนดตำแหน่งที่ตั้งของทุกสิ่ง',tip:'ใช้ป้าย Label ระบุตำแหน่งชัดเจน'},
-      {label:'จัดระบบแฟ้มเอกสารให้หาง่าย',tip:'ตั้งชื่อแฟ้มแบบ Date-First เช่น 2024-01-report'},
-      {label:'ออกแบบพื้นที่ทำงานให้ไหลสะดวก',tip:'ของที่ใช้บ่อยต้องอยู่ใกล้มือที่สุด'},
-      {label:'ทำ Visual Board แสดงสถานะงาน',tip:'ทุกคนเห็นภาพรวมงานได้ทันที'}
-    ]},
+      subs:[
+        {label:'กำหนดตำแหน่งที่ตั้งของทุกสิ่ง',tip:'ใช้ป้าย Label ระบุตำแหน่งชัดเจน'},
+        {label:'จัดระบบแฟ้มเอกสารให้หาง่าย',tip:'ตั้งชื่อแฟ้มแบบ Date-First เช่น 2024-01-report'},
+        {label:'ออกแบบพื้นที่ทำงานให้ไหลสะดวก',tip:'ของที่ใช้บ่อยต้องอยู่ใกล้มือที่สุด'},
+        {label:'ทำ Visual Board แสดงสถานะงาน',tip:'ทุกคนเห็นภาพรวมงานได้ทันที'}
+      ]},
     {ico:'🧹',bg:'#ECFDF5',title:'สะอาด (Seiso)',hint:'ทำความสะอาดและตรวจหาแหล่งสกปรก',
-     subs:[
-      {label:'กำหนดตารางทำความสะอาดประจำวัน',tip:'ใช้หลัก "ผู้ใช้คือผู้ดูแล"'},
-      {label:'ค้นหาและแก้ไขแหล่งกำเนิดความสกปรก',tip:'แก้ที่ต้นเหตุ ไม่ใช่แค่ทำความสะอาดซ้ำๆ'},
-      {label:'ดูแลบำรุงรักษาอุปกรณ์สม่ำเสมอ',tip:'ป้องกันดีกว่าซ่อม'},
-      {label:'สร้างนิสัยสะอาดก่อนเลิกงานทุกวัน',tip:'ใช้เวลาแค่ 5 นาทีสุดท้าย'}
-    ]},
+      subs:[
+        {label:'กำหนดตารางทำความสะอาดประจำวัน',tip:'ใช้หลัก "ผู้ใช้คือผู้ดูแล"'},
+        {label:'ค้นหาและแก้ไขแหล่งกำเนิดความสกปรก',tip:'แก้ที่ต้นเหตุ ไม่ใช่แค่ทำความสะอาดซ้ำๆ'},
+        {label:'ดูแลบำรุงรักษาอุปกรณ์สม่ำเสมอ',tip:'ป้องกันดีกว่าซ่อม'},
+        {label:'สร้างนิสัยสะอาดก่อนเลิกงานทุกวัน',tip:'ใช้เวลาแค่ 5 นาทีสุดท้าย'}
+      ]},
     {ico:'📋',bg:'#F0FDF4',title:'สุขลักษณะ (Seiketsu)',hint:'สร้างมาตรฐานและ Visual Management',
-     subs:[
-      {label:'กำหนดมาตรฐานความสะอาดที่วัดได้',tip:'ถ่ายรูป "สภาพที่ดี" ไว้เป็น Reference'},
-      {label:'ทำ Checklist ตรวจสอบ 3ส แรก',tip:'ใช้ภาพมากกว่าตัวอักษร เข้าใจง่ายกว่า'},
-      {label:'ใช้สีและป้ายสัญลักษณ์บ่งบอกสถานะ',tip:'เช่น เขียว=ปกติ เหลือง=ระวัง แดง=แจ้งซ่อม'},
-      {label:'ทบทวนและอัปเดตมาตรฐานสม่ำเสมอ',tip:'ทบทวนทุก 3 เดือน หรือเมื่อมีการเปลี่ยนแปลง'}
-    ]},
+      subs:[
+        {label:'กำหนดมาตรฐานความสะอาดที่วัดได้',tip:'ถ่ายรูป "สภาพที่ดี" ไว้เป็น Reference'},
+        {label:'ทำ Checklist ตรวจสอบ 3ส แรก',tip:'ใช้ภาพมากกว่าตัวอักษร เข้าใจง่ายกว่า'},
+        {label:'ใช้สีและป้ายสัญลักษณ์บ่งบอกสถานะ',tip:'เช่น เขียว=ปกติ เหลือง=ระวัง แดง=แจ้งซ่อม'},
+        {label:'ทบทวนและอัปเดตมาตรฐานสม่ำเสมอ',tip:'ทบทวนทุก 3 เดือน หรือเมื่อมีการเปลี่ยนแปลง'}
+      ]},
     {ico:'🎯',bg:'#F7FEE7',title:'สร้างวินัย (Shitsuke)',hint:'ปฏิบัติต่อเนื่องจนเป็นวัฒนธรรม',
-     subs:[
-      {label:'สร้างการตรวจ 5ส สม่ำเสมอทุกสัปดาห์',tip:'หัวหน้าต้องเป็นตัวอย่างให้ทีม'},
-      {label:'ให้ Feedback และยกย่องทีมที่ทำดี',tip:'ชมต่อหน้า ติในที่ลับ'},
-      {label:'ผูก 5ส เข้ากับการประเมินผลงาน',tip:'ทำให้ 5ส เป็นส่วนหนึ่งของ KPI'},
-      {label:'จัดกิจกรรม 5ส Day เพื่อสร้างวัฒนธรรม',tip:'ทำร่วมกันทั้งองค์กร สร้างความสามัคคี'}
-    ]}
+      subs:[
+        {label:'สร้างการตรวจ 5ส สม่ำเสมอทุกสัปดาห์',tip:'หัวหน้าต้องเป็นตัวอย่างให้ทีม'},
+        {label:'ให้ Feedback และยกย่องทีมที่ทำดี',tip:'ชมต่อหน้า ติในที่ลับ'},
+        {label:'ผูก 5ส เข้ากับการประเมินผลงาน',tip:'ทำให้ 5ส เป็นส่วนหนึ่งของ KPI'},
+        {label:'จัดกิจกรรม 5ส Day เพื่อสร้างวัฒนธรรม',tip:'ทำร่วมกันทั้งองค์กร สร้างความสามัคคี'}
+      ]}
   ],
   s3:[
     {ico:'🧑‍💼',bg:'#E6F1FB',title:'Who — ใคร',hint:'ตรวจสอบว่าใครเป็นผู้รับผิดชอบ',
-     subs:[
-      {label:'ใครรับผิดชอบงานนี้ชัดเจนหรือไม่',tip:'ถ้าไม่ชัดจะเกิด Mura — ความรับผิดชอบขัดแย้ง'},
-      {label:'ทักษะของผู้ปฏิบัติเหมาะสมกับงานไหม',tip:'ตรวจสอบว่า Man ตรงกับ Method หรือไม่'},
-      {label:'มีผู้รับงานสำรองเมื่อขาดบุคลากรหลักไหม',tip:'ป้องกัน Single Point of Failure'},
-      {label:'การสื่อสารระหว่างผู้เกี่ยวข้องชัดเจนไหม',tip:'ใช้ RACI Matrix ช่วยกำหนดบทบาท'}
-    ]},
+      subs:[
+        {label:'ใครรับผิดชอบงานนี้ชัดเจนหรือไม่',tip:'ถ้าไม่ชัดจะเกิด Mura — ความรับผิดชอบขัดแย้ง'},
+        {label:'ทักษะของผู้ปฏิบัติเหมาะสมกับงานไหม',tip:'ตรวจสอบว่า Man ตรงกับ Method หรือไม่'},
+        {label:'มีผู้รับงานสำรองเมื่อขาดบุคลากรหลักไหม',tip:'ป้องกัน Single Point of Failure'},
+        {label:'การสื่อสารระหว่างผู้เกี่ยวข้องชัดเจนไหม',tip:'ใช้ RACI Matrix ช่วยกำหนดบทบาท'}
+      ]},
     {ico:'📌',bg:'#DBEAFE',title:'What — อะไร',hint:'ตรวจสอบว่าทำอะไรและได้ผลอะไร',
-     subs:[
-      {label:'งานที่ทำมีคุณค่าเพิ่มต่อองค์กรจริงไหม',tip:'ถามว่า "ถ้าไม่ทำสิ่งนี้จะเกิดอะไรขึ้น?"'},
-      {label:'ผลลัพธ์ที่ต้องการชัดเจนและวัดได้ไหม',tip:'ใช้หลัก SMART Goal ในการกำหนดเป้า'},
-      {label:'ขอบเขตงานชัดเจนป้องกัน Scope Creep ไหม',tip:'บันทึกและยืนยันขอบเขตเป็นลายลักษณ์อักษร'},
-      {label:'มีงานซ้ำซ้อนกับหน่วยงานอื่นไหม',tip:'ตรวจสอบ Process Map ร่วมกัน'}
-    ]},
+      subs:[
+        {label:'งานที่ทำมีคุณค่าเพิ่มต่อองค์กรจริงไหม',tip:'ถามว่า "ถ้าไม่ทำสิ่งนี้จะเกิดอะไรขึ้น?"'},
+        {label:'ผลลัพธ์ที่ต้องการชัดเจนและวัดได้ไหม',tip:'ใช้หลัก SMART Goal ในการกำหนดเป้า'},
+        {label:'ขอบเขตงานชัดเจนป้องกัน Scope Creep ไหม',tip:'บันทึกและยืนยันขอบเขตเป็นลายลักษณ์อักษร'},
+        {label:'มีงานซ้ำซ้อนกับหน่วยงานอื่นไหม',tip:'ตรวจสอบ Process Map ร่วมกัน'}
+      ]},
     {ico:'📍',bg:'#BFDBFE',title:'Where — ที่ไหน',hint:'ตรวจสอบสถานที่และจุดที่เกิดปัญหา',
-     subs:[
-      {label:'สถานที่ทำงานเอื้อต่อประสิทธิภาพไหม',tip:'ใช้หลัก 5ส ประเมินสภาพแวดล้อม'},
-      {label:'จุดที่เกิดปัญหาบ่อยที่สุดอยู่ที่ไหน',tip:'ทำ Heatmap ปัญหาในแต่ละจุด'},
-      {label:'การเดินทาง/เคลื่อนย้ายระหว่างจุดสั้นที่สุดไหม',tip:'ลด Muda ด้านการเคลื่อนที่'},
-      {label:'ข้อมูลและทรัพยากรอยู่ในที่เข้าถึงได้ง่ายไหม',tip:'ใช้ Cloud หรือ Shared Drive ให้เข้าถึงได้ทุกที่'}
-    ]},
+      subs:[
+        {label:'สถานที่ทำงานเอื้อต่อประสิทธิภาพไหม',tip:'ใช้หลัก 5ส ประเมินสภาพแวดล้อม'},
+        {label:'จุดที่เกิดปัญหาบ่อยที่สุดอยู่ที่ไหน',tip:'ทำ Heatmap ปัญหาในแต่ละจุด'},
+        {label:'การเดินทาง/เคลื่อนย้ายระหว่างจุดสั้นที่สุดไหม',tip:'ลด Muda ด้านการเคลื่อนที่'},
+        {label:'ข้อมูลและทรัพยากรอยู่ในที่เข้าถึงได้ง่ายไหม',tip:'ใช้ Cloud หรือ Shared Drive ให้เข้าถึงได้ทุกที่'}
+      ]},
     {ico:'📅',bg:'#E0F2FE',title:'When — เมื่อไร',hint:'ตรวจสอบเวลาและความถี่ในการทำงาน',
-     subs:[
-      {label:'เวลาที่ทำงานนี้เหมาะสมที่สุดไหม',tip:'บางงานเหมาะทำตอนเช้า บางงานเหมาะบ่าย'},
-      {label:'ความถี่ในการทำงานเหมาะสมไหม',tip:'ลองถามว่าทำบ่อยเกินไป หรือน้อยเกินไปไหม'},
-      {label:'กำหนดส่งงานสมเหตุสมผลไหม',tip:'ควร Buffer เผื่อปัญหาที่อาจเกิดขึ้น'},
-      {label:'งานนี้ควรทำอัตโนมัติแทนทำด้วยมือไหม',tip:'ถ้าทำซ้ำๆ มากกว่า 10 ครั้ง/เดือน ควรทำ Automation'}
-    ]},
+      subs:[
+        {label:'เวลาที่ทำงานนี้เหมาะสมที่สุดไหม',tip:'บางงานเหมาะทำตอนเช้า บางงานเหมาะบ่าย'},
+        {label:'ความถี่ในการทำงานเหมาะสมไหม',tip:'ลองถามว่าทำบ่อยเกินไป หรือน้อยเกินไปไหม'},
+        {label:'กำหนดส่งงานสมเหตุสมผลไหม',tip:'ควร Buffer เผื่อปัญหาที่อาจเกิดขึ้น'},
+        {label:'งานนี้ควรทำอัตโนมัติแทนทำด้วยมือไหม',tip:'ถ้าทำซ้ำๆ มากกว่า 10 ครั้ง/เดือน ควรทำ Automation'}
+      ]},
     {ico:'❓',bg:'#F0F9FF',title:'Why — ทำไม',hint:'ค้นหาสาเหตุที่แท้จริงของปัญหา',
-     subs:[
-      {label:'ทำไมถึงทำงานนี้ด้วยวิธีนี้',tip:'ใช้ Why 5 ครั้งเพื่อหาสาเหตุที่แท้จริง'},
-      {label:'ทำไมปัญหานี้ถึงยังไม่ได้รับการแก้ไข',tip:'อาจมี Limiting Beliefs ขัดขวางอยู่'},
-      {label:'ทำไมถึงยังใช้วิธีเดิมที่ไม่มีประสิทธิภาพ',tip:'ตรวจสอบว่าเป็นเรื่อง "ไม่รู้" หรือ "ไม่กล้าเปลี่ยน"'},
-      {label:'ทำไมคนในทีมไม่มีส่วนร่วมปรับปรุง',tip:'ทบทวนบรรยากาศและวัฒนธรรมองค์กร'}
-    ]},
+      subs:[
+        {label:'ทำไมถึงทำงานนี้ด้วยวิธีนี้',tip:'ใช้ Why 5 ครั้งเพื่อหาสาเหตุที่แท้จริง'},
+        {label:'ทำไมปัญหานี้ถึงยังไม่ได้รับการแก้ไข',tip:'อาจมี Limiting Beliefs ขัดขวางอยู่'},
+        {label:'ทำไมถึงยังใช้วิวัติเดิมที่ไม่มีประสิทธิภาพ',tip:'ตรวจสอบว่าเป็นเรื่อง "ไม่รู้" หรือ "ไม่กล้าเปลี่ยน"'},
+        {label:'ทำไมคนในทีมไม่มีส่วนร่วมปรับปรุง',tip:'ทบทวนบรรยากาศและวัฒนธรรมองค์กร'}
+      ]},
     {ico:'⚡',bg:'#F0FDFA',title:'How — อย่างไร',hint:'ค้นหาวิธีการที่ดีกว่าเดิม',
-     subs:[
-      {label:'วิธีการปัจจุบันมีขั้นตอนที่ลดได้ไหม',tip:'ใช้เทคนิค เลิก-ลด-เปลี่ยน วิเคราะห์'},
-      {label:'มีเทคโนโลยีหรือเครื่องมือที่ช่วยได้ไหม',tip:'ลอง Digital Tools ก่อนลงทุนซื้อระบบใหม่'},
-      {label:'วิธีการสื่อสารและประสานงานดีพอไหม',tip:'ลองใช้ SOP หรือ Work Instruction ที่ชัดขึ้น'},
-      {label:'มีวิธีที่ทำได้ดีกว่า เร็วกว่า ถูกกว่าไหม',tip:'Benchmark กับหน่วยงานที่ทำดีกว่า'}
-    ]}
+      subs:[
+        {label:'วิธีการปัจจุบันมีขั้นตอนที่ลดได้ไหม',tip:'ใช้เทคนิค เลิก-ลด-เปลี่ยน วิเคราะห์'},
+        {label:'มีเทคโนโลยีหรือเครื่องมือที่ช่วยได้ไหม',tip:'ลอง Digital Tools ก่อนลงทุนซื้อระบบใหม่'},
+        {label:'วิธีการสื่อสารและประสานงานดีพอไหม',tip:'ลองใช้ SOP หรือ Work Instruction ที่ชัดขึ้น'},
+        {label:'มีวิธีที่ทำได้ดีกว่า เร็วกว่า ถูกกว่าไหม',tip:'Benchmark กับหน่วยงานที่ทำดีกว่า'}
+      ]}
   ],
   s4:[
     {ico:'👷',bg:'#FAEEDA',title:'Man — กำลังคน',hint:'ตรวจสอบผู้ปฏิบัติงาน ทักษะ และความรับผิดชอบ',
-     subs:[
-      {label:'ทำงานตามมาตรฐานที่กำหนดไว้หรือไม่',tip:'ตรวจสอบด้วยการสังเกตจริง (Gemba Walk)'},
-      {label:'มีทักษะและความชำนาญเพียงพอหรือไม่',tip:'ทำ Skill Matrix ประเมินช่องว่างทักษะ'},
-      {label:'งานที่มอบหมายตรงกับความสามารถไหม',tip:'Right Person, Right Job คือหัวใจสำคัญ'},
-      {label:'มีความรับผิดชอบและแรงจูงใจในงานไหม',tip:'ตรวจสอบระบบแรงจูงใจและ Feedback Loop'}
-    ]},
+      subs:[
+        {label:'ทำงานตามมาตรฐานที่กำหนดไว้หรือไม่',tip:'ตรวจสอบด้วยการสังเกตจริง (Gemba Walk)'},
+        {label:'มีทักษะและความชำนาญเพียงพอหรือไม่',tip:'ทำ Skill Matrix ประเมินช่องว่างทักษะ'},
+        {label:'งานที่มอบหมายตรงกับความสามารถไหม',tip:'Right Person, Right Job คือหัวใจสำคัญ'},
+        {label:'มีความรับผิดชอบและแรงจูงใจในงานไหม',tip:'ตรวจสอบระบบแรงจูงใจและ Feedback Loop'}
+      ]},
     {ico:'🖥️',bg:'#FEF3C7',title:'Machine — เครื่องจักร/อุปกรณ์',hint:'ตรวจสอบเครื่องมือ ประสิทธิภาพ และการจัดวาง',
-     subs:[
-      {label:'อุปกรณ์สอดคล้องกับความต้องการของงานไหม',tip:'ใช้ OEE วัดประสิทธิภาพเครื่องจักร'},
-      {label:'เครื่องจักรขัดข้องบ่อยหรือมีสัญญาณผิดปกติไหม',tip:'ทำ Preventive Maintenance สม่ำเสมอ'},
-      {label:'การจัดวางอุปกรณ์เหมาะสมกับ Flow งานไหม',tip:'ใช้ Spaghetti Diagram วิเคราะห์การเคลื่อนที่'},
-      {label:'อุปกรณ์อยู่ในสภาพพร้อมใช้งานเสมอไหม',tip:'ทำ Daily Check Sheet ก่อนเริ่มงาน'}
-    ]},
+      subs:[
+        {label:'อุปกรณ์สอดคล้องกับความต้องการของงานไหม',tip:'ใช้ OEE วัดประสิทธิภาพเครื่องจักร'},
+        {label:'เครื่องจักรขัดข้องบ่อยหรือมีสัญญาณผิดปกติไหม',tip:'ทำ Preventive Maintenance สม่ำเสมอ'},
+        {label:'การจัดวางอุปกรณ์เหมาะสมกับ Flow งานไหม',tip:'ใช้ Spaghetti Diagram วิเคราะห์การเคลื่อนที่'},
+        {label:'อุปกรณ์อยู่ในสภาพพร้อมใช้งานเสมอไหม',tip:'ทำ Daily Check Sheet ก่อนเริ่มงาน'}
+      ]},
     {ico:'📦',bg:'#FEF9C3',title:'Material — วัสดุ/ข้อมูล',hint:'ตรวจสอบคุณภาพ ปริมาณ และระบบจัดเก็บ',
-     subs:[
-      {label:'คุณภาพวัสดุหรือข้อมูลเป็นไปตามมาตรฐานไหม',tip:'กำหนด Spec ที่ชัดเจนก่อนรับวัสดุ'},
-      {label:'ปริมาณสำรองวัสดุเพียงพอ ไม่มากหรือน้อยเกินไหม',tip:'ใช้ Min-Max Stock Control'},
-      {label:'ระบบจัดเก็บวัสดุมีประสิทธิภาพและป้องกันความเสียหายไหม',tip:'ใช้หลัก FIFO ในการจัดเก็บ'},
-      {label:'ข้อมูลที่ใช้ในการตัดสินใจถูกต้องและทันสมัยไหม',tip:'กำหนด Single Source of Truth สำหรับข้อมูล'}
-    ]},
+      subs:[
+        {label:'คุณภาพวัสดุหรือข้อมูลเป็นไปตามมาตรฐานไหม',tip:'กำหนด Spec ที่ชัดเจนก่อนรับวัสดุ'},
+        {label:'ปริมาณสำรองวัสดุเพียงพอ ไม่มากหรือน้อยเกินไหม',tip:'ใช้ Min-Max Stock Control'},
+        {label:'ระบบจัดเก็บวัสดุมีประสิทธิภาพและป้องกันความเสียหายไหม',tip:'ใช้หลัก FIFO ในการจัดเก็บ'},
+        {label:'ข้อมูลที่ใช้ในการตัดสินใจถูกต้องและทันสมัยไหม',tip:'กำหนด Single Source of Truth สำหรับข้อมูล'}
+      ]},
     {ico:'📊',bg:'#FEF08A',title:'Method — วิธีการ/มาตรฐาน',hint:'ตรวจสอบมาตรฐาน ความปลอดภัย และประสิทธิภาพกระบวนการ',
-     subs:[
-      {label:'มาตรฐานการทำงานมีเพียงพอและชัดเจนไหม',tip:'ทำ SOP เป็นภาพมากกว่าตัวอักษร'},
-      {label:'วิธีการปัจจุบันปลอดภัยต่อผู้ปฏิบัติไหม',tip:'ทำ Risk Assessment ทุกขั้นตอน'},
-      {label:'กระบวนการมีประสิทธิภาพและไม่มีความสูญเปล่าไหม',tip:'ทำ Value Stream Mapping'},
-      {label:'ลำดับขั้นตอนการทำงานเหมาะสมที่สุดแล้วไหม',tip:'ลองเรียงขั้นตอนใหม่แล้ว Simulate ผล'}
-    ]}
+      subs:[
+        {label:'มาตรฐานการทำงานมีเพียงพอและชัดเจนไหม',tip:'ทำ SOP เป็นภาพมากกว่าตัวอักษร'},
+        {label:'วิธีการปัจจุบันปลอดภัยต่อผู้ปฏิบัติไหม',tip:'ทำ Risk Assessment ทุกขั้นตอน'},
+        {label:'กระบวนการมีประสิทธิภาพและไม่มีความสูญเปล่าไหม',tip:'ทำ Value Stream Mapping'},
+        {label:'ลำดับขั้นตอนการทำงานเหมาะสมที่สุดแล้วไหม',tip:'ลองเรียงขั้นตอนใหม่แล้ว Simulate ผล'}
+      ]},
+    {ico:'🌿',bg:'#FDE68A',title:'Environment — สภาพแวดล้อม',hint:'ตรวจสอบแสง เสียง อุณหภูมิ และความปลอดภัย',
+      subs:[
+        {label:'แสงสว่างในการทำงานเพียงพอตามเกณฑ์กฎหมาย',tip:'วัดค่าความเข้มแสงด้วย Lux Meter บนพื้นที่ปฏิบัติการจริง'},
+        {label:'เสียงรบกวนในออฟฟิศ/โรงงานรบกวนสมาธิพนักงาน',tip:'ใช้มาตรการทางสถาปัตยกรรม (Soundproof/พาร์ติชันเก็บเสียง)'},
+        {label:'การระบายอากาศและอุณหภูมิอบอ้าวอึดอัดเกินไป',tip:'ปรับปรุงการไหลของอากาศ (Air Flow) เพื่อเพิ่มออกซิเจนและสมาธิ'},
+        {label:'มีจุดเสี่ยงหรือสิ่งกีดขวางทางเดินที่ทำให้เกิดอุบัติเหตุ',tip:'ใช้ป้ายสัญลักษณ์ทางเดิน ล้างอุปสรรคตามทางให้โล่งปลอดภัย'}
+      ]}
   ],
-  s6:[
+  s5:[
     {ico:'📝',bg:'#EEEDFE',title:'Plan — วางแผน',hint:'กำหนดเป้าหมาย วิเคราะห์ปัญหา วางแผนปรับปรุง',
-     subs:[
-      {label:'กำหนดเป้าหมายการปรับปรุงชัดเจนและวัดได้',tip:'ใช้ SMART: Specific Measurable Achievable Relevant Time-bound'},
-      {label:'วิเคราะห์สาเหตุที่แท้จริงด้วย Why 5 ครั้ง',tip:'อย่าหยุดแค่อาการ ต้องหาต้นเหตุ'},
-      {label:'วางแผนการปรับปรุงพร้อมกำหนดผู้รับผิดชอบ',tip:'ใช้ Action Plan Template: What-Who-When'},
-      {label:'ประเมินความเสี่ยงก่อนเริ่มปรับปรุง',tip:'ทำ Pre-mortem: "อะไรทำให้แผนนี้ล้มเหลวได้?"'}
-    ]},
+      subs:[
+        {label:'กำหนดเป้าหมายการปรับปรุงชัดเจนและวัดได้',tip:'ใช้ SMART: Specific Measurable Achievable Relevant Time-bound'},
+        {label:'วิเคราะห์สาเหตุที่แท้จริงด้วย Why 5 ครั้ง',tip:'อย่าหยุดแค่อาการ ต้องหาต้นเหตุ'},
+        {label:'วางแผนการปรับปรุงพร้อมกำหนดผู้รับผิดชอบ',tip:'ใช้ Action Plan Template: What-Who-When'},
+        {label:'ประเมินความเสี่ยงก่อนเริ่มปรับปรุง',tip:'ทำ Pre-mortem: "อะไรทำให้แผนนี้ล้มเหลวได้?"'}
+      ]},
     {ico:'⚡',bg:'#DDD6FE',title:'Do — ลงมือปฏิบัติ',hint:'ทดลองปฏิบัติ ฝึกอบรม ดำเนินการตามแผน',
-     subs:[
-      {label:'ทดลองปรับปรุงในขอบเขตเล็กก่อน (Pilot)',tip:'เริ่มเล็ก เรียนรู้เร็ว ขยายผลทีหลัง'},
-      {label:'ฝึกอบรมผู้เกี่ยวข้องให้เข้าใจวิธีการใหม่',tip:'ทำ OJT: On the Job Training จริง'},
-      {label:'บันทึกขั้นตอนและข้อมูลระหว่างปฏิบัติ',tip:'ข้อมูลระหว่างทำสำคัญพอๆ กับผลลัพธ์'},
-      {label:'สื่อสารความคืบหน้าให้ทีมรับทราบสม่ำเสมอ',tip:'Daily Stand-up 15 นาที ช่วยให้ทีม Sync กัน'}
-    ]},
+      subs:[
+        {label:'ทดลองปรับปรุงในขอบเขตเล็กก่อน (Pilot)',tip:'เริ่มเล็ก เรียนรู้เร็ว ขยายผลทีหลัง'},
+        {label:'ฝึกอบรมผู้เกี่ยวข้องให้เข้าใจวิธีการใหม่',tip:'ทำ OJT: On the Job Training จริง'},
+        {label:'บันทึกขั้นตอนและข้อมูลระหว่างปฏิบัติ',tip:'ข้อมูลระหว่างทำสำคัญพอๆ กับผลลัพธ์'},
+        {label:'สื่อสารความคืบหน้าให้ทีมรับทราบสม่ำเสมอ',tip:'Daily Stand-up 15 นาที ช่วยให้ทีม Sync กัน'}
+      ]},
     {ico:'🔍',bg:'#C4B5FD',title:'Check — ตรวจสอบผล',hint:'วัดผล เปรียบเทียบ และวิเคราะห์ความแตกต่าง',
-     subs:[
-      {label:'ผลลัพธ์เป็นไปตามเป้าหมายที่กำหนดไหม',tip:'เปรียบเทียบ Before vs After ด้วยตัวเลข'},
-      {label:'ตัวชี้วัดที่ใช้สะท้อนความสำเร็จจริงไหม',tip:'KPI ต้องวัดได้จริง ไม่ใช่แค่ความรู้สึก'},
-      {label:'มีผลข้างเคียงที่ไม่คาดคิดเกิดขึ้นไหม',tip:'มองทั้งผลดีและผลกระทบที่อาจเกิด'},
-      {label:'สิ่งที่เรียนรู้จากการปรับปรุงคืออะไร',tip:'บันทึก Lesson Learned ทุกครั้ง'}
-    ]},
+      subs:[
+        {label:'ผลลัพธ์เป็นไปตามเป้าหมายที่กำหนดไหม',tip:'เปรียบเทียบ Before vs After ด้วยตัวเลข'},
+        {label:'ตัวชี้วัดที่ใช้สะท้อนความสำเร็จจริงไหม',tip:'KPI ต้องวัดได้จริง ไม่ใช่แค่ความรู้สึก'},
+        {label:'มีผลข้างเคียงที่ไม่คาดคิดเกิดขึ้นไหม',tip:'มองทั้งผลดีและผลกระทบที่อาจเกิด'},
+        {label:'สิ่งที่เรียนรู้จากการปรับปรุงคืออะไร',tip:'บันทึก Lesson Learned ทุกครั้ง'}
+      ]},
     {ico:'🚀',bg:'#A78BFA',title:'Act — ปรับปรุงและขยายผล',hint:'ปรับมาตรฐาน ขยายผล และวางแผนรอบถัดไป',
-     subs:[
-      {label:'ปรับปรุงวิธีการให้เป็นมาตรฐานใหม่',tip:'อัปเดต SOP ทันทีที่พิสูจน์ว่าดีกว่า'},
-      {label:'ขยายผลการปรับปรุงไปยังหน่วยงานอื่น',tip:'Horizontal Deployment สู่ทีมอื่น'},
-      {label:'ถอดบทเรียนและแชร์ความสำเร็จให้องค์กร',tip:'Knowledge Sharing สร้างวัฒนธรรมการเรียนรู้'},
-      {label:'วางแผน PDCA รอบถัดไปจากสิ่งที่ยังปรับปรุงได้',tip:'Kaizen ไม่มีจุดสิ้นสุด ทุกรอบคือโอกาสใหม่'}
-    ]}
+      subs:[
+        {label:'ปรับปรุงวิธีการให้เป็นมาตรฐานใหม่',tip:'อัปเดต SOP ทันทีที่พิสูจน์ว่าดีกว่า'},
+        {label:'ขยายผลการปรับปรุงไปยังหน่วยงานอื่น',tip:'Horizontal Deployment สู่ทีมอื่น'},
+        {label:'ถอดบทเรียนและแชร์ความสำเร็จให้องค์กร',tip:'Knowledge Sharing สร้างวัฒนธรรมการเรียนรู้'},
+        {label:'วางแผน PDCA รอบถัดไปจากสิ่งที่ยังปรับปรุงได้',tip:'Kaizen ไม่มีจุดสิ้นสุด ทุกรอบคือโอกาสใหม่'}
+      ]}
   ]
 };
- 
-const COLORS={s2:'#0F6E56',s3:'#185FA5',s4:'#854F0B',s6:'#534AB7'};
-const CLS={s2:'c2',s3:'c3',s4:'c4',s6:'c6'};
-const NAMES={s2:'5ส',s3:'5W1H',s4:'4M',s6:'PDCA'};
- 
+
+const CLS = {s1:'c1', s2:'c2', s3:'c3', s4:'c4', s5:'c5'};
+const NAMES = {s1:"3-Mu's", s2:'5ส', s3:'5W1H', s4:'4M1E', s5:'PDCA'};
+
 function buildPrompt(strategy,sub,tip){
   const sName=NAMES[strategy];
   return `สมมุติคุณคือผู้เชี่ยวชาญ Kaizen 20 ปี\n\nใช้กลยุทธ์ ${sName} วิเคราะห์หัวข้อ:\n"${sub}"\n\nกรุณาตอบในรูปแบบ Kaizen:\n\n🔍 สภาพปัจจุบัน:\nอธิบายสถานการณ์ที่พบในงานจริง\n\n🎯 สาเหตุที่แท้จริง:\nระบุต้นเหตุ (ใช้ Why 5 ครั้งถ้าจำเป็น)\n\n✅ แนวทางปรับปรุงแบบ Kaizen:\nเสนอ 2-3 วิธีที่ทำได้จริง ไม่ต้องใช้งบมาก\n\n💡 เคล็ดลับ: ${tip}\n\n📈 ผลลัพธ์ที่คาดหวัง:\nระบุตัวชี้วัดที่วัดได้หลังการปรับปรุง`;
 }
- 
+
 function renderStrategy(strategy,containerId){
   const items=DATA[strategy];
   const cls=CLS[strategy];
@@ -530,14 +728,17 @@ function renderStrategy(strategy,containerId){
   });
   container.innerHTML=html;
 }
- 
+
 function toggleCard(st,i){
   const card=document.getElementById(`sg_${st}_${i}`);
   const isOpen=card.classList.contains('open');
   document.querySelectorAll('.sg-card').forEach(c=>c.classList.remove('open'));
-  if(!isOpen){card.classList.add('open');setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),50);}
+  if(!isOpen){
+    card.classList.add('open');
+    setTimeout(()=>card.scrollIntoView({behavior:'smooth',block:'nearest'}),150);
+  }
 }
- 
+
 function pick(st,i,j,chip){
   document.querySelectorAll(`#sg_${st}_${i} .chip`).forEach(c=>c.classList.remove('active'));
   chip.classList.add('active');
@@ -552,28 +753,69 @@ function pick(st,i,j,chip){
   ptip.style.display='block';
   pout.classList.add('show');
 }
- 
+
 function doCopy(st,i,e){
   e.stopPropagation();
-  const raw=document.getElementById(`ptxt_${st}_${i}`).dataset.raw||document.getElementById(`ptxt_${st}_${i}`).innerText;
-  navigator.clipboard.writeText(raw).then(()=>{
+  const raw=document.getElementById(`ptxt_${st}_${i}`).dataset.raw || document.getElementById(`ptxt_${st}_${i}`).innerText;
+  
+  // Robust Fallback Copy for Iframe Security restrictions
+  function fallbackCopyText(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed"; // Avoid scrolling
+    textArea.style.left = "-9999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      onCopySuccess();
+    } catch (err) {
+      console.error('ไม่สามารถคัดลอกได้', err);
+    }
+    document.body.removeChild(textArea);
+  }
+
+  function onCopySuccess() {
     const btn=document.querySelector(`#pout_${st}_${i} .copy-p`);
     btn.textContent='✅ คัดลอกแล้ว!';
     setTimeout(()=>btn.textContent='📋 คัดลอก',2000);
-  });
+  }
+
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(raw)
+      .then(onCopySuccess)
+      .catch(() => fallbackCopyText(raw));
+  } else {
+    fallbackCopyText(raw);
+  }
 }
- 
+
 function switchTab(id,btn){
   document.querySelectorAll('.tp').forEach(t=>t.classList.remove('show'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.getElementById(id).classList.add('show');
   btn.classList.add('active');
 }
- 
-renderStrategy('s2','sg2');
-renderStrategy('s3','sg3');
-renderStrategy('s4','sg4');
-renderStrategy('s6','sg6');
+
+function goTab(tabId, btnId){
+  switchTab(tabId, document.getElementById(btnId));
+  setTimeout(()=>{
+    document.getElementById('tabs').scrollIntoView({behavior:'smooth',block:'start'});
+  }, 150);
+}
+
+// Render on DOM Loaded
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('kaizen-theme') || 'light';
+  updateThemeUI(saved);
+  
+  renderStrategy('s1','sg1');
+  renderStrategy('s2','sg2');
+  renderStrategy('s3','sg3');
+  renderStrategy('s4','sg4');
+  renderStrategy('s5','sg5');
+});
 </script>
 </body>
 </html>
