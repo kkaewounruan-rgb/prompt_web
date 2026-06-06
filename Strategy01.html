@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,60 +7,114 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <style>
-:root{
+/* ── THEME VARIABLES ── */
+:root,[data-theme="light"]{
   --green:#005576;--green-l:#E1F5EE;--green-m:#9FE1CB;--green-d:#0F6E56;
   --border:#e2e8f0;--bg:#f8fafc;--bg2:#fff;--text:#1a202c;--text2:#64748b;--text3:#94a3b8;
   --r:10px;--primary:#005576;--secondary:#006c4e;--accent:#6366F1;
+  --topbar-bg:#fff;--topbar-shadow:0 1px 4px rgba(0,0,0,.08);
+  --drawer-bg:#fff;--drawer-border:#f0eded;
+  --bottom-nav-bg:#fff;
+  --chip-muda-bg:#FCEBEB;--chip-muri-bg:#FAEEDA;--chip-mura-bg:#E6F1FB;
+  --el-card-bg:#fff;
+  --mu-muda-bg:#FCEBEB;--mu-muda-c:#A32D2D;
+  --mu-muri-bg:#FAEEDA;--mu-muri-c:#854F0B;
+  --mu-mura-bg:#E6F1FB;--mu-mura-c:#185FA5;
+  --pout-bg:#E1F5EE;--pout-border:#9FE1CB;--pout-copy-bg:#fff;
+  --toggle-bg:#e2e8f0;--toggle-thumb:#005576;
 }
+[data-theme="dark"]{
+  --green:#38bdf8;--green-l:#0f2a38;--green-m:#1e4d66;--green-d:#7dd3fc;
+  --border:#2d3748;--bg:#0f172a;--bg2:#1e293b;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;
+  --primary:#38bdf8;--secondary:#34d399;--accent:#818cf8;
+  --topbar-bg:#1e293b;--topbar-shadow:0 1px 4px rgba(0,0,0,.4);
+  --drawer-bg:#1e293b;--drawer-border:#2d3748;
+  --bottom-nav-bg:#1e293b;
+  --chip-muda-bg:#3d1515;--chip-muri-bg:#3d2a0a;--chip-mura-bg:#0f2342;
+  --el-card-bg:#1e293b;
+  --mu-muda-bg:#3d1515;--mu-muda-c:#fca5a5;
+  --mu-muri-bg:#3d2a0a;--mu-muri-c:#fcd34d;
+  --mu-mura-bg:#0f2342;--mu-mura-c:#93c5fd;
+  --pout-bg:#0f2a38;--pout-border:#1e4d66;--pout-copy-bg:#1e293b;
+  --toggle-bg:#38bdf8;--toggle-thumb:#0f172a;
+}
+
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
- 
+body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s}
+
 /* ── TOP APP BAR ── */
 .topbar{
   position:fixed;top:0;left:0;width:100%;height:64px;z-index:100;
-  background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08);
+  background:var(--topbar-bg);box-shadow:var(--topbar-shadow);
   display:flex;align-items:center;justify-content:space-between;padding:0 16px;
+  transition:background .3s,box-shadow .3s;
 }
 .topbar-btn{
   width:40px;height:40px;border-radius:50%;border:none;background:transparent;
   cursor:pointer;display:flex;align-items:center;justify-content:center;
   color:var(--primary);transition:background .15s;
 }
-.topbar-btn:hover{background:#f0eded}
-.topbar-title{font-size:20px;font-weight:700;color:var(--primary);letter-spacing:-.3px;text-decoration:none}
+.topbar-btn:hover{background:var(--green-l)}
+.topbar-title{font-size:20px;font-weight:700;color:var(--primary);letter-spacing:-.3px;text-decoration:none;transition:color .3s}
 .material-symbols-outlined{
   font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
   display:inline-block;line-height:1;
 }
- 
+
+/* ── THEME TOGGLE BUTTON ── */
+.theme-toggle{
+  display:flex;align-items:center;gap:6px;
+  background:var(--toggle-bg);border:none;border-radius:20px;
+  padding:5px 10px 5px 6px;cursor:pointer;
+  font-family:inherit;font-size:12px;font-weight:600;
+  color:var(--text2);transition:all .3s;
+  white-space:nowrap;
+}
+.theme-toggle:hover{opacity:.85;transform:scale(1.03)}
+.theme-toggle .toggle-icon{
+  width:22px;height:22px;border-radius:50%;
+  background:var(--toggle-thumb);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .3s;flex-shrink:0;
+}
+.theme-toggle .toggle-icon .material-symbols-outlined{
+  font-size:14px;color:#fff;
+  font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20;
+}
+[data-theme="dark"] .theme-toggle .toggle-icon{background:#0f172a}
+[data-theme="dark"] .theme-toggle .toggle-icon .material-symbols-outlined{color:#38bdf8}
+
+/* topbar right group */
+.topbar-right{display:flex;align-items:center;gap:6px}
+
 /* ── DRAWER OVERLAY ── */
 .overlay{
   display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.35);
   backdrop-filter:blur(2px);
 }
 .overlay.show{display:block}
- 
+
 /* ── SIDE DRAWER ── */
 .drawer{
   position:fixed;top:0;left:-280px;width:260px;height:100%;z-index:300;
-  background:#fff;box-shadow:4px 0 20px rgba(0,0,0,.12);
-  transition:left .25s cubic-bezier(.4,0,.2,1);
+  background:var(--drawer-bg);box-shadow:4px 0 20px rgba(0,0,0,.18);
+  transition:left .25s cubic-bezier(.4,0,.2,1),background .3s;
   display:flex;flex-direction:column;
 }
 .drawer.open{left:0}
 .drawer-header{
   height:64px;display:flex;align-items:center;padding:0 16px;gap:12px;
-  border-bottom:1px solid #f0eded;
+  border-bottom:1px solid var(--drawer-border);
 }
 .drawer-logo{font-size:18px;font-weight:700;color:var(--primary)}
 .drawer-nav{flex:1;padding:12px 8px;overflow-y:auto}
 .drawer-item{
   display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:14px;
-  text-decoration:none;color:#1b1c1c;font-size:15px;font-weight:500;
+  text-decoration:none;color:var(--text);font-size:15px;font-weight:500;
   transition:background .15s;margin-bottom:2px;
 }
-.drawer-item:hover{background:#f0eded}
-.drawer-item.active{background:#E1F5EE;color:var(--primary)}
+.drawer-item:hover{background:var(--green-l)}
+.drawer-item.active{background:var(--green-l);color:var(--primary)}
 .drawer-item .material-symbols-outlined{font-size:22px}
 .drawer-item.active .material-symbols-outlined{color:var(--primary)}
 .drawer-icon-kaizen{color:var(--primary)}
@@ -68,44 +122,63 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
 .drawer-icon-gemini{color:var(--secondary)}
 .drawer-icon-strategy{color:#3d38c5}
 .drawer-icon-prompt{color:var(--primary)}
-.drawer-footer{padding:16px;border-top:1px solid #f0eded;font-size:11px;color:#94a3b8;text-align:center}
- 
+.drawer-footer{padding:16px;border-top:1px solid var(--drawer-border);font-size:11px;color:var(--text3);text-align:center}
+
+/* drawer dark mode toggle */
+.drawer-theme-row{
+  padding:12px 14px;display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--drawer-border);margin:4px 0;
+}
+.drawer-theme-label{font-size:13px;font-weight:500;color:var(--text2);display:flex;align-items:center;gap:8px}
+.toggle-pill{
+  width:46px;height:26px;border-radius:13px;border:none;cursor:pointer;
+  background:var(--toggle-bg);position:relative;transition:background .3s;padding:0;
+}
+.toggle-pill::after{
+  content:'';position:absolute;top:3px;left:3px;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--toggle-thumb);
+  transition:transform .3s, background .3s;
+}
+[data-theme="dark"] .toggle-pill::after{transform:translateX(20px)}
+
 /* ── MAIN CONTENT ── */
 .wrap{max-width:860px;margin:0 auto;padding:80px 18px 88px}
- 
+
 /* Header */
 .hdr{text-align:center;margin-bottom:24px}
 .hdr-badge{
   display:inline-flex;align-items:center;gap:6px;
   background:var(--green-l);color:var(--green-d);
   font-size:12px;font-weight:700;padding:5px 16px;border-radius:20px;margin-bottom:12px;
+  transition:background .3s,color .3s;
 }
 .back-link{
   display:inline-flex;align-items:center;gap:6px;
   color:var(--primary);font-size:13px;font-weight:500;text-decoration:none;
-  margin-bottom:14px;padding:6px 12px;background:#f0f9ff;border-radius:20px;
-  border:1px solid #c5e7ff;transition:background .15s;
+  margin-bottom:14px;padding:6px 12px;background:var(--green-l);border-radius:20px;
+  border:1px solid var(--green-m);transition:background .15s;
 }
-.back-link:hover{background:#c5e7ff}
+.back-link:hover{background:var(--green-m)}
 .hdr h1{font-size:24px;font-weight:700;margin-bottom:6px}
 .hdr p{font-size:13px;color:var(--text2);line-height:1.6;max-width:560px;margin:0 auto}
- 
+
 /* 3Mu strip */
 .mu-row{display:flex;gap:8px;margin-bottom:20px}
-.mu-box{flex:1;border-radius:var(--r);padding:12px 14px;text-align:center}
+.mu-box{flex:1;border-radius:var(--r);padding:12px 14px;text-align:center;transition:background .3s,color .3s}
 .mu-box .jp{font-size:20px;font-weight:700;margin-bottom:2px}
 .mu-box .th{font-size:12px;font-weight:600;margin-bottom:1px}
 .mu-box .en{font-size:10px;opacity:.75}
-.muda-box{background:#FCEBEB;color:#A32D2D}
-.muri-box{background:#FAEEDA;color:#854F0B}
-.mura-box{background:#E6F1FB;color:#185FA5}
- 
+.muda-box{background:var(--mu-muda-bg);color:var(--mu-muda-c)}
+.muri-box{background:var(--mu-muri-bg);color:var(--mu-muri-c)}
+.mura-box{background:var(--mu-mura-bg);color:var(--mu-mura-c)}
+
 /* Section label */
 .sec{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin:20px 0 10px}
- 
+
 /* Element accordion */
 .el-list{display:flex;flex-direction:column;gap:7px}
-.el-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .2s}
+.el-card{background:var(--el-card-bg);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .2s,background .3s}
 .el-card.open{border-color:var(--green-m)}
 .el-hdr{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;user-select:none}
 .el-hdr:hover{background:var(--bg)}
@@ -115,10 +188,10 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
 .el-hint{font-size:11px;color:var(--text2)}
 .el-arr{font-size:11px;color:var(--text3);transition:transform .22s}
 .el-card.open .el-arr{transform:rotate(180deg);color:var(--green)}
- 
+
 .el-body{display:none;padding:0 14px 14px;border-top:1px solid var(--border)}
 .el-card.open .el-body{display:block}
- 
+
 /* Mu group */
 .mu-group{margin-top:12px}
 .mu-group-label{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;padding:3px 0}
@@ -126,35 +199,35 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
 .chip{padding:5px 11px;border-radius:14px;font-size:11.5px;font-weight:500;cursor:pointer;border:1px solid;transition:all .15s;font-family:inherit}
 .chip:hover{opacity:.8;transform:translateY(-1px)}
 .chip.active{color:#fff!important;border-color:transparent!important;box-shadow:0 2px 6px rgba(0,0,0,.18)}
-.c-muda{background:#FCEBEB;color:#A32D2D;border-color:#F5C6C6}
+.c-muda{background:var(--chip-muda-bg);color:var(--mu-muda-c);border-color:var(--mu-muda-c)}
 .c-muda.active{background:#A32D2D}
-.c-muri{background:#FAEEDA;color:#854F0B;border-color:#F5D6A8}
+.c-muri{background:var(--chip-muri-bg);color:var(--mu-muri-c);border-color:var(--mu-muri-c)}
 .c-muri.active{background:#854F0B}
-.c-mura{background:#E6F1FB;color:#185FA5;border-color:#BCDBF7}
+.c-mura{background:var(--chip-mura-bg);color:var(--mu-mura-c);border-color:var(--mu-mura-c)}
 .c-mura.active{background:#185FA5}
- 
+
 /* Prompt output */
-.pout{display:none;margin-top:12px;background:var(--green-l);border:1px solid var(--green-m);border-radius:9px;padding:14px 16px;font-size:13px;line-height:1.8;color:var(--text);position:relative;padding-right:90px}
+.pout{display:none;margin-top:12px;background:var(--pout-bg);border:1px solid var(--pout-border);border-radius:9px;padding:14px 16px;font-size:13px;line-height:1.8;color:var(--text);position:relative;padding-right:90px;transition:background .3s,border-color .3s}
 .pout.show{display:block}
 .pout strong{color:var(--green-d)}
-.copy-p{position:absolute;top:10px;right:12px;background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:4px 11px;font-size:11px;cursor:pointer;color:var(--text2);font-family:inherit;white-space:nowrap;transition:all .15s}
+.copy-p{position:absolute;top:10px;right:12px;background:var(--pout-copy-bg);border:1px solid var(--border);border-radius:7px;padding:4px 11px;font-size:11px;cursor:pointer;color:var(--text2);font-family:inherit;white-space:nowrap;transition:all .15s}
 .copy-p:hover{background:var(--green-l);color:var(--green-d);border-color:var(--green-m)}
- 
+
 /* ── BOTTOM NAV ── */
 .bottom-nav{
   position:fixed;bottom:0;left:0;width:100%;height:72px;z-index:100;
-  background:#fff;box-shadow:0 -1px 8px rgba(0,0,0,.08);
-  border-top:1px solid #e5e2e1;
+  background:var(--bottom-nav-bg);box-shadow:0 -1px 8px rgba(0,0,0,.08);
+  border-top:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-around;
-  padding:0 4px 8px;
+  padding:0 4px 8px;transition:background .3s,border-color .3s;
 }
 .nav-item{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:2px;padding:8px 12px;border-radius:14px;text-decoration:none;
-  color:#40484e;font-size:11px;font-weight:600;transition:all .15s;min-width:56px;
+  color:var(--text2);font-size:11px;font-weight:600;transition:all .15s;min-width:56px;
 }
-.nav-item:hover{background:#f0eded}
-.nav-item.active{background:#83f5c6;color:var(--secondary)}
+.nav-item:hover{background:var(--green-l)}
+.nav-item.active{background:var(--green-l);color:var(--secondary)}
 .nav-item .material-symbols-outlined{font-size:22px}
 .nav-item.home-btn{
   background:var(--green-l);padding:6px 8px;border-radius:18px;
@@ -163,10 +236,10 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
   font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;
   color:var(--primary);font-size:28px;
 }
- 
+
 /* footer */
 .footer{text-align:center;margin-top:24px;font-size:12px;color:var(--text3);line-height:1.7}
- 
+
 @media(min-width:768px){
   .bottom-nav{display:none}
   .wrap{padding-bottom:48px}
@@ -174,10 +247,10 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
 </style>
 </head>
 <body>
- 
+
 <!-- ── OVERLAY ── -->
 <div class="overlay" id="overlay" onclick="closeDrawer()"></div>
- 
+
 <!-- ── SIDE DRAWER ── -->
 <div class="drawer" id="drawer">
   <div class="drawer-header">
@@ -204,23 +277,42 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
       <span class="material-symbols-outlined drawer-icon-prompt">psychology</span>Strategies2
     </a>
   </nav>
+
+  <!-- Dark mode toggle inside drawer -->
+  <div class="drawer-theme-row">
+    <span class="drawer-theme-label">
+      <span class="material-symbols-outlined" style="font-size:18px;color:var(--primary)" id="drawerModeIcon">dark_mode</span>
+      <span id="drawerModeLabel">โหมดมืด</span>
+    </span>
+    <button class="toggle-pill" onclick="toggleTheme()" id="pillToggle" aria-label="toggle dark mode"></button>
+  </div>
+
   <div class="drawer-footer">KAIZEN SMART PLAYBOOK<br>By Kachain_K 2026</div>
 </div>
- 
+
 <!-- ── TOP APP BAR ── -->
 <header class="topbar">
   <button class="topbar-btn" onclick="openDrawer()">
     <span class="material-symbols-outlined">menu</span>
   </button>
   <a class="topbar-title" href="https://sites.google.com/view/teprompt-web/home2?authuser=0" target="_blank">KAIZEN SMART</a>
-  <button class="topbar-btn" onclick="window.open('https://sites.google.com/view/teprompt-web/home2?authuser=0','_blank')">
-    <span class="material-symbols-outlined">search</span>
-  </button>
+  <div class="topbar-right">
+    <!-- ── THEME TOGGLE BUTTON ── -->
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeToggleBtn" aria-label="Toggle dark/light mode">
+      <span class="toggle-icon">
+        <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+      </span>
+      <span id="themeLabelText">โหมดมืด</span>
+    </button>
+    <button class="topbar-btn" onclick="window.open('https://sites.google.com/view/teprompt-web/home2?authuser=0','_blank')">
+      <span class="material-symbols-outlined">search</span>
+    </button>
+  </div>
 </header>
- 
+
 <!-- ── MAIN ── -->
 <div class="wrap">
- 
+
   <div class="hdr">
     <a class="back-link" href="https://sites.google.com/view/teprompt-web/home2?authuser=0" target="_blank">
       <span class="material-symbols-outlined" style="font-size:16px">arrow_back</span>
@@ -233,16 +325,16 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
     <h1>รายการตรวจสอบ 3-Mu's × Prompt Generator</h1>
     <p>แยกองค์ประกอบการทำงาน 9 ด้าน × Muda / Muri / Mura<br>คลิกหัวข้อย่อย → ได้ Prompt ค้นหาแนวทางปรับปรุงแบบ Kaizen ทันที</p>
   </div>
- 
+
   <div class="mu-row">
     <div class="mu-box muda-box"><div class="jp">Muda</div><div class="th">ความสูญเปล่า</div><div class="en">Waste — ไม่เพิ่มคุณค่า</div></div>
     <div class="mu-box muri-box"><div class="jp">Muri</div><div class="th">ความตึง</div><div class="en">Overburden — เกินกำลัง</div></div>
     <div class="mu-box mura-box"><div class="jp">Mura</div><div class="th">ความแตกต่าง</div><div class="en">Unevenness — ไม่สม่ำเสมอ</div></div>
   </div>
- 
+
   <div class="sec">📂 9 องค์ประกอบการทำงาน — คลิกเพื่อขยาย แล้วเลือกหัวข้อย่อย</div>
   <div class="el-list" id="elList"></div>
- 
+
   <div class="footer">
     จัดทำโดย คเชนท์ แก้วอุ่นเรือน · แผนกฝึกอบรม 2026<br>
     3-Mu's Kaizen Prompt Generator — ทุกคน ทุกที่ ทุกเวลา 🌱<br>
@@ -252,7 +344,7 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
     </a>
   </div>
 </div>
- 
+
 <!-- ── BOTTOM NAV ── -->
 <nav class="bottom-nav">
   <a class="nav-item home-btn" href="https://sites.google.com/view/teprompt-web/home2?authuser=0" target="_blank">
@@ -280,7 +372,7 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
     <span>Strategy2</span>
   </a>
 </nav>
- 
+
 <script>
 /* ── Drawer ── */
 function openDrawer(){
@@ -293,7 +385,36 @@ function closeDrawer(){
   document.getElementById('overlay').classList.remove('show');
   document.body.style.overflow='';
 }
- 
+
+/* ── Theme Toggle ── */
+function toggleTheme(){
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  html.setAttribute('data-theme', newTheme);
+  localStorage.setItem('kaizen-theme', newTheme);
+  updateThemeUI(newTheme);
+}
+
+function updateThemeUI(theme){
+  const isDark = theme === 'dark';
+  // topbar button
+  document.getElementById('themeIcon').textContent        = isDark ? 'light_mode'   : 'dark_mode';
+  document.getElementById('themeLabelText').textContent   = isDark ? 'โหมดสว่าง'    : 'โหมดมืด';
+  // drawer
+  document.getElementById('drawerModeIcon').textContent   = isDark ? 'light_mode'   : 'dark_mode';
+  document.getElementById('drawerModeLabel').textContent  = isDark ? 'โหมดสว่าง'    : 'โหมดมืด';
+}
+
+// Apply saved preference on load
+(function(){
+  const saved = localStorage.getItem('kaizen-theme');
+  if(saved === 'dark'){
+    document.documentElement.setAttribute('data-theme','dark');
+    updateThemeUI('dark');
+  }
+})();
+
 /* ── Data ── */
 const ELS=[
   {ico:'👥',bg:'#E1F5EE',t:'กำลังคน',h:'Man / Manpower',
@@ -333,20 +454,20 @@ const ELS=[
    muri:['ความคิดที่ว่าต้องทำทุกอย่างด้วยตัวเองคนเดียว','กดดันตัวเองมากเกินจนเกิดความเหนื่อยหน่าย','ไม่กล้าปฏิเสธหรือขอความช่วยเหลือ'],
    mura:['ทัศนคติต่องานไม่สม่ำเสมอในแต่ละวัน','แรงจูงใจขึ้นๆ ลงๆ ตามอารมณ์','ทีมมีความเข้าใจเป้าหมายแตกต่างกัน']}
 ];
- 
+
 const MU_LABEL={muda:'🔴 Muda — ความสูญเปล่า',muri:'🟡 Muri — ความตึง/เกินกำลัง',mura:'🔵 Mura — ความแตกต่าง/ไม่สม่ำเสมอ'};
 const MU_FULL={muda:'ความสูญเปล่า (Muda)',muri:'ความตึง/เกินกำลัง (Muri)',mura:'ความแตกต่าง/ไม่สม่ำเสมอ (Mura)'};
- 
+
 function buildP(el,mu,sub){
   return `สมมุติคุณคือผู้เชี่ยวชาญ Kaizen 20 ปี\n\nใช้หลัก 3-Mu's วิเคราะห์ปัญหา "${sub}"\nด้าน "${el.t}" ในมุม ${MU_FULL[mu]}\n\nกรุณาตอบในรูปแบบ Kaizen:\n\n🔍 สภาพปัจจุบัน:\nอธิบายปัญหาที่เกิดจาก ${MU_FULL[mu]} ในด้านนี้\n\n🎯 สาเหตุที่แท้จริง:\nระบุต้นเหตุที่ทำให้เกิดปัญหานี้\n\n✅ แนวทางปรับปรุงแบบ Kaizen:\nเสนอ 2-3 วิธีที่ทำได้จริง งบน้อย เห็นผลเร็ว\n\n📈 ผลลัพธ์ที่คาดหวัง:\nระบุตัวชี้วัดที่วัดได้หลังการปรับปรุง`;
 }
- 
+
 function buildHTML(el,i){
   let muGroups='';
   ['muda','muri','mura'].forEach(mu=>{
     const cls={muda:'c-muda',muri:'c-muri',mura:'c-mura'}[mu];
     const chips=el[mu].map(s=>`<button class="chip ${cls}" onclick="pick(${i},'${mu}',this,'${s.replace(/'/g,"\\'")}')"> ${s}</button>`).join('');
-    muGroups+=`<div class="mu-group"><div class="mu-group-label" style="color:${mu==='muda'?'#A32D2D':mu==='muri'?'#854F0B':'#185FA5'}">${MU_LABEL[mu]}</div><div class="chip-row">${chips}</div></div>`;
+    muGroups+=`<div class="mu-group"><div class="mu-group-label" style="color:${mu==='muda'?'var(--mu-muda-c)':mu==='muri'?'var(--mu-muri-c)':'var(--mu-mura-c)'}">${MU_LABEL[mu]}</div><div class="chip-row">${chips}</div></div>`;
   });
   return `<div class="el-card" id="ec${i}">
     <div class="el-hdr" onclick="tog(${i})">
@@ -362,16 +483,16 @@ function buildHTML(el,i){
     </div>
   </div>`;
 }
- 
+
 document.getElementById('elList').innerHTML=ELS.map((el,i)=>buildHTML(el,i)).join('');
- 
+
 function tog(i){
   const c=document.getElementById(`ec${i}`);
   const open=c.classList.contains('open');
   document.querySelectorAll('.el-card').forEach(x=>x.classList.remove('open'));
   if(!open){c.classList.add('open');setTimeout(()=>c.scrollIntoView({behavior:'smooth',block:'nearest'}),50);}
 }
- 
+
 function pick(i,mu,chip,sub){
   document.querySelectorAll(`#ec${i} .chip`).forEach(c=>{c.classList.remove('active');});
   chip.classList.add('active');
@@ -381,7 +502,7 @@ function pick(i,mu,chip,sub){
   pt.dataset.txt=buildP(ELS[i],mu,sub);
   po.classList.add('show');
 }
- 
+
 function doCopy(i,e){
   e.stopPropagation();
   const txt=document.getElementById(`pt${i}`).dataset.txt||document.getElementById(`pt${i}`).innerText;
