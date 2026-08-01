@@ -84,7 +84,6 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
 [data-theme="dark"] .theme-toggle .toggle-icon{background:#0f172a}
 [data-theme="dark"] .theme-toggle .toggle-icon .material-symbols-outlined{color:#38bdf8}
 
-/* topbar right group */
 .topbar-right{display:flex;align-items:center;gap:6px}
 
 /* ── DRAWER OVERLAY ── */
@@ -124,7 +123,6 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
 .drawer-icon-prompt{color:var(--primary)}
 .drawer-footer{padding:16px;border-top:1px solid var(--drawer-border);font-size:11px;color:var(--text3);text-align:center}
 
-/* drawer dark mode toggle */
 .drawer-theme-row{
   padding:12px 14px;display:flex;align-items:center;justify-content:space-between;
   border-top:1px solid var(--drawer-border);margin:4px 0;
@@ -145,7 +143,6 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
 /* ── MAIN CONTENT ── */
 .wrap{max-width:860px;margin:0 auto;padding:80px 18px 88px}
 
-/* Header */
 .hdr{text-align:center;margin-bottom:24px}
 .hdr-badge{
   display:inline-flex;align-items:center;gap:6px;
@@ -173,10 +170,8 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
 .muri-box{background:var(--mu-muri-bg);color:var(--mu-muri-c)}
 .mura-box{background:var(--mu-mura-bg);color:var(--mu-mura-c)}
 
-/* Section label */
 .sec{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin:20px 0 10px}
 
-/* Element accordion */
 .el-list{display:flex;flex-direction:column;gap:7px}
 .el-card{background:var(--el-card-bg);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:border-color .2s,background .3s}
 .el-card.open{border-color:var(--green-m)}
@@ -192,7 +187,6 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
 .el-body{display:none;padding:0 14px 14px;border-top:1px solid var(--border)}
 .el-card.open .el-body{display:block}
 
-/* Mu group */
 .mu-group{margin-top:12px}
 .mu-group-label{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;padding:3px 0}
 .chip-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:4px}
@@ -206,7 +200,6 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
 .c-mura{background:var(--chip-mura-bg);color:var(--mu-mura-c);border-color:var(--mu-mura-c)}
 .c-mura.active{background:#185FA5}
 
-/* Prompt output */
 .pout{display:none;margin-top:12px;background:var(--pout-bg);border:1px solid var(--pout-border);border-radius:9px;padding:14px 16px;font-size:13px;line-height:1.8;color:var(--text);position:relative;padding-right:90px;transition:background .3s,border-color .3s}
 .pout.show{display:block}
 .pout strong{color:var(--green-d)}
@@ -237,7 +230,6 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
   color:var(--primary);font-size:28px;
 }
 
-/* footer */
 .footer{text-align:center;margin-top:24px;font-size:12px;color:var(--text3);line-height:1.7}
 
 @media(min-width:768px){
@@ -248,10 +240,8 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
 </head>
 <body>
 
-<!-- ── OVERLAY ── -->
 <div class="overlay" id="overlay" onclick="closeDrawer()"></div>
 
-<!-- ── SIDE DRAWER ── -->
 <div class="drawer" id="drawer">
   <div class="drawer-header">
     <span class="material-symbols-outlined" style="color:var(--primary)">menu_book</span>
@@ -278,7 +268,6 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
     </a>
   </nav>
 
-  <!-- Dark mode toggle inside drawer -->
   <div class="drawer-theme-row">
     <span class="drawer-theme-label">
       <span class="material-symbols-outlined" style="font-size:18px;color:var(--primary)" id="drawerModeIcon">dark_mode</span>
@@ -290,14 +279,12 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
   <div class="drawer-footer">KAIZEN SMART PLAYBOOK<br>By Kachain_K 2026</div>
 </div>
 
-<!-- ── TOP APP BAR ── -->
 <header class="topbar">
   <button class="topbar-btn" onclick="openDrawer()">
     <span class="material-symbols-outlined">menu</span>
   </button>
   <a class="topbar-title" href="https://sites.google.com/view/teprompt-web/home2?authuser=0" target="_blank">KAIZEN SMART</a>
   <div class="topbar-right">
-    <!-- ── THEME TOGGLE BUTTON ── -->
     <button class="theme-toggle" onclick="toggleTheme()" id="themeToggleBtn" aria-label="Toggle dark/light mode">
       <span class="toggle-icon">
         <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
@@ -310,7 +297,6 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
   </div>
 </header>
 
-<!-- ── MAIN ── -->
 <div class="wrap">
 
   <div class="hdr">
@@ -345,7 +331,6 @@ body{font-family:'IBM Plex Sans','Segoe UI',Tahoma,sans-serif;background:var(--b
   </div>
 </div>
 
-<!-- ── BOTTOM NAV ── -->
 <nav class="bottom-nav">
   <a class="nav-item home-btn" href="https://sites.google.com/view/teprompt-web/home2?authuser=0" target="_blank">
     <span class="material-symbols-outlined">home</span>
@@ -398,15 +383,12 @@ function toggleTheme(){
 
 function updateThemeUI(theme){
   const isDark = theme === 'dark';
-  // topbar button
   document.getElementById('themeIcon').textContent        = isDark ? 'light_mode'   : 'dark_mode';
   document.getElementById('themeLabelText').textContent   = isDark ? 'โหมดสว่าง'    : 'โหมดมืด';
-  // drawer
   document.getElementById('drawerModeIcon').textContent   = isDark ? 'light_mode'   : 'dark_mode';
   document.getElementById('drawerModeLabel').textContent  = isDark ? 'โหมดสว่าง'    : 'โหมดมืด';
 }
 
-// Apply saved preference on load
 (function(){
   const saved = localStorage.getItem('kaizen-theme');
   if(saved === 'dark'){
@@ -462,11 +444,27 @@ function buildP(el,mu,sub){
   return `สมมุติคุณคือผู้เชี่ยวชาญ Kaizen 20 ปี\n\nใช้หลัก 3-Mu's วิเคราะห์ปัญหา "${sub}"\nด้าน "${el.t}" ในมุม ${MU_FULL[mu]}\n\nกรุณาตอบในรูปแบบ Kaizen:\n\n🔍 สภาพปัจจุบัน:\nอธิบายปัญหาที่เกิดจาก ${MU_FULL[mu]} ในด้านนี้\n\n🎯 สาเหตุที่แท้จริง:\nระบุต้นเหตุที่ทำให้เกิดปัญหานี้\n\n✅ แนวทางปรับปรุงแบบ Kaizen:\nเสนอ 2-3 วิธีที่ทำได้จริง งบน้อย เห็นผลเร็ว\n\n📈 ผลลัพธ์ที่คาดหวัง:\nระบุตัวชี้วัดที่วัดได้หลังการปรับปรุง`;
 }
 
+/* ══════════════════════════════════════════════════════
+   จุดที่แก้ไข: escapeAttr()
+   เดิม: escape แค่ ' (single quote) ทำให้ chip ที่มี " (double quote)
+        ในข้อความ เช่น 'ความคิด "เดี๋ยวค่อยทำ" ...'
+        ไปตัด attribute onclick="..." ให้ขาดกลางคัน (invalid HTML)
+        ปุ่มจึงไม่ทำงานเหมือนปุ่มอื่น
+   ใหม่: escape " เป็น &quot; ด้วย (และ escape backslash กันเผื่อ)
+        เพื่อให้ HTML attribute ไม่ถูกตัดตอนกลางคำ
+   ══════════════════════════════════════════════════════ */
+function escapeAttr(s){
+  return s
+    .replace(/\\/g, '\\\\')   // escape backslash ก่อน
+    .replace(/'/g, "\\'")     // escape single quote (สำหรับ JS string)
+    .replace(/"/g, '&quot;'); // escape double quote (สำหรับ HTML attribute) ← ตัวแก้บั๊กหลัก
+}
+
 function buildHTML(el,i){
   let muGroups='';
   ['muda','muri','mura'].forEach(mu=>{
     const cls={muda:'c-muda',muri:'c-muri',mura:'c-mura'}[mu];
-    const chips=el[mu].map(s=>`<button class="chip ${cls}" onclick="pick(${i},'${mu}',this,'${s.replace(/'/g,"\\'")}')"> ${s}</button>`).join('');
+    const chips=el[mu].map(s=>`<button class="chip ${cls}" onclick="pick(${i},'${mu}',this,'${escapeAttr(s)}')"> ${s}</button>`).join('');
     muGroups+=`<div class="mu-group"><div class="mu-group-label" style="color:${mu==='muda'?'var(--mu-muda-c)':mu==='muri'?'var(--mu-muri-c)':'var(--mu-mura-c)'}">${MU_LABEL[mu]}</div><div class="chip-row">${chips}</div></div>`;
   });
   return `<div class="el-card" id="ec${i}">
